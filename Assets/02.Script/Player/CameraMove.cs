@@ -1,21 +1,26 @@
+/// <summary>
+/// 카메라의 이동과 방향의 지정에 대한 스크립트입니다. 
+/// (01.22) 스크립트 작성, 플레이어 추적/ 위 올려다보기 기능 추가
+/// </summary>
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-   [Header("Target")]
-    public Transform target;
+   [Header("플레이어 (추적 대상)")]
+    public Transform target;                // 카메라가 따라 갈 대상
 
-    [Header("X Follow")]
-    public float xOffset = 0f;
-    public float xSmoothTime = 0.12f;
+    [Header("추적 이동 관련 수치")]
+    public float xOffset = 0f;              // X축 카메라 보정 값  
+    public float xSmoothTime = 0.12f;       // x축 이동 보정 값
 
     [Header("Look Up Pulse (Press W)")]
-    public KeyCode pulseKey = KeyCode.W;
     public float pulseHeight = 3f;          // 위로 올라갈 높이
     public float pulseHoldTime = 0.25f;     // 위에서 유지 시간
     public float ySmoothTime = 0.10f;       // Y 이동 부드러움
+
+    [Header("참조 컴포넌트")]
+    private InputManager inputManager;
 
     float xVel;
     float yVel;
@@ -25,17 +30,22 @@ public class CameraMove : MonoBehaviour
 
     float yExtra;               // baseY에 더해지는 값(0~pulseHeight)
     Coroutine pulseRoutine;
+    
 
     void Start()
     {
         baseY = transform.position.y;
         fixedZ = transform.position.z;
+
+        /// [강다영] 싱글톤 인스턴스인 InputManager를 추가해 입력을 일괄적으로 관리합니다. ///
+        inputManager = InputManager.Instance;
+
     }
 
     void Update()
     {
         // "누른 순간"에만 트리거
-        if (Input.GetKeyDown(pulseKey))
+        if (Input.GetKeyDown(inputManager.Lookup))
         {
             TriggerPulse();
         }
@@ -60,6 +70,7 @@ public class CameraMove : MonoBehaviour
         transform.position = new Vector3(newX, newY, fixedZ);
     }
 
+    /* 카메라 시점을 위로 올려 더 높은 시점을 올려다 보는 기능 */
     public void TriggerPulse()
     {
         if (pulseRoutine != null)
