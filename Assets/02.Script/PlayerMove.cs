@@ -30,7 +30,7 @@ public class PlayerMove : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip runFootstepLoop;         // 달릴 때만 재생할 루프 클립
     public float footstepMinSpeed = 0.2f;     // 이 속도 이상일 때만 발소리
-    private bool stopFootstepsWhenAirborne = false; // 점프 없다면 보통 false로 둬도 됨
+    
 
     Rigidbody rb;
 
