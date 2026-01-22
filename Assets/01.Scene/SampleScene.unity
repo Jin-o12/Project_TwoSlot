@@ -557,22 +557,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a7edc77aef3d4ba73adc2448ee516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 6
+  walkSpeed: 5
   runSpeed: 10
-  runKey: 304
   acceleration: 40
   deceleration: 50
   faceByMoveInput: 1
   faceByMouse: 0
   lockZToStart: 1
-  maxStamina: 5
-  staminaDrainPerSec: 1.2
-  staminaRegenPerSec: 0.9
-  minStaminaToRun: 0.2
-  stamina: 0
   audioSource: {fileID: 1120050098}
   runFootstepLoop: {fileID: 8300000, guid: 4c9f4a9ae2079dd47bc2682c13658660, type: 3}
   footstepMinSpeed: 0.2
+  animator: {fileID: 1120050096}
+  speedParam: Speed
+  isRunningParam: IsRunning
+  animSpeedDamp: 0.1
 --- !u!54 &1120050094
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -581,7 +579,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1120050092}
   serializedVersion: 4
-  m_Mass: 70
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -597,7 +595,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!136 &1120050095
@@ -623,6 +621,12 @@ CapsuleCollider:
   m_Height: 1.9123263
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &1120050096 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1713190570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1120050097 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
@@ -733,10 +737,75 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
+    - target: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6b507c249cfcd9342b3b33f10e2f3273, type: 2}
+    - target: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605158831971, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605162998179, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_Quality
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605162998179, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7539588605166110009, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
       propertyPath: m_Name
       value: SkelMesh_Bodyguard_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539588605166344323, guid: 71d6918dc6afcf849a34729b45f082c9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
@@ -756,7 +825,7 @@ PrefabInstance:
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
@@ -766,7 +835,7 @@ PrefabInstance:
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
@@ -781,7 +850,7 @@ PrefabInstance:
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7539588605166344473, guid: 71d6918dc6afcf849a34729b45f082c9,
         type: 3}

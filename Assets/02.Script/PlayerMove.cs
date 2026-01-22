@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
   [Header("Move")]
-    public float walkSpeed = 6f;
+    public float walkSpeed = 5f;
     public float runSpeed = 10f;
-    public KeyCode runKey = KeyCode.LeftShift;
+    private KeyCode runKey = KeyCode.LeftShift;
 
     public float acceleration = 40f;
     public float deceleration = 50f;
@@ -19,18 +19,22 @@ public class PlayerMove : MonoBehaviour
     [Header("Z Lock (2.5D)")]
     public bool lockZToStart = true;
 
-    [Header("Stamina")]
-    public float maxStamina = 5f;             // 최대 스태미나(초 단위처럼 쓰기 좋음)
-    public float staminaDrainPerSec = 1.2f;   // 달릴 때 초당 소모
-    public float staminaRegenPerSec = 0.9f;   // 안 달릴 때 초당 회복
-    public float minStaminaToRun = 0.2f;      // 이 값보다 낮으면 달리기 불가(깜빡임 방지)
-    public float stamina;                     // 현재 스태미나(읽기용)
+    // [Header("Stamina")]
+    // public float maxStamina = 5f;             // 최대 스태미나(초 단위처럼 쓰기 좋음)
+    // public float staminaDrainPerSec = 1.2f;   // 달릴 때 초당 소모
+    // public float staminaRegenPerSec = 0.9f;   // 안 달릴 때 초당 회복
+    // public float minStaminaToRun = 0.2f;      // 이 값보다 낮으면 달리기 불가(깜빡임 방지)
+    // public float stamina;                     // 현재 스태미나(읽기용)
 
     [Header("Footsteps (Run Only)")]
     public AudioSource audioSource;
     public AudioClip runFootstepLoop;         // 달릴 때만 재생할 루프 클립
     public float footstepMinSpeed = 0.2f;     // 이 속도 이상일 때만 발소리
-    
+    [Header("Animation")]
+    public Animator animator;          // 플레이어(혹은 모델 자식)에 있는 Animator
+    public string speedParam = "Speed";
+    public string isRunningParam = "IsRunning";
+    public float animSpeedDamp = 0.1f; // 애니 전환 부드럽게
 
     Rigidbody rb;
 
@@ -56,7 +60,8 @@ public class PlayerMove : MonoBehaviour
         if (lockZToStart)
             rb.constraints |= RigidbodyConstraints.FreezePositionZ;
 
-        stamina = maxStamina;
+        // stamina = maxStamina;
+        if (!animator) animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -85,26 +90,30 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        HandleStamina();
+        // HandleStamina();
         HandleRunFootsteps();
+        UpdateAnimator();
     }
 
     void FixedUpdate()
     {
         bool wantsRun = Input.GetKey(runKey);
-        bool canRun = stamina > minStaminaToRun;
+        // bool canRun = stamina > minStaminaToRun;
 
         bool isMoving = Mathf.Abs(moveInput) > 0.01f;
-        bool isRunning = wantsRun && canRun && isMoving;
+        bool isRunning = wantsRun && isMoving;
 
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
         float targetVelX = moveInput * currentSpeed;
-        float diff = targetVelX - rb.velocity.x;
 
-        float rate = Mathf.Abs(targetVelX) > 0.01f ? acceleration : deceleration;
+        // 가속/감속 선택 (입력 있으면 acceleration, 없으면 deceleration)
+        float accel = Mathf.Abs(targetVelX) > 0.01f ? acceleration : deceleration;
 
-        rb.AddForce(new Vector3(diff * rate, 0f, 0f), ForceMode.Acceleration);
+        // 목표 속도까지 일정 속도로 접근 (Lerp보다 목표치 도달이 확실함)
+        float newVelX = Mathf.MoveTowards(rb.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
+
+        rb.velocity = new Vector3(newVelX, rb.velocity.y, rb.velocity.z);      
 
         // 물리 단계에서도 Z 고정(더 단단하게)
         if (lockZToStart)
@@ -114,38 +123,36 @@ public class PlayerMove : MonoBehaviour
             rb.position = p;
         }
     }
+    // void HandleStamina()
+    // {
+    //     bool isMoving = Mathf.Abs(moveInput) > 0.01f;
+    //     bool wantsRun = Input.GetKey(runKey);
 
-    void HandleStamina()
-    {
-        bool isMoving = Mathf.Abs(moveInput) > 0.01f;
-        bool wantsRun = Input.GetKey(runKey);
+    //     // "달리기 상태" 판정은 FixedUpdate와 동일한 규칙으로 맞춰줌
+    //     bool isRunning = wantsRun && isMoving && stamina > minStaminaToRun;
 
-        // "달리기 상태" 판정은 FixedUpdate와 동일한 규칙으로 맞춰줌
-        bool isRunning = wantsRun && isMoving && stamina > minStaminaToRun;
+    //     if (isRunning)
+    //     {
+    //         stamina -= staminaDrainPerSec * Time.deltaTime;
+    //     }
+    //     else
+    //     {
+    //         stamina += staminaRegenPerSec * Time.deltaTime;
+    //     }
 
-        if (isRunning)
-        {
-            stamina -= staminaDrainPerSec * Time.deltaTime;
-        }
-        else
-        {
-            stamina += staminaRegenPerSec * Time.deltaTime;
-        }
-
-        stamina = Mathf.Clamp(stamina, 0f, maxStamina);
-    }
-
+    //     stamina = Mathf.Clamp(stamina, 0f, maxStamina);
+    // }
     void HandleRunFootsteps()
     {
         // 달릴 때만 발소리: (Shift 누름) + (움직임 있음) + (스태미나 충분) + (실제 속도도 어느 정도)
         bool wantsRun = Input.GetKey(runKey);
         bool isMovingInput = Mathf.Abs(moveInput) > 0.01f;
-        bool hasStamina = stamina > minStaminaToRun;
+        // bool hasStamina = stamina > minStaminaToRun;
 
         float speedX = Mathf.Abs(rb.velocity.x);
         bool fastEnough = speedX >= footstepMinSpeed;
 
-        bool shouldPlay = wantsRun && isMovingInput && hasStamina && fastEnough;
+        bool shouldPlay = wantsRun && isMovingInput && fastEnough;
 
         if (shouldPlay)
         {
@@ -163,12 +170,16 @@ public class PlayerMove : MonoBehaviour
 
     void SetFacing(bool faceRight)
     {
-        if (facingRight == faceRight) return;
-        facingRight = faceRight;
+    facingRight = faceRight;
 
-        Vector3 s = transform.localScale;
-        s.x *= -1f;
-        transform.localScale = s;
+    // 지금 오브젝트(SkelMesh_Bodyguard_01)를 그냥 회전시켜서 방향 전환
+    // 현재 기본 회전이 Y=-90 이므로:
+    // 오른쪽 보기 = -90
+    // 왼쪽 보기 = +90
+    float y = faceRight ? 90f : -90f;
+
+    Vector3 e = transform.localEulerAngles;
+    transform.localRotation = Quaternion.Euler(e.x, y, e.z);
     }
 
     Vector3 GetMouseWorldOnZPlane(float zPlane)
@@ -181,5 +192,18 @@ public class PlayerMove : MonoBehaviour
             return ray.GetPoint(enter);
 
         return transform.position;
+    }
+    void UpdateAnimator()
+    {
+     if (!animator) return;
+
+        float vx = Mathf.Abs(rb.velocity.x);
+
+      // 미세 흔들림 제거
+     if (vx < 0.05f) vx = 0f;
+
+     float speed01 = Mathf.Clamp01(vx / runSpeed);
+
+     animator.SetFloat(speedParam, speed01, animSpeedDamp, Time.deltaTime);
     }
 }
