@@ -23,7 +23,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public KeyCode Run = KeyCode.LeftShift;
-    /// 
-    public KeyCode Lookup = KeyCode.W;
+    // 행동 조작 키
+    public KeyCode Run = KeyCode.LeftShift;         // 달리기
+    public KeyCode Lookup = KeyCode.W;              // 위 처다보기
+    public KeyCode Shoot = KeyCode.Mouse0;          // 총 발사
+    public KeyCode UseItem = KeyCode.Mouse1;        // 총 발사
+
+    public KeyCode Slot1 = KeyCode.Alpha1;
+    public KeyCode Slot2 = KeyCode.Alpha2;
 }
