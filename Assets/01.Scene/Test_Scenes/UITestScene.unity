@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1039,20 +1039,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 6
   runSpeed: 10
-  runKey: 304
   acceleration: 40
   deceleration: 50
   faceByMoveInput: 1
   faceByMouse: 0
   lockZToStart: 1
-  maxStamina: 5
-  staminaDrainPerSec: 1.2
-  staminaRegenPerSec: 0.9
-  minStaminaToRun: 0.2
-  stamina: 0
   audioSource: {fileID: 1120050098}
   runFootstepLoop: {fileID: 8300000, guid: 4c9f4a9ae2079dd47bc2682c13658660, type: 3}
   footstepMinSpeed: 0.2
+  animator: {fileID: 0}
+  speedParam: Speed
+  isRunningParam: IsRunning
+  animSpeedDamp: 0.1
 --- !u!54 &1120050094
 Rigidbody:
   m_ObjectHideFlags: 0
