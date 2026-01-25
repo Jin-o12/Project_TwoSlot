@@ -97,3 +97,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# 1. ThirdParty 폴더와 그 안의 모든 내용물 무시
+/Assets/ThirdParty/
+/Assets/ThirdParty.meta
