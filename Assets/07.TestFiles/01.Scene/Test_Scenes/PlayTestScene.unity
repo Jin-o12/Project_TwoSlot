@@ -519,7 +519,7 @@ Transform:
   m_GameObject: {fileID: 219501317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: 0.183, z: 0.065}
+  m_LocalPosition: {x: -0.001, y: 0.028, z: -0}
   m_LocalScale: {x: 0.88625, y: 0.25841278, z: 0.88625}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -544,7 +544,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &219501320
 MeshRenderer:
@@ -3452,6 +3452,8 @@ MonoBehaviour:
   navi: {fileID: 1470280570}
   traceDist: 20
   attackDist: 2
+  lockZ: 0
+  lockZAxis: 1
   enemyTr: {fileID: 1470280569}
   playerTr: {fileID: 309825650}
 --- !u!54 &1470280565
