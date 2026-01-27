@@ -7,6 +7,8 @@ TagManager:
   - ItemDrop
   - Shell
   - ENEMY
+  - Watcher
+  - Gun
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,6 @@ TagManager:
   - Bullet
   - ENEMY
   - ENEMY ATTACK
-  - 
   - 
   - 
   - 
