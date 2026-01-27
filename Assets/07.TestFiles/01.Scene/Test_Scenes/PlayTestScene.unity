@@ -1144,21 +1144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a7edc77aef3d4ba73adc2448ee516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputKey: {fileID: 0}
   walkSpeed: 5
   runSpeed: 10
   IsRunning: 0
-  inputManager: {fileID: 0}
+  lockZToStart: 1
   acceleration: 40
   deceleration: 50
   faceByMoveInput: 1
   faceByMouse: 0
-  lockZToStart: 1
+  faceRight: 0
   audioSource: {fileID: 309825647}
   runFootstepLoop: {fileID: 8300000, guid: 4c9f4a9ae2079dd47bc2682c13658660, type: 3}
   footstepMinSpeed: 0.2
   animator: {fileID: 0}
   speedParam: Speed
-  isRunningParam: IsRunning
   animSpeedDamp: 0.1
 --- !u!4 &309825650 stripped
 Transform:
@@ -3387,8 +3387,7 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114253073084258262, guid: 8e0f285c21cdcf14e8d5c06c57ba936b, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4431084402279646, guid: 8e0f285c21cdcf14e8d5c06c57ba936b, type: 3}
