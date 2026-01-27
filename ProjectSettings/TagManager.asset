@@ -14,6 +14,7 @@ TagManager:
   - PLAYER
   - Water
   - UI
+  - Bullet
   - ENEMY
   - ENEMY ATTACK
   - 
