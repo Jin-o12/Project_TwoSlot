@@ -1,21 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletDamage : MonoBehaviour
+public class BulletCtrl : MonoBehaviour
 {
-    public int damage = 100;
-    public float lifeTime = 2f;
+   public int damage = 1;
+    public float lifeTime = 3f;
 
-    void Start()
-    {
-        Destroy(gameObject, lifeTime); // 시간 지나면 자동 삭제
-    }
+    bool dead;
 
-    private void OnTriggerEnter(Collider other)
+    void Start() => Destroy(gameObject, lifeTime);
+
+    void OnCollisionEnter(Collision c)
     {
-        if (other.CompareTag("Player"))
+        if (dead) return;
+        dead = true;
+
+        // 자신의 자식 파츠(Head/Casing 등)랑 충돌하면 무시
+        if (c.transform.IsChildOf(transform))
         {
-            Destroy(gameObject); // 맞으면 총알 삭제
+            dead = false;
+            return;
         }
+
+        var dmg = c.collider.GetComponentInParent<IDamageable>();
+        dmg?.TakeDamage(damage);
+
+        Destroy(gameObject);
     }
-    
 }
