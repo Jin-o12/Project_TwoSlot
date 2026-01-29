@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class WatcherByDistance : MonoBehaviour
+public class WatcherCTRL : MonoBehaviour
 {
     [Header("References")]
     public Transform headTr;

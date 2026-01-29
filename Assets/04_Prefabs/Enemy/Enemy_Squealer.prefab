@@ -299,7 +299,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 174c6b346c041d045af3ffe081d9be6c, type: 2}
+  - {fileID: 2100000, guid: 26ef9c31c1fa95a4d91ff6d54fedcd9d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -473,10 +473,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headTr: {fileID: 7138447834334094034}
   playerTr: {fileID: 0}
-  alarmAudio: {fileID: 7414004243306637924}
-  detectDistance: 8
+  alarmA: {fileID: 0}
+  alarmB: {fileID: 0}
+  warnClip: {fileID: 0}
+  alertClip: {fileID: 0}
+  fadeTime: 0.35
+  warningLight: {fileID: 0}
+  lightDistance: 15
+  spawnDistance: 10
   rotateSpeed: 6
   enemyPrefab: {fileID: 0}
   spawnPoint: {fileID: 0}
   spawnCount: 3
   spawnInterval: 0.3
+  spawnSpreadX: 2
+  minGap: 0.8
+  maxTry: 15
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  lockZAxis: 1
+  lockZ: 0
+  warnColor: {r: 1, g: 0.85, b: 0.15, a: 1}
+  alertColor: {r: 1, g: 0.15, b: 0.15, a: 1}
+  warnBlinkSpeed: 2
+  alertBlinkSpeed: 6
+  warnIntensity: 3
+  alertIntensity: 6
+  playSoundInWarnRange: 0
+  warnVolume: 0.25
+  alertVolume: 1
+  warnPitch: 1
+  alertPitch: 1.15
+  keepLightOnAfterExit: 0

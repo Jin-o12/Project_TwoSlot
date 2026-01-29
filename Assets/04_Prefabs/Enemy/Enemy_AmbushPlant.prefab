@@ -3218,9 +3218,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5119313724512705601}
   - component: {fileID: 6220408257662051687}
-  - component: {fileID: 8604156178319621709}
-  - component: {fileID: 6054043534830202430}
   - component: {fileID: 6611841087073680403}
+  - component: {fileID: 4096618917624565509}
+  - component: {fileID: 8604156178319621709}
+  - component: {fileID: 3817668137768610589}
   m_Layer: 7
   m_Name: Enemy_AmbushPlant
   m_TagString: ENEMY
@@ -3276,35 +3277,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8604156178319621709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020962383702482920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2ec4b227d0b7e745bc7976fdad9125d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1918533418913810541, guid: 59367a93f1c92cf418f7e0fbc0b3e712, type: 3}
-  firePoint: {fileID: 3292979446206917815}
-  bulletSpeed: 20
-  attackCooldown: 5
---- !u!114 &6054043534830202430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020962383702482920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78eb2dbeda9183d4f9e00d37f953b0da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 10
 --- !u!136 &6611841087073680403
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3328,6 +3300,50 @@ CapsuleCollider:
   m_Height: 32.28
   m_Direction: 1
   m_Center: {x: 0, y: 10.2, z: -1.6}
+--- !u!114 &4096618917624565509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1d2df1145e6ee41b5d608b16362c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2943000544469367980, guid: 156326cc0c846c54d82a94395885fae8, type: 3}
+  firePos: {fileID: 3292979446206917815}
+--- !u!114 &8604156178319621709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ec4b227d0b7e745bc7976fdad9125d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2943000544469367980, guid: 156326cc0c846c54d82a94395885fae8, type: 3}
+  firePoint: {fileID: 3292979446206917815}
+  bulletSpeed: 20
+  attackCooldown: 5
+--- !u!114 &3817668137768610589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e6399e756e946419daf38e2ca96159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 100
+  lifeTime: 2
 --- !u!1 &4033656146877792450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3507,7 +3523,7 @@ GameObject:
   - component: {fileID: 176407030202870154}
   - component: {fileID: 202823294914683263}
   - component: {fileID: 6503049594366253074}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HitTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
