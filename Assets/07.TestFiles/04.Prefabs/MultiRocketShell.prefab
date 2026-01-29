@@ -151,7 +151,7 @@ MonoBehaviour:
   lifeTime: 3
   hitMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   hitVfxPrefab: {fileID: 7824925918150361229}
 --- !u!1 &7824925918150361229
 GameObject:

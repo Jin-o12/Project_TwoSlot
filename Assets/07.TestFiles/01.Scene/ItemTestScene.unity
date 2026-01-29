@@ -619,6 +619,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2030888877}
+    - target: {fileID: 2336289873444401639, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: inputKey
+      value: 
+      objectReference: {fileID: 1384184788}
     - target: {fileID: 5384554318900774118, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: MinDistance
       value: 1.0784577
@@ -676,21 +680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot1: 
-  slot2: 
-  selectedSlot: 1
-  dropTable:
-  - itemId: EnergyDrink
-    prefab: {fileID: 6008074133677174885, guid: 4d0c78759527f9041b4efbf57aefb390, type: 3}
-  - itemId: SoundBomb
-    prefab: {fileID: 4106814457344636235, guid: 2c9671aaa57d7e747ad466a6564d6759, type: 3}
-  - itemId: Glowgun
-    prefab: {fileID: 2687447825116020007, guid: 41e15b39b861f8344971072559bdaea2, type: 3}
-  dropPoint: {fileID: 1044763770}
-  activeMode: 0
-  selectingItem: 0
-  slot1Key: 113
-  slot2Key: 101
 --- !u!114 &1044763772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,10 +692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2517133c3e7df642a4d75850f913feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBarImage: {fileID: 0}
-  hpText: {fileID: 0}
-  maxHP: 100
-  currentHP: 0
 --- !u!114 &1044763773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,10 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f79ab5613d9d724d95b4c8ec4f054a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inv: {fileID: 1044763771}
-  hp: {fileID: 1044763772}
-  energyDrinkId: EnergyDrink
-  healAmount: 25
 --- !u!114 &1044763774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,25 +716,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5dc0caad32d20459c79316d709105a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inv: {fileID: 1044763771}
-  noiseBombId: SoundBomb
-  noiseBombPrefab: {fileID: 4106814457344636235, guid: 9017212424dc8354a942698bc25c5bde, type: 3}
-  throwPoint: {fileID: 498518263}
-  spawnForwardOffset: 0.6
-  spawnUpOffset: 1.2
-  throwForce: 12
-  upwardForce: 2.5
-  useMouseAim: 0
-  aimCamera: {fileID: 312756753}
-  aimMaxDistance: 60
-  aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!82 &1044763777 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5384554318900774118, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 1044763768}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1044763780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,22 +728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21269f3c858a0b48b6765a67759ead5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inv: {fileID: 0}
-  flareGunId: Glowgun
-  flareProjectile: {fileID: 5400000, guid: 502f397bde12655448ff152eac00cdc7, type: 3}
-  muzzle: {fileID: 358319740}
-  spawnForwardOffset: 0.6
-  spawnUpOffset: 1.2
-  shootForce: 35
-  forceMode: 2
-  forceFlatForward: 1
-  useFacingByLocalScaleX: 0
-  rightDir: {x: 1, y: 0, z: 0}
-  leftDir: {x: -1, y: 0, z: 0}
-  muzzleParticles: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}
-  audioSource: {fileID: 1044763777}
-  shotSound: {fileID: 8300000, guid: 0f01458ab91c1ac4883d0e6e549bff26, type: 3}
-  ignoreOwnerColliders: 1
 --- !u!82 &1223747020 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 4169424507580016564, guid: 41e15b39b861f8344971072559bdaea2, type: 3}
@@ -957,6 +903,56 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1384184787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384184789}
+  - component: {fileID: 1384184788}
+  m_Layer: 0
+  m_Name: GameSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1384184788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384184787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8dca65fec6ca0742a961ade869c9946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Run: 304
+  Lookup: 119
+  Shoot: 323
+  UseItem: 324
+  Slot1: 49
+  Slot2: 50
+--- !u!4 &1384184789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384184787}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 51.30372, y: 5.1423817, z: 3.7966619}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1526738702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1475,3 +1471,4 @@ SceneRoots:
   - {fileID: 1547616082}
   - {fileID: 37359807}
   - {fileID: 1526738702}
+  - {fileID: 1384184789}
