@@ -54,6 +54,12 @@ public class EnemyCtrl : MonoBehaviour
 
         if (attackBox != null)
             attackBox.enabled = false;
+            // ✅ 적끼리 자동으로 피하는(간격 벌리는) 기능 끄기
+navi.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+
+// ✅ 필요하면 에이전트 반지름도 줄이기(붙게 만들기)
+navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사이로 테스트)
+
     }
 
     void Update()

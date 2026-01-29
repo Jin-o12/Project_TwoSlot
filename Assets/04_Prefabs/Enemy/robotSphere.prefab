@@ -1368,7 +1368,7 @@ GameObject:
   - component: {fileID: 5664367359690815031}
   m_Layer: 6
   m_Name: robotSphere
-  m_TagString: Untagged
+  m_TagString: ENEMY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1381,9 +1381,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3589928091439197903}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23.57, y: 0.020000458, z: 0.010000229}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 10, y: 10, z: 10.707999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2302757777997202872}
@@ -1452,7 +1452,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 180
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1494,15 +1494,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navi: {fileID: 6921815248779039006}
-  traceDist: 50
+  traceDist: 30
   attackDist: 0.5
   lockZ: 0
   lockZAxis: 1
   enemyTr: {fileID: 3332849188659603575}
   playerTr: {fileID: 0}
-  attackCooldown: 2
+  attackCooldown: 1
+  attackLockTime: 1.2
   attackBox: {fileID: 5657216620600207327}
   hitboxOnTime: 0.2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
   recoilDistance: 5
   recoilDuration: 0.25
 --- !u!114 &5664367359690815031
@@ -1517,10 +1521,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff369c452b6dd7844b73a3d7a9886337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
   hpInit: 100
+  hp: 0
   isDie: 1
-  boxCol: {fileID: 0}
+  boxCol: {fileID: 5657216620600207327}
 --- !u!1 &3807539023180344619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,7 +2608,7 @@ GameObject:
   - component: {fileID: 808898012354965326}
   m_Layer: 7
   m_Name: EnemyDamageCollider
-  m_TagString: Untagged
+  m_TagString: ENEMY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2617,13 +2621,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6295199367209616792}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.052, y: 0.11, z: -0.06750002}
-  m_LocalScale: {x: 0.02, y: 0.15, z: 0.15}
+  m_LocalRotation: {x: -0, y: -0.7148925, z: -0, w: 0.69923437}
+  m_LocalPosition: {x: 0.047, y: 0.11000001, z: 0.004}
+  m_LocalScale: {x: 0.1413739, y: 0.15, z: 0.3369162}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3332849188659603575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -91.269, z: 0}
 --- !u!33 &8420149139051728321
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4008,7 +4012,7 @@ GameObject:
   - component: {fileID: 2302757777997202872}
   m_Layer: 6
   m_Name: main_jt
-  m_TagString: Untagged
+  m_TagString: ENEMY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
