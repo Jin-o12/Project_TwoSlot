@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BulletDamage : MonoBehaviour
 {
+    public CeilingEnemyCTRL ceilingEnemyCTRL;
     public int damage = 100;
     public float lifeTime = 2f;
 
@@ -14,6 +15,7 @@ public class BulletDamage : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ceilingEnemyCTRL.TryFire();
             Destroy(gameObject); // 맞으면 총알 삭제
         }
     }
