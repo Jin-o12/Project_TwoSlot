@@ -7,6 +7,8 @@ TagManager:
   - ItemDrop
   - Shell
   - ENEMY
+  - Watcher
+  - ITEM
   layers:
   - Default
   - TransparentFX
@@ -14,10 +16,10 @@ TagManager:
   - PLAYER
   - Water
   - UI
+  - Bullet
   - ENEMY
   - ENEMY ATTACK
-  - 
-  - 
+  - ITEM
   - 
   - 
   - 
