@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: e88b38dcc65d7d540b3d1c9e96a46122, type: 3}
   weaponPrefab: {fileID: 100004, guid: dddb6335529eb194f83735c0842fff4f, type: 3}
-  pickupPrefab: {fileID: 100004, guid: dddb6335529eb194f83735c0842fff4f, type: 3}
+  pickupPrefab: {fileID: 100004, guid: 170b8c41191aa0e44a112169bfa1e02a, type: 3}

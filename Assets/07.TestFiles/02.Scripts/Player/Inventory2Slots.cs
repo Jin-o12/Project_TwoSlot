@@ -10,6 +10,7 @@ public class Inventory2Slots : MonoBehaviour
 
     [Header("Equip")]
     public Transform handMount;
+    public WeaponItem startEquipped;
 
     WeaponItem slot1, slot2, equippedItem;
     GameObject equippedGO;
@@ -19,6 +20,7 @@ public class Inventory2Slots : MonoBehaviour
         // 아이콘은 enabled 건드리지 말고(꼬임 방지) 알파로만 숨김/표시
         if (slot1Icon) slot1Icon.enabled = true;
         if (slot2Icon) slot2Icon.enabled = true;
+        Equip(startEquipped);
         RefreshUI();
     }
 
@@ -53,6 +55,8 @@ public class Inventory2Slots : MonoBehaviour
 
     void Equip(WeaponItem item)
     {
+        equippedItem = item;
+        
         if (equippedGO) Destroy(equippedGO);
         equippedGO = null;
 

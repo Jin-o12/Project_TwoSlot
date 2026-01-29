@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-     [Header("HP")]
+    [Header("HP")]
     public int maxHp = 100;
     public int hp;
 
@@ -18,22 +18,27 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public Animator animator;
     public PlayerMove playerMove;
     public GunFire gunFire;
+    public Inventory2Slots inventory;
     public AimAndFlip aimAndFlip;
     public RigBuilder rigBuilder;
-    public Rig rig; // Rig Layers에 들어있는 그 Rig(1개면 1개만)
+    public Rig rig;
 
     [Header("Anim")]
+    public string hitTrigger = "Hit";
     public string dieTrigger = "Die";
-    public string hitTrigger = "Hit"; // 있으면 쓰고, 없으면 비워도 됨
 
     bool isDead;
 
     void Awake()
     {
         hp = maxHp;
+
         if (!animator) animator = GetComponentInChildren<Animator>();
-        if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
+        if (!gunFire) gunFire = GetComponentInChildren<GunFire>();
         if (!playerMove) playerMove = GetComponent<PlayerMove>();
+        if (!inventory) inventory = GetComponent<Inventory2Slots>();
+        if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
+
         UpdateHPUI();
     }
 
@@ -42,39 +47,53 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (isDead) return;
 
         hp = Mathf.Clamp(hp - dmg, 0, maxHp);
-        
         UpdateHPUI();
 
-        if (hp <= 0) Die();
-        else if (animator && !string.IsNullOrEmpty(hitTrigger))
+        if (hp <= 0)
+        {
+            Die();
+            return;
+        }
+
+        // ✅ Hit 애니
+        if (animator && !string.IsNullOrEmpty(hitTrigger))
             animator.SetTrigger(hitTrigger);
-        
+
+        // ✅ 0.5초 발사 금지
+        gunFire?.LockFire(0.5f);
     }
+
     void UpdateHPUI()
     {
-        hpFill.fillAmount = (float)hp / (float)maxHp;
+        if (hpFill) hpFill.fillAmount = (float)hp / maxHp;
         if (hpText) hpText.text = $"{hp}/{maxHp}";
     }
+
     void Die()
     {
         if (isDead) return;
         isDead = true;
 
-        // 1) 에임/IK 즉시 중단 (마지막 마우스 포즈 방지)
+        // ✅ 에임/IK 정지
         if (aimAndFlip) aimAndFlip.IsDead = true;
-
-        // 2) Animation Rigging 완전 종료
         if (rig) rig.weight = 0f;
         if (rigBuilder) rigBuilder.enabled = false;
 
-        // 3) 입력/발사/이동 중단
+        // ✅ 입력/전투/인벤 중단
         if (gunFire) gunFire.enabled = false;
-        if (playerMove) 
+        if (inventory) inventory.enabled = false;
+
+        // ✅ 이동/사운드 중단
+        if (playerMove)
         {
             playerMove.enabled = false;
-            playerMove.audioSource.Stop();
+            if (playerMove.audioSource)
+                playerMove.audioSource.Stop();
         }
-        // 4) 죽는 애니만 실행
-        if (animator) animator.SetTrigger(dieTrigger);
+
+        // ✅ 죽음 애니
+        if (animator)
+            animator.SetTrigger(dieTrigger);
     }
 }
+

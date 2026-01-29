@@ -34,6 +34,14 @@ public class GunFire : MonoBehaviour
     public ParticleSystem muzzleFlash;
 
     float lastFire;
+    bool fireLocked;
+    public void LockFire(float sec)
+    {
+        CancelInvoke(nameof(UnlockFire));
+        fireLocked = true;
+        Invoke(nameof(UnlockFire), sec);
+    }
+    void UnlockFire() => fireLocked = false;
 
     void Awake()
     {
@@ -52,22 +60,23 @@ public class GunFire : MonoBehaviour
 
     void TryFire()
     {
+        if (fireLocked) return;
         // 재장전 중이면 발사 불가
-    if (isReloading) return;
+        if (isReloading) return;
 
-    // 탄 없으면 자동 리로드
-    if (currentAmmo <= 0)
-    {
-        StartCoroutine(Reload());
-        return;
-    }
+        // 탄 없으면 자동 리로드
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
 
-    if (Time.time - lastFire < fireCooldown) return;
+        if (Time.time - lastFire < fireCooldown) return;
 
-    lastFire = Time.time;
-    currentAmmo--;
+        lastFire = Time.time;
+        currentAmmo--;
 
-    Fire();
+        Fire();
 
     // 마지막 탄 쏜 직후에도 자동 리로드
     if (currentAmmo <= 0)
@@ -165,7 +174,7 @@ public class GunFire : MonoBehaviour
         }
     }
     System.Collections.IEnumerator Reload()
-{
+    {
     if (isReloading) yield break;
 
     isReloading = true;
@@ -176,5 +185,5 @@ public class GunFire : MonoBehaviour
 
     currentAmmo = maxAmmo;
     isReloading = false;
-}
+    }
 }
