@@ -1,29 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class PlaneEnemyDmgTriiger : MonoBehaviour
+public class PlaneEnemyDmgTrigger : MonoBehaviour
 {
-public int hp = 0;
-public int hpInit = 100;
-public bool isDie = false;
-private Animator animator;
-public BoxCollider boxCol;
+    public int hpInit = 100;
+    public int hp;
+    public bool isDie = false;
+
+    private Animator animator;
+
+    [Header("References")]
+    public BoxCollider boxCol; // 인스펙터로 연결 가능
+
     void Awake()
     {
-        boxCol = GameObject.Find("HitTrigger").GetComponent<BoxCollider>();
-    }
-    void Start()
-    {
-        hp =hpInit;
-        animator = GetComponent<Animator>();
-    }
+        hp = hpInit;
 
-    
-    void Update()
-    {
-        
+        // Animator 안전하게
+        animator = GetComponentInChildren<Animator>();
+
+        // boxCol이 인스펙터에서 비어있으면 자식에서 찾기
+        if (boxCol == null)
+            boxCol = GetComponentInChildren<BoxCollider>();
+
+        if (boxCol == null)
+            Debug.LogError("[PlaneEnemyDmgTrigger] BoxCollider를 찾지 못했습니다. 자식에 HitTrigger가 있는지 확인하세요.");
     }
 }
