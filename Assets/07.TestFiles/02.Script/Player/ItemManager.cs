@@ -17,7 +17,7 @@ public class ItemManager : MonoBehaviour
     // public Sprite healkitSprite;   // ����ŰƮ
 
     void Start()
-    {
+    {//이 부분이 Inventory2Slots.cs 와 충돌을 일으킵니다
         slot1IconObj.SetActive(false);
         slot2IconObj.SetActive(false);
     }

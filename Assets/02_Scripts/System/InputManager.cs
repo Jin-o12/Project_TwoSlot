@@ -1,12 +1,12 @@
 /// <summary>
 /// PC 플레이어의 키 할당을 일괄 관리하기 위한 InputManager 인스턴스 선언 스크립트입니다.
-/// (01.22) 스크립트 작성, 달리기/ 총 발사 키 할당
+/// (01.22) 스크립트 작성, 달리기/ 
 /// </summary>
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance { get; private set; }    // 싱글톤 제작
+    public static InputManager Instance;    // 싱글톤 제작
 
     void Awake()
     {

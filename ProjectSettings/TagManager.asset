@@ -3,19 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - ItemDrop
-  - Shell
-  - ENEMY
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PLAYER
+  - 
   - Water
   - UI
-  - ENEMY
-  - ENEMY ATTACK
+  - 
+  - 
   - 
   - 
   - 

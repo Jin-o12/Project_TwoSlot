@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AimAndFlip : MonoBehaviour
 {
-
+    public Vector3 AimWorldPoint { get; private set; }
     [Header("Refs")]
     public Camera cam;
     public Transform playerRoot;      // 캐릭터 전체를 뒤집을 루트 (Yaw 180)
@@ -31,6 +31,7 @@ public class AimAndFlip : MonoBehaviour
     {
         if (!cam) cam = Camera.main;
         if (!playerRoot) playerRoot = transform;
+        aimPlaneZ = transform.position.z;
     }
 
     void LateUpdate()
@@ -42,6 +43,7 @@ public class AimAndFlip : MonoBehaviour
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, aimPlaneZ));
         if (!plane.Raycast(ray, out float enter)) return;
         Vector3 mouseWorld = ray.GetPoint(enter);
+        AimWorldPoint = mouseWorld;
 
         // 2) pivot -> mouse 방향 (2D)
         Vector3 dir = mouseWorld - aimPivot.position;
