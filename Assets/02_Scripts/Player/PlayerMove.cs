@@ -71,33 +71,33 @@ public class PlayerMove : MonoBehaviour
         if (isDead) return;
         moveInput = Input.GetAxisRaw("Horizontal");
 
-    bool isMoving = Mathf.Abs(moveInput) > 0.01f;
-    bool isBackWalkNow = false;
+        bool isMoving = Mathf.Abs(moveInput) > 0.01f;
+        bool isBackWalkNow = false;
 
-    if (aimAndFlip != null && isMoving)
-    {
-        int moveDir = (moveInput > 0f) ? 1 : -1;
-        int faceDir = aimAndFlip.Facing;
-        isBackWalkNow = (moveDir != faceDir);
-    }
+        if (aimAndFlip != null && isMoving)
+        {
+            int moveDir = (moveInput > 0f) ? 1 : -1;
+            int faceDir = aimAndFlip.Facing;
+            isBackWalkNow = (moveDir != faceDir);
+        }
 
-    // 방향 처리
-    if (faceByMouse)
-    {
-        Vector3 mouseWorld = GetMouseWorldOnZPlane(lockedZ);
-        SetFacing(mouseWorld.x >= transform.position.x);
-    }
-    else if (faceByMoveInput && moveInput != 0)
-    {
-        if (!isBackWalkNow)
-            SetFacing(moveInput > 0);
-    }
+        // 방향 처리
+        if (faceByMouse)
+        {
+            Vector3 mouseWorld = GetMouseWorldOnZPlane(lockedZ);
+            SetFacing(mouseWorld.x >= transform.position.x);
+        }
+        else if (faceByMoveInput && moveInput != 0)
+        {
+            if (!isBackWalkNow)
+                SetFacing(moveInput > 0);
+        }
 
-    // 애니
-    if (animator) animator.SetBool(isBackWalkParam, isBackWalkNow);
+        // 애니
+        if (animator) animator.SetBool(isBackWalkParam, isBackWalkNow);
 
-    HandleRunFootsteps();
-    UpdateAnimator();
+        HandleRunFootsteps();
+        UpdateAnimator();
     }
 
     void FixedUpdate()
