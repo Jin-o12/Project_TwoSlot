@@ -8,7 +8,7 @@ TagManager:
   - Shell
   - ENEMY
   - Watcher
-  - Gun
+  - ITEM
   layers:
   - Default
   - TransparentFX
@@ -19,8 +19,7 @@ TagManager:
   - Bullet
   - ENEMY
   - ENEMY ATTACK
-  - 
-  - 
+  - ITEM
   - 
   - 
   - 
