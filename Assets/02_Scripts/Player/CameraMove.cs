@@ -17,7 +17,6 @@ public class CameraMove : MonoBehaviour
     public float pulseHoldTime = 0.25f;     // 위에서 유지 시간
     public float ySmoothTime = 0.10f;       // Y 이동 부드러움
 
-    public Transform handLight;
 
     float xVel;
     float yVel;
@@ -74,7 +73,6 @@ public class CameraMove : MonoBehaviour
     {
         // 위로 올라가기
         yExtra = pulseHeight;
-        handLight.rotation = Quaternion.Euler(0, 0, -120f);
 
         // 위에서 잠깐 유지
         yield return new WaitForSeconds(pulseHoldTime);
