@@ -26,7 +26,9 @@ public class AimAndFlip : MonoBehaviour
     // 내부 상태: 현재 캐릭터가 +X를 바라보는지(-X를 바라보는지)
     // +X면 facing = +1, -X면 facing = -1
     int facing = 1;
+    public int Facing => facing; // +1이면 오른쪽, -1이면 왼쪽(마우스 보는 방향)
     public float bodyTurnSpeed = 15f;
+    public bool IsDead { get; set; }
     void Awake()
     {
         if (!cam) cam = Camera.main;
@@ -36,6 +38,7 @@ public class AimAndFlip : MonoBehaviour
 
     void LateUpdate()
     {
+        if (IsDead) return;
         if (!cam || !playerRoot || !aimPivot || !ikTarget) return;
 
         // 1) 마우스를 월드로 (Z 평면 투영)
