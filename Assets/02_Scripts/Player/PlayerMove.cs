@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    bool isDead; // 외부에서 true로 세팅
-    [Header("Move")]
+    
+    [Header("기본 스텟")]
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
-    public bool IsRunning = false;
+    
     public InputManager inputManager;
     private KeyCode runKey = KeyCode.LeftShift;
 
     public float acceleration = 40f;
     public float deceleration = 50f;
+
+    [Header("상태 bool 변수")]
+    public bool isDead;
+    public bool IsRunning = false;
 
     [Header("Facing")]
     public bool faceByMoveInput = true;
