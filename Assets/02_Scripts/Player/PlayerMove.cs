@@ -68,6 +68,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (InputPauseManager.IsPaused) return;
         if (isDead) return;
         moveInput = Input.GetAxisRaw("Horizontal");
 
@@ -102,6 +103,7 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (InputPauseManager.IsPaused) return;
         if (isDead) return;
         bool wantsRun = Input.GetKey(runKey);
         // bool canRun = stamina > minStaminaToRun;
