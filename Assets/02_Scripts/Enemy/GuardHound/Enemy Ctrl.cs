@@ -22,7 +22,7 @@ public class EnemyCtrl : MonoBehaviour
     private float nextAttackTime = 0f;
 
     [Header("공격 애니 보이게 잠깐 멈춤")]
-    public float attackLockTime = 0.8f;
+    public float attackLockTime = 1.2f;
     private bool isAttacking = false;
 
     [Header("공격 히트박스")]
@@ -33,9 +33,12 @@ public class EnemyCtrl : MonoBehaviour
     public LayerMask playerLayer;
 
     [Header("리코일(공격시 살짝 넉백 넣기)")]
-    public float recoilDistance = 0.6f;
-    public float recoilDuration = 0.12f;
+    public float recoilDistance = 2.0f;
+    public float recoilDuration = 0.25f;
     private bool isRecoiling = false;
+
+    [Header("디버그")]
+    public bool debugLog = false; // true로 켜면 공격 조건/log 확인 가능
 
     private Animator animator;
 
@@ -45,27 +48,33 @@ public class EnemyCtrl : MonoBehaviour
         enemyTr = transform;
         playerTr = GameObject.FindWithTag("Player")?.transform;
 
-        navi.updateRotation = false;
-        navi.updateUpAxis = false;
+        if (navi != null)
+        {
+            navi.updateRotation = false;
+            navi.updateUpAxis = false;
+            navi.stoppingDistance = attackDist;
 
-        navi.stoppingDistance = attackDist;
+            // ✅ 적끼리 자동으로 피하는 기능 끄기
+            navi.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+
+            // ✅ 필요하면 에이전트 반지름도 줄이기(붙게 만들기)
+            navi.radius = 0.15f; // 0.1~0.25 테스트
+        }
 
         animator = GetComponent<Animator>();
 
         if (attackBox != null)
+        {
+            // 공격 판정용 콜라이더는 기본 OFF
             attackBox.enabled = false;
-            // ✅ 적끼리 자동으로 피하는(간격 벌리는) 기능 끄기
-navi.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-
-// ✅ 필요하면 에이전트 반지름도 줄이기(붙게 만들기)
-navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사이로 테스트)
-
+        }
     }
 
     void Update()
     {
         if (playerTr == null) return;
         if (animator == null) return;
+        if (navi == null) return;
         if (!navi.enabled || !navi.isOnNavMesh) return;
 
         // ✅ 공격 중(또는 공격 직후 잠깐)은 추적/판정 모두 멈추기
@@ -97,6 +106,11 @@ navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사�
         // ★ 공격 판정: 공격 박스 안에 플레이어가 있는지
         bool inAttackRange = IsPlayerInAttackBox();
 
+        if (debugLog)
+        {
+            Debug.Log($"[EnemyCtrl] distX={distance:F2}, inAttackRange={inAttackRange}, time={Time.time:F2}, next={nextAttackTime:F2}");
+        }
+
         if (inAttackRange)
         {
             StopAgent();
@@ -104,11 +118,12 @@ navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사�
 
             if (Time.time >= nextAttackTime)
             {
+                if (debugLog) Debug.Log("[EnemyCtrl] ATTACK TRIGGER!");
                 animator.SetTrigger("Attack");
                 nextAttackTime = Time.time + attackCooldown;
 
-                StartCoroutine(AttackLock());               // ✅ 공격 후 0.8초 멈춤
-                StartCoroutine(EnableHitboxTemporarily());
+                StartCoroutine(AttackLock());               // ✅ 공격 애니가 보이도록 잠깐 멈춤
+                StartCoroutine(EnableHitboxTemporarily());  // ✅ 히트박스 잠깐 ON
                 StartCoroutine(RecoilBack());               // ✅ 플레이어 반대 방향 리코일
             }
         }
@@ -141,16 +156,20 @@ navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사�
         isAttacking = false;
     }
 
-    // ★ 플레이어가 공격 박스 안에 있는지 확인
+    // ★ 플레이어가 공격 박스 안에 있는지 확인 (안정 버전)
     bool IsPlayerInAttackBox()
     {
         if (attackBox == null) return false;
 
-        // bounds 기반(현재 너 코드 유지). 만약 계속 안 잡히면 TransformPoint 버전으로 바꾸면 더 안정적임.
-        Vector3 center = attackBox.bounds.center;
-        Vector3 halfExtents = attackBox.bounds.extents;
+        // BoxCollider의 로컬 center -> 월드 center
+        Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
 
-        return Physics.CheckBox(center, halfExtents, attackBox.transform.rotation, playerLayer, QueryTriggerInteraction.Collide);
+        // 로컬 size 반영 + 월드 스케일 적용
+        Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
+
+        Quaternion rot = attackBox.transform.rotation;
+
+        return Physics.CheckBox(center, halfExtents, rot, playerLayer, QueryTriggerInteraction.Collide);
     }
 
     void StopAgent()
@@ -234,7 +253,13 @@ navi.radius = 0.15f;   // 기본이 크면 서로 더 멀어짐. (0.1~0.25 사�
     void OnDrawGizmosSelected()
     {
         if (attackBox == null) return;
-        Gizmos.matrix = attackBox.transform.localToWorldMatrix;
-        Gizmos.DrawWireCube(attackBox.center, attackBox.size);
+
+        // CheckBox와 동일한 방식으로 기즈모 표시
+        Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
+        Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
+        Quaternion rot = attackBox.transform.rotation;
+
+        Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
     }
 }
