@@ -1821,7 +1821,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23.57, y: 0.020000458, z: 0.010000229}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 12.174999, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7946183601519492730}
@@ -1887,8 +1887,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
-  m_Acceleration: 20
+  m_Speed: 5
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 180
   m_StoppingDistance: 1
@@ -1940,13 +1940,13 @@ MonoBehaviour:
   enemyTr: {fileID: 422452467887860781}
   playerTr: {fileID: 0}
   attackCooldown: 2
-  attackLockTime: 0.8
+  attackLockTime: 1
   attackBox: {fileID: 4323793743331943132}
   hitboxOnTime: 0.2
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  recoilDistance: 0.6
+    m_Bits: 8
+  recoilDistance: 1
   recoilDuration: 0.12
 --- !u!114 &9149514894186390466
 MonoBehaviour:
@@ -2891,7 +2891,7 @@ GameObject:
   - component: {fileID: 7840966205416816701}
   - component: {fileID: 4323793743331943132}
   - component: {fileID: 2363096479854718006}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: EnemyDamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2907,8 +2907,8 @@ Transform:
   m_GameObject: {fileID: 5636916723933723154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.052, y: 0.11, z: -0.06750002}
-  m_LocalScale: {x: 0.02, y: 0.15, z: 0.15}
+  m_LocalPosition: {x: 0.003, y: 0.154, z: 0.096}
+  m_LocalScale: {x: 0.13415374, y: 0.15, z: 0.24099001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 422452467887860781}

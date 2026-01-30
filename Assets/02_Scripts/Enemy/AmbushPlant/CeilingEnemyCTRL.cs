@@ -7,7 +7,7 @@ public class CeilingEnemyCTRL : MonoBehaviour
     public Transform firePoint;
 
     [Header("Bullet")]
-    public float bulletSpeed = 20f;
+    public float bulletSpeed = 50f;
 
     [Header("Attack")]
     public float attackCooldown = 5f;
