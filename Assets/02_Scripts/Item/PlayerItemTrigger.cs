@@ -54,38 +54,46 @@ public class PlayerItemTrigger : MonoBehaviour
             HandleSlotKey(2);
     }
 
-    void HandleSlotKey(int slotIndex)
+   void HandleSlotKey(int slotIndex)
+{
+    // ✅ [추가] 이미 아이템 모드인데, 같은 슬롯 키를 누르면 = 총 모드로 토글 복귀
+    // (아이템 모드에서 Q 한 번 더 누르면 총으로 돌아감)
+    if (activeMode == ActiveMode.Item && !selectingItem && selectedSlot == slotIndex)
     {
-        // 1) 아직 아이템 선택중이 아니면: 선택 모드로 들어가고 슬롯만 하이라이트
-        if (!selectingItem)
-        {
-            selectingItem = true;
-            selectedSlot = slotIndex;
-            Debug.Log($"[ItemSelect] 슬롯 {selectedSlot} 선택됨 (한 번 더 누르면 전환)");
-            return;
-        }
-
-        // 2) 이미 선택중일 때
-        if (selectedSlot != slotIndex)
-        {
-            // 다른 슬롯으로 하이라이트 이동
-            selectedSlot = slotIndex;
-            Debug.Log($"[ItemSelect] 슬롯 {selectedSlot}로 이동 (한 번 더 누르면 전환)");
-            return;
-        }
-
-        // 3) 같은 키를 한 번 더 눌렀다 = 확정(아이템 모드로 전환)
-        if (string.IsNullOrEmpty(GetSelectedItem()))
-        {
-            // 빈 슬롯이면 전환하지 않고, 그냥 선택만 유지
-            Debug.Log("[ItemSelect] 슬롯이 비어있어서 전환 불가");
-            return;
-        }
-
-        activeMode = ActiveMode.Item;
-        selectingItem = false;
-        Debug.Log($"[ItemSelect] ✅ 아이템 모드로 전환! (슬롯 {selectedSlot})");
+        SwitchToGun();
+        return;
     }
+
+    // 1) 아직 아이템 선택중이 아니면: 선택 모드로 들어가고 슬롯만 하이라이트
+    if (!selectingItem)
+    {
+        selectingItem = true;
+        selectedSlot = slotIndex;
+        Debug.Log($"[ItemSelect] 슬롯 {selectedSlot} 선택됨 (한 번 더 누르면 전환/토글)");
+        return;
+    }
+
+    // 2) 이미 선택중일 때
+    if (selectedSlot != slotIndex)
+    {
+        // 다른 슬롯으로 하이라이트 이동
+        selectedSlot = slotIndex;
+        Debug.Log($"[ItemSelect] 슬롯 {selectedSlot}로 이동 (한 번 더 누르면 전환/토글)");
+        return;
+    }
+
+    // 3) 같은 키를 한 번 더 눌렀다 = 확정(아이템 모드로 전환)
+    if (string.IsNullOrEmpty(GetSelectedItem()))
+    {
+        Debug.Log("[ItemSelect] 슬롯이 비어있어서 전환 불가");
+        return;
+    }
+
+    activeMode = ActiveMode.Item;
+    selectingItem = false;
+    Debug.Log($"[ItemSelect] ✅ 아이템 모드로 전환! (슬롯 {selectedSlot})");
+}
+
 
     // 아이템 사용 후 자동으로 총로 돌아가고 싶을 때 호출
     public void SwitchToGun()
