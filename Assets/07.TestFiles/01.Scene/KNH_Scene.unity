@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &22307608 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9077724853466014757, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 3976618100984294129}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &31149677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1993,11 +1988,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &573223255 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1959655096921682624, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 3976618100984294129}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &602633417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7824721396740572023, guid: b71797b89559dba40a898c4c94df2df9, type: 3}
@@ -9706,11 +9696,6 @@ Transform:
   - {fileID: 3400370838874287008}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1549870689 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 6464127213727836414, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 3976618100984294129}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1566534966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12263,10 +12248,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 564431115}
-    - target: {fileID: 854970417521941714, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: aimPlaneZ
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 3439138498539923855, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: hpFill
       value: 
@@ -12275,37 +12256,9 @@ PrefabInstance:
       propertyPath: hpText
       value: 
       objectReference: {fileID: 1800377188}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 564431115}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: barrel
-      value: 
-      objectReference: {fileID: 22307608}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: fireClip
-      value: 
-      objectReference: {fileID: 8300000, guid: f0495c7fff7743745884f70d7c3bf27b, type: 3}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 1549870689}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: muzzleFlash
-      value: 
-      objectReference: {fileID: 573223255}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 1122964723992546, guid: 674adf642abf5614aae2995443c8250f, type: 3}
-    - target: {fileID: 4423427409413007285, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: enemyMask.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.27
+      value: 64.371
       objectReference: {fileID: 0}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.y

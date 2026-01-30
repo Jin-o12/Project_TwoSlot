@@ -51,6 +51,7 @@ public class GunFire : MonoBehaviour
 
     void Update()
     {
+        if (InputPauseManager.IsPaused) return;
         // ✅ 단발: 클릭 1번에 1발
         if (Input.GetMouseButtonDown(0))
         {
