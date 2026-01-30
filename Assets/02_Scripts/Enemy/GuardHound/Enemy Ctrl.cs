@@ -106,10 +106,10 @@ public class EnemyCtrl : MonoBehaviour
         // ★ 공격 판정: 공격 박스 안에 플레이어가 있는지
         bool inAttackRange = IsPlayerInAttackBox();
 
-        if (debugLog)
-        {
-            Debug.Log($"[EnemyCtrl] distX={distance:F2}, inAttackRange={inAttackRange}, time={Time.time:F2}, next={nextAttackTime:F2}");
-        }
+        // if (debugLog)
+        // {
+        //     Debug.Log($"[EnemyCtrl] distX={distance:F2}, inAttackRange={inAttackRange}, time={Time.time:F2}, next={nextAttackTime:F2}");
+        // }
 
         if (inAttackRange)
         {
