@@ -6,8 +6,15 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    [Header("컴포넌트")]
+    [Header("컴포넌트&스크립트")]
+    // 컴포넌트
     private AudioSource audioSource;
+    private Animator animator;
+    // 스크립트
+    private PlayerMove playerMove;
+    private Inventory2Slots inventory;
+    private AimAndFlip aimAndFlip;
+    private RigBuilder rigBuilder;
 
     [Header("HP")]
     public int maxHp = 100;
@@ -18,12 +25,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public Text hpText;
 
     [Header("Refs")]
-    public Animator animator;
-    public PlayerMove playerMove;
     public GunFire gunFire;
-    public Inventory2Slots inventory;
-    public AimAndFlip aimAndFlip;
-    public RigBuilder rigBuilder;
     public Rig rig;
 
     [Header("Anim")]
@@ -34,21 +36,27 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     void Awake()
     {
+        // 모든 컴포넌트 및 스크립트를 찾아서 할당
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!gunFire) gunFire = GetComponentInChildren<GunFire>();
         if (!playerMove) playerMove = GetComponent<PlayerMove>();
         if (!inventory) inventory = GetComponent<Inventory2Slots>();
         if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
         if (!audioSource) audioSource = GetComponent<AudioSource>();
-
-        UpdateHPUI();
     }
 
     void Start()
     {
         hp = maxHp;
+        UpdateHPUI();
     }
 
+    private void Update()
+    {
+        UpdateHPUI();
+    }
+
+    /* 피해를 입음 */
     public void TakeDamage(int dmg)
     {
         if (isDead) return;
@@ -70,12 +78,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         gunFire?.LockFire(0.5f);
     }
 
+    /* 체력 UI를 갱신 */
     void UpdateHPUI()
     {
         if (hpFill) hpFill.fillAmount = (float)hp / maxHp;
         if (hpText) hpText.text = $"{hp}/{maxHp}";
     }
 
+    /* 사망 처리 */
     void Die()
     {
         if (isDead) return;
@@ -98,7 +108,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
                 audioSource.Stop();
         }
 
-        // ✅ 죽음 애니
+        // 죽음 애니메이션
         if (animator)
             animator.SetTrigger(dieTrigger);
     }

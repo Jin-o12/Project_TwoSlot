@@ -5,31 +5,30 @@ using UnityEngine;
 public class GunFire : MonoBehaviour
 {
     [Header("총 오브젝트 이름")]
-    public string gunName;
+    public string gunName;                  // 총 오브젝트를 찾기 위한 오브젝트 이름
 
-    [Header("Refs")]
-    public Camera cam;
-    public Transform barrel;
-    public GameObject bulletPrefab;
-    public Transform gunObject;
+    [Header("참조 오브젝트 & 컴포넌트")]
+    public Camera cam;                      // 카메라
+    public Transform barrel;                // 총구 위치
+    public GameObject bulletPrefab;         // 총알 프리팹
+    public Transform gunObject;             // 총 오브젝트
 
     [Header("Targeting")]
-    public LayerMask enemyMask;          // ENEMY
-    public LayerMask worldMask = ~0;
-    public float maxDistance = 200f;
+    public LayerMask enemyMask;             // 레이어: ENEMY
+    public float maxDistance = 200f;        // 탄환 z축 보정 최댓값
 
     [Header("2.5D")]
-    public float defaultCombatZ;
+    public float defaultCombatZ;            //
 
     [Header("Shoot")]
-    public float bulletSpeed = 40f;
-    public float fireCooldown = 0.1f;
-    public float spawnForwardOffset = 0.6f;
+    public float bulletSpeed;               // 총알 속도
+    public float fireCooldown;              // 발사 쿨다운
+    public float spawnForwardOffset;        // 총알 발사 시 생성 지점 보정치
 
     [Header("Ammo")]
-    public int maxAmmo = 10;
-    public int currentAmmo = 10;
-    public float reloadTime = 1.5f;   // 재장전 시간
+    public int maxAmmo = 10;                // 최대 총알
+    public int currentAmmo = 10;            // 현재 총알
+    public float reloadTime = 1.5f;         // 재장전 시간
     bool isReloading = false;
 
     [Header("VFX / SFX")]
@@ -50,16 +49,20 @@ public class GunFire : MonoBehaviour
     void Awake()
     {
         if (cam == null) cam = Camera.main;
-        if (currentAmmo <= 0) currentAmmo = maxAmmo; // 시작 시 보정
 
         // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
-        if(gunObject==null) gunObject = FindChildByName(transform, gunName);
-        audioSource = gunObject.GetComponent<AudioSource>();
-        muzzleFlash = gunObject.GetComponent<ParticleSystem>();
-        barrel = gunObject.transform;
+        if(gunObject==null)     gunObject = FindChildByName(transform, gunName);
+        if(audioSource==null)   audioSource = gunObject.GetComponent<AudioSource>();
+        if(muzzleFlash==null)   muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        if(barrel==null)        barrel = gunObject.transform;
 
         // 플레이어와 Z 값 맞춤
         defaultCombatZ = gameObject.transform.position.z;
+
+        // 총 발사에 관한 변수들 일관 초기화
+        bulletSpeed = 40f;
+        fireCooldown = 0.1f;
+        spawnForwardOffset = 0.6f;
     }
 
     /* 자식 오브젝트 중 특정 이름의 오브젝트를 가져오는 코드 */
@@ -78,6 +81,12 @@ public class GunFire : MonoBehaviour
         // 없을 시 null 반환
         Debug.Log($"GunFire.cs: {transform.name} 오브젝트 하위에 {nameToFind}가 존재하지 않습니다.");
         return null;
+    }
+
+    /* 게임 시작시 총 관련 수치 초기화 */
+    public void InitializedGun()
+    {
+        if (currentAmmo <= 0) currentAmmo = maxAmmo; // 시작 시 총알이 없을 시 총알 보충
     }
 
     void Update()
@@ -110,11 +119,11 @@ public class GunFire : MonoBehaviour
 
         Fire();
 
-    // 마지막 탄 쏜 직후에도 자동 리로드
-    if (currentAmmo <= 0)
-    {
-        StartCoroutine(Reload());
-    }
+        // 마지막 탄 쏜 직후에도 자동 리로드
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+        }
     }
 
     void Fire()
@@ -175,7 +184,7 @@ public class GunFire : MonoBehaviour
         }
     }
 
-    float FindNearestEnemyZ(Vector3 origin, float radius)
+    private float FindNearestEnemyZ(Vector3 origin, float radius)
     {
         Collider[] cols = Physics.OverlapSphere(origin, radius, enemyMask);
         if (cols == null || cols.Length == 0) return defaultCombatZ;
@@ -195,7 +204,7 @@ public class GunFire : MonoBehaviour
         return bestZ;
     }
 
-    void IgnoreMyColliders(GameObject bullet)
+    private void IgnoreMyColliders(GameObject bullet)
     {
         var bulletCol = bullet.GetComponent<Collider>();
         if (bulletCol == null) return;
@@ -205,17 +214,17 @@ public class GunFire : MonoBehaviour
             if (col != null) Physics.IgnoreCollision(bulletCol, col, true);
         }
     }
-    System.Collections.IEnumerator Reload()
+    IEnumerator Reload()
     {
-    if (isReloading) yield break;
+        if (isReloading) yield break;
 
-    isReloading = true;
+        isReloading = true;
 
-    // 여기서 리로드 사운드/애니 넣어도 됨
+        // 여기서 리로드 사운드/애니 넣어도 됨
 
-    yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(reloadTime);
 
-    currentAmmo = maxAmmo;
-    isReloading = false;
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 }
