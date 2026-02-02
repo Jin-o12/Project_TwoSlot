@@ -43,6 +43,13 @@ public class PlayerHP : MonoBehaviour
         currentHP += amount;
         if (currentHP > maxHP) currentHP = maxHP;
     }
+    public bool TryHeal(float amount)
+   {
+    if (currentHP >= maxHP) return false;
+    Heal(amount);
+    return true;
+   }
+
 
 
     void HandleHPAnimation()

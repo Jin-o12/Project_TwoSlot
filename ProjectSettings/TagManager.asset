@@ -7,8 +7,12 @@ TagManager:
   - CinemachineTarget
   - ENEMY
   - Watcher
+<<<<<<< HEAD
   - Gun
   - Shell
+=======
+  - ITEM
+>>>>>>> Master
   layers:
   - Default
   - TransparentFX
@@ -16,7 +20,11 @@ TagManager:
   - PLAYER
   - Water
   - UI
+<<<<<<< HEAD
   - BULLET
+=======
+  - Bullet
+>>>>>>> Master
   - ENEMY
   - ENEMY ATTACK
   - ITEM
