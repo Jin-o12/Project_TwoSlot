@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class BulletCtrl : MonoBehaviour
 {
-    public int damage = 1;
+    public int damage = 10;
     public float lifeTime = 3f;
     public float speed = 10.0f;
 
     bool dead;
 
-    void Start()
+    void Awake()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
         Destroy(gameObject, lifeTime);
+
+        // Trigger 방식 추천
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
     }
     
 
-    void OnCollisionEnter(Collision c)
+    void OnTriggerEnter(Collider other)
     {
         if (dead) return;
+
+        // 자기 자신/자식과 충돌 무시(필요시)
+        if (other.transform.IsChildOf(transform)) return;
+
         dead = true;
 
-        // 자신의 자식 파츠(Head/Casing 등)랑 충돌하면 무시
-        if (c.transform.IsChildOf(transform))
-        {
-            dead = false;
-            return;
-        }
-
-        var dmg = c.collider.GetComponentInParent<IDamageable>();
+        var dmg = other.GetComponentInParent<IDamageable>();
         dmg?.TakeDamage(damage);
 
         Destroy(gameObject);
