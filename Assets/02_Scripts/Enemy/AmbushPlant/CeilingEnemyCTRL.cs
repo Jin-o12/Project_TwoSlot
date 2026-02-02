@@ -1,17 +1,21 @@
 using UnityEngine;
 
-public class CeilingEnemyCTRL : MonoBehaviour
+public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
 {
     [Header("References")]
     public GameObject bulletPrefab;
     public Transform firePoint;
 
     [Header("Bullet")]
-    public float bulletSpeed = 50f;
+    public float bulletSpeed = 30f;
 
     [Header("Attack")]
     public float attackCooldown = 5f;
     private float nextAttackTime = 0f;
+
+    [Header("HP")]
+    public int maxHealth = 20;
+    private int currentHealth;
 
     public void TryFire()
     {
@@ -39,21 +43,30 @@ public class CeilingEnemyCTRL : MonoBehaviour
             return;
         }
 
-        // ✅ 방향: firePoint 기준 "아래"
+        // 방향: firePoint 기준 "아래"
         Vector3 downDir = firePoint.up;
 
-        // ✅ 프리팹이 이상해도 날아가게 기본값 강제
+        // 프리팹이 이상해도 날아가게 기본값 강제
         rb.isKinematic = false;
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        // ✅ 아래로 발사
+        // 아래로 발사
         rb.velocity = downDir.normalized * bulletSpeed;
 
-        // ✅ 총알 비주얼도 아래 방향을 보게(필요 없으면 지워도 됨)
+        // 총알 비주얼도 아래 방향을 보게(필요 없으면 지워도 됨)
         bullet.transform.rotation = Quaternion.LookRotation(downDir, Vector3.forward);
 
         // 디버그 (원하면 유지)
         // Debug.Log($"[Bullet] downDir={downDir}, vel={rb.velocity}");
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

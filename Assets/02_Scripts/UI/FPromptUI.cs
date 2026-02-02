@@ -7,7 +7,7 @@ public class FPromptUI : MonoBehaviour
 {
     public static FPromptUI I;
     public Image icon;          // F 이미지
-    public Vector3 worldOffset = new Vector3(0, 1.5f, 0);
+    public Vector3 worldOffset = new Vector3(0, 1f, 0);
 
     Camera cam;
     Transform target;
