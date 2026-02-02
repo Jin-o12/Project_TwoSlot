@@ -7,6 +7,7 @@ public class ItemPickUpTrigger : MonoBehaviour
     public WeaponItem item;  // ✅ 프리팹마다 다른 WeaponItem 에셋 넣기
 
     [Header("UI")]
+    public bool showFPrompt = true;
     public string promptFormat = "F : 줍기 ({0})";
 
     [Header("옵션")]
@@ -30,9 +31,13 @@ public class ItemPickUpTrigger : MonoBehaviour
         _inv = other.GetComponent<PlayerItemTrigger>()
                ?? other.GetComponentInParent<PlayerItemTrigger>();
 
-        // UI 표시 예시
-        // if (_inv != null && item != null)
-        //     PickupUI.Instance?.Show(string.Format(promptFormat, item.name));
+        if (showFPrompt && FPromptUI.I && _inv != null)
+            FPromptUI.I.Show(transform);
+        
+        // 인벤토리가 있다면 UI 표시
+        //if (_inv != null)
+            //PickupUI.Instance?.Show(string.Format(promptFormat, itemId));
+
     }
 
     void OnTriggerExit(Collider other)
@@ -42,7 +47,11 @@ public class ItemPickUpTrigger : MonoBehaviour
         _playerIn = false;
         _inv = null;
 
-        // PickupUI.Instance?.Hide();
+        if (showFPrompt && FPromptUI.I && FPromptUI.I.IsShowing(transform))
+            FPromptUI.I.Hide();
+
+        // UI 숨기기
+        //PickupUI.Instance?.Hide();
     }
 
     void Update()
@@ -59,6 +68,9 @@ public class ItemPickUpTrigger : MonoBehaviour
 
             // ✅ 인벤에 아이템 추가
             _inv.AddOrReplaceSelected(item);
+
+            if (showFPrompt && FPromptUI.I && FPromptUI.I.IsShowing(transform))
+                FPromptUI.I.Hide();
 
             // UI 숨기기
             // PickupUI.Instance?.Hide();
