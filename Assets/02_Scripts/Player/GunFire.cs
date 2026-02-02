@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
-   [Header("Refs")]
+    [Header("총 오브젝트 이름")]
+    public string gunName;
+
+    [Header("Refs")]
     public Camera cam;
     public Transform barrel;
     public GameObject bulletPrefab;
+    public Transform gunObject;
 
     [Header("Targeting")]
     public LayerMask enemyMask;          // ENEMY
@@ -15,7 +19,7 @@ public class GunFire : MonoBehaviour
     public float maxDistance = 200f;
 
     [Header("2.5D")]
-    public float defaultCombatZ = 0f;
+    public float defaultCombatZ;
 
     [Header("Shoot")]
     public float bulletSpeed = 40f;
@@ -47,10 +51,38 @@ public class GunFire : MonoBehaviour
     {
         if (cam == null) cam = Camera.main;
         if (currentAmmo <= 0) currentAmmo = maxAmmo; // 시작 시 보정
+
+        // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
+        if(gunObject==null) gunObject = FindChildByName(transform, gunName);
+        audioSource = gunObject.GetComponent<AudioSource>();
+        muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        barrel = gunObject.transform;
+
+        // 플레이어와 Z 값 맞춤
+        defaultCombatZ = gameObject.transform.position.z;
+    }
+
+    /* 자식 오브젝트 중 특정 이름의 오브젝트를 가져오는 코드 */
+    Transform FindChildByName(Transform parent, string nameToFind)
+    {
+        Transform[] allChildren = parent.GetComponentsInChildren<Transform>(true);
+
+        // 자식 오브젝트를 순회하며 해당 이름의 오브젝트를 찾음
+        foreach (Transform child in allChildren)
+        {
+            if (child.name == nameToFind)
+            {
+                return child;
+            }
+        }
+        // 없을 시 null 반환
+        Debug.Log($"GunFire.cs: {transform.name} 오브젝트 하위에 {nameToFind}가 존재하지 않습니다.");
+        return null;
     }
 
     void Update()
     {
+        if (InputPauseManager.IsPaused) return;
         // ✅ 단발: 클릭 1번에 1발
         if (Input.GetMouseButtonDown(0))
         {
