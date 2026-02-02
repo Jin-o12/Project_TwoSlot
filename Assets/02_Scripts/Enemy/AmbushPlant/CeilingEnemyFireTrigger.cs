@@ -17,8 +17,8 @@ public class CeilingEnemyFireTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (enemy == null) return;
-        if (!other.CompareTag(playerTag)) return;
+        // 자신이 존재하지 않거나, 닿은 것이 플레이어가 아니라면 리턴
+        if (enemy == null && !other.CompareTag(playerTag)) return;
 
         enemy.TryFire(); // 닿는 순간 1발
     }
