@@ -124,11 +124,17 @@ public class GunFire : MonoBehaviour
         Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
 
         float targetZ = defaultCombatZ;
-        bool hasEnemyHit = Physics.Raycast(mouseRay, out RaycastHit enemyHit, maxDistance, enemyMask);
-        if (hasEnemyHit)
-            targetZ = enemyHit.collider.transform.position.z;
+        RaycastHit[] hits = Physics.RaycastAll(mouseRay, maxDistance, enemyMask);
+        if (hits.Length > 0)
+        {
+            // 카메라에서 가장 가까운 적 hit 선택
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            targetZ = hits[0].collider.transform.position.z;
+        }
         else
+        {
             targetZ = FindNearestEnemyZ(barrel.position, 20f);
+        }
 
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, targetZ));
         Vector3 aimPoint;
