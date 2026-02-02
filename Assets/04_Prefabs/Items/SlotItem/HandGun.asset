@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HandGun
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 4e0a6b878faf5ce45a790cd796db0ea6, type: 3}
-  weaponPrefab: {fileID: 2322646566791826620, guid: f761ccfd02727aa4fb3a1a587730f0e0, type: 3}
-  pickupPrefab: {fileID: 2322646566791826620, guid: 85f153d5ca8ca08428a29ef73658574b, type: 3}
+  weaponPrefab: {fileID: 1690370004738036, guid: a78a725941312494b930d664f3b315d0, type: 3}
+  pickupPrefab: {fileID: 1690370004738036, guid: a78a725941312494b930d664f3b315d0, type: 3}

@@ -1,88 +1,74 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class NoiseBomb_Throw : MonoBehaviour
 {
-    [Header("Explosion Timing")]
-    public float fuseTime = 1.2f;
-    public bool explodeOnFirstHit = true;
+    [Header("Explode Timing")]
+    public float fuseTime = 1.0f;            // 몇 초 뒤 폭발(소리)
+    public bool explodeOnFirstHit = true;    // 닿자마자 폭발(소리)
 
-    [Header("Safety (중요)")]
-    public float armDelay = 0.2f;         // 던진 직후 0.2초 동안은 충돌해도 안 터짐
-    public string ignoreTag = "Player";   // 플레이어랑 부딪히면 무시(선택)
+    [Header("Noise")]
+    public float noiseRadius = 15f;          // 이 반경 안의 적만 유인
+    public float distractTime = 5f;          // 적이 플레이어 대신 소리 위치 추적하는 시간
 
-    [Header("Ping")]
-    public float radius = 12f;
-    public string enemyTag = "ENEMY";
-    public GameObject pingPrefab;
-    public float pingLifeTime = 1.5f;
+    [Header("Sound")]
+    public AudioSource audioSource;          // 프리팹에 AudioSource 붙이면 자동 연결
+    public AudioClip noiseClip;              // 사용할 소리
+    [Range(0f, 1f)] public float volume = 1f;
 
-    [Header("Optional FX")]
-    public GameObject explosionVfx;
-    public AudioClip explosionSfx;
+    [Header("Optional")]
+    public GameObject vfxPrefab;             // 있으면 터질 때 이펙트
 
-    bool _exploded;
-    float _spawnTime;
+    bool exploded;
+
+    void Awake()
+    {
+        var col = GetComponent<Collider>();
+        col.isTrigger = false;               // 던져서 바닥에 '충돌'시키는 쪽이 자연스러움
+
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
-        _spawnTime = Time.time;
-
-        if (fuseTime > 0f)
-            Invoke(nameof(Explode), fuseTime);
+        if (fuseTime > 0f) Invoke(nameof(Explode), fuseTime);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision c)
     {
-        if (!explodeOnFirstHit) return;
-        if (_exploded) return;
-
-        // 1) 던진 직후 안전장치 시간 동안은 충돌해도 폭발 금지
-        if (Time.time - _spawnTime < armDelay) return;
-
-        // 2) 플레이어와의 충돌이면 무시(원하면 유지)
-        if (!string.IsNullOrEmpty(ignoreTag) && collision.collider.CompareTag(ignoreTag))
-            return;
-
+        if (!explodeOnFirstHit || exploded) return;
         Explode();
     }
 
     void Explode()
     {
-        if (_exploded) return;
-        _exploded = true;
+        if (exploded) return;
+        exploded = true;
 
         CancelInvoke(nameof(Explode));
 
-        if (explosionVfx != null)
-            Instantiate(explosionVfx, transform.position, Quaternion.identity);
+        Vector3 pos = transform.position;
 
-        if (explosionSfx != null)
-            AudioSource.PlayClipAtPoint(explosionSfx, transform.position);
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, radius);
-        for (int i = 0; i < hits.Length; i++)
+        // 1) 소리 재생
+        if (noiseClip)
         {
-            var col = hits[i];
-            if (col == null) continue;
-            if (!col.CompareTag(enemyTag)) continue;
-
-            Vector3 pingPos = col.bounds.center;
-
-            if (pingPrefab != null)
-            {
-                var ping = Instantiate(pingPrefab, pingPos, Quaternion.identity);
-                if (pingLifeTime > 0f) Destroy(ping, pingLifeTime);
-            }
-
-            Debug.Log($"[NoiseBomb] Ping -> {col.name}");
+            if (audioSource) audioSource.PlayOneShot(noiseClip, volume);
+            else AudioSource.PlayClipAtPoint(noiseClip, pos, volume);
         }
 
-        Destroy(gameObject);
+        // 2) 적 유인 이벤트 발생
+        NoiseSystem.Emit(transform.position, noiseRadius, distractTime);
+
+        // 3) 이펙트
+        if (vfxPrefab) Instantiate(vfxPrefab, pos, Quaternion.identity);
+
+        // 4) 오브젝트 제거 (소리만 재생하면 바로 지워도 OK)
+        Destroy(gameObject, 5f);
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, noiseRadius);
     }
 }
