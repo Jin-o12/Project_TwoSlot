@@ -1,35 +1,35 @@
+/// <summary>
+/// 플레이어의 인벤토리에 관한 기능을 총괄함.
+/// 아이템 습득, 떨어트리기, 사용하기 위한 선택 과정을 모두 관리
+/// </summary>
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerItemTrigger : MonoBehaviour
 {
+    private InputManager inputManager;
+
     [Header("아이템 슬롯 2칸 (WeaponItem)")]
-    public WeaponItem slot1;
-    public WeaponItem slot2;
+    public WeaponItem slot1;                        // 첫번째 아이템이 들어갈 번수
+    public WeaponItem slot2;                        // 두번째 아이템이 들어갈 변수
 
     [Header("슬롯 아이콘 UI (Image)")]
-    public Image slot1Icon;
-    public Image slot2Icon;
+    public Image slotIcon;                          // 아이템 슬롯 이미지
 
     [Header("아이템 슬롯(1/2)")]
     [Range(1, 2)]
-    public int selectedSlot = 1;
+    public int selectedSlot;                        // 선택 된 슬롯
 
     [Header("드롭 위치(선택)")]
-    public Transform dropPoint;
-
-    // ====== 총/아이템 전환 상태 ======
-    public enum ActiveMode { Gun, Item } // 총 or 아이템(선택 슬롯)
+    public Transform dropPoint;                     // 아이템이 떨어질 위치
 
     [Header("현재 활성 모드")]
-    public ActiveMode activeMode = ActiveMode.Gun;
+    public ActiveMode activeMode;                   // 현재 활성화 된 아이템 모드
 
     [Header("아이템 선택중(하이라이트만)")]
-    public bool selectingItem = false;
+    public bool selectingItem = false;              // 아이템을 선택 중인지에 대한 여부
 
-    [Header("키")]
-    public KeyCode slot1Key = KeyCode.Q;
-    public KeyCode slot2Key = KeyCode.E;
+    public enum ActiveMode { Gun, Item }            // 아이템 활성화 여부: 총 or 아이템(선택 슬롯)
 
     // ====== 편의 프로퍼티 ======
     public bool IsFull => slot1 != null && slot2 != null;
@@ -39,15 +39,26 @@ public class PlayerItemTrigger : MonoBehaviour
     // 총을 쏴도 되는지(총 스크립트에서 이걸로 막으면 “통합” 완성)
     public bool CanFireGun => activeMode == ActiveMode.Gun;
 
+    private void Awake()
+    {
+        inputManager = InputManager.Instance;
+    }
     void Start()
     {
         RefreshUI();
     }
 
+    /* 인벤토리 관련 기능 초기화 */
+    public void Initialized()
+    {
+        activeMode = ActiveMode.Gun;
+        selectedSlot = 1;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(slot1Key)) HandleSlotKey(1);
-        if (Input.GetKeyDown(slot2Key)) HandleSlotKey(2);
+        if (Input.GetKeyDown(inputManager.Slot1Key)) HandleSlotKey(1);
+        else if (Input.GetKeyDown(inputManager.Slot2Key)) HandleSlotKey(2);
     }
 
     void HandleSlotKey(int slotIndex)
@@ -172,8 +183,8 @@ public class PlayerItemTrigger : MonoBehaviour
 
     void RefreshUI()
     {
-        SetSlotIcon(slot1Icon, slot1);
-        SetSlotIcon(slot2Icon, slot2);
+        SetSlotIcon(slotIcon, slot1);
+        SetSlotIcon(slotIcon, slot2);
     }
 
     void SetSlotIcon(Image img, WeaponItem item)

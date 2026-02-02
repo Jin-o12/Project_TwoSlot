@@ -28,7 +28,6 @@ public class InputManager : MonoBehaviour
     public KeyCode Lookup = KeyCode.W;              // 위 처다보기
     public KeyCode Shoot = KeyCode.Mouse0;          // 총 발사
     public KeyCode UseItem = KeyCode.Mouse1;        // 총 발사
-
-    public KeyCode Slot1 = KeyCode.Alpha1;
-    public KeyCode Slot2 = KeyCode.Alpha2;
+    public KeyCode Slot1Key = KeyCode.Q;
+    public KeyCode Slot2Key = KeyCode.E;
 }

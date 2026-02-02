@@ -1,19 +1,16 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // ¾À ÀÌµ¿À» À§ÇØ ÇÊ¼ö!
+using UnityEngine.SceneManagement; // ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½!
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("ÀüÃ¼È­¸é Åä±Û ¿¬°á")]
+    [Header("ì „ì²´í™”ë©´ ë²„íŠ¼ì˜ ëˆŒë¦¼ ì—¬ë¶€")]
     public Toggle fullscreenToggle;
 
     void Start()
     {
-        // 1. ±âÁ¸ º¼·ý ½½¶óÀÌ´õ ¼³Á¤ (ÀÖ´Ù¸é À¯Áö)
-
-        // 2. °ÔÀÓ ÄÑÀÚ¸¶ÀÚ ÇöÀç È­¸é »óÅÂ¸¦ Åä±Û¿¡ ¹Ý¿µ (Áß¿ä!)
-        // (ÀÌ°Ô ¾øÀ¸¸é, ÀÌ¹Ì ÀüÃ¼È­¸éÀÎµ¥ Ã¼Å©°¡ Ç®·ÁÀÖ°Å³ª ÇÏ´Â ¹ö±×°¡ »ý±è)
+        // fullscreenToggleì— ê°’ì´ ìžˆë‹¤ë©´ (í† ê¸€ì´ ëˆŒëŸ¬ì ¸ìžˆë‹¤ë©´) ì „ì²´í™”ë©´
         if (fullscreenToggle != null)
         {
             fullscreenToggle.isOn = Screen.fullScreen;
@@ -24,26 +21,26 @@ public class MainMenuManager : MonoBehaviour
         Screen.fullScreen = isFullScreen;
     }
 
-    [Header("ÀÌµ¿ÇÒ ¾À ÀÌ¸§À» ¿©±â¿¡ ÀûÀ¸¼¼¿ä")]
-    public string gameSceneName = "GameScene"; // ±âº»°ªÀº GameScene (ÀÎ½ºÆåÅÍ¿¡¼­ º¯°æ °¡´É)
+    [Header("ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public string gameSceneName = "GameScene"; // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ GameScene (ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
-    // °ÔÀÓ ½ÃÀÛ ¹öÆ° (¾À ÀÌµ¿)
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° (ï¿½ï¿½ ï¿½Ìµï¿½)
     public void OnClickStartGame()
     {
-        Debug.Log("°ÔÀÓ ½ÃÀÛ ¹öÆ° Å¬¸¯! ÀÌµ¿ÇÒ ¾À: " + gameSceneName);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½! ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½: " + gameSceneName);
 
-        // ¾À ÀÌ¸§ÀÌ ºñ¾îÀÖÁö ¾Ê´Ù¸é ÀÌµ¿
+        // ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½ ï¿½Ìµï¿½
         if (!string.IsNullOrEmpty(gameSceneName))
         {
             SceneManager.LoadScene(gameSceneName);
         }
         else
         {
-            Debug.LogError("ÀÌµ¿ÇÒ ¾À ÀÌ¸§ÀÌ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù! GameManager¸¦ È®ÀÎÇØÁÖ¼¼¿ä.");
+            Debug.LogError("ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½! GameManagerï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
         }
     }
 
-    // °ÔÀÓ Á¾·á ¹öÆ°
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     public void OnClickExitGame()
     {
 #if UNITY_EDITOR
@@ -51,39 +48,39 @@ public class MainMenuManager : MonoBehaviour
 #else
             Application.Quit();
 #endif
-        Debug.Log("°ÔÀÓ Á¾·á");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
-    [Header("¼³Á¤ Ã¢ ÆÐ³Î(UI)À» ¿©±â¿¡ ¿¬°áÇÏ¼¼¿ä")]
-    public GameObject settingsPanel; // ¼³Á¤ Ã¢ ¿ÀºêÁ§Æ®¸¦ ´ãÀ» º¯¼ö
+    [Header("ï¿½ï¿½ï¿½ï¿½ Ã¢ ï¿½Ð³ï¿½(UI)ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")]
+    public GameObject settingsPanel; // ï¿½ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // 1. ¼³Á¤ ¹öÆ°À» ´­·¶À» ¶§ -> Ã¢ ÄÑ±â
+    // 1. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> Ã¢ ï¿½Ñ±ï¿½
     public void OnClickOpenSettings()
     {
         settingsPanel.SetActive(true);
     }
 
-    // 2. ´Ý±â ¹öÆ°À» ´­·¶À» ¶§ -> Ã¢ ²ô±â
+    // 2. ï¿½Ý±ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> Ã¢ ï¿½ï¿½ï¿½ï¿½
     public void OnClickCloseSettings()
     {
         settingsPanel.SetActive(false);
     }
-    [Header("¿Àµð¿À ¹Í¼­ ¿¬°á")]
-    public AudioMixer audioMixer; // ¾Æ±î ¸¸µç MainMixer ³ÖÀ» °÷
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public AudioMixer audioMixer; // ï¿½Æ±ï¿½ ï¿½ï¿½ï¿½ï¿½ MainMixer ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-    [Header("½½¶óÀÌ´õ ¿¬°á")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½")]
 
-    public Slider masterVolumeSlider; // ½½¶óÀÌ´õ UI ³ÖÀ» °÷
+    public Slider masterVolumeSlider; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
 
 
-    // ½½¶óÀÌ´õ¸¦ ¿òÁ÷ÀÏ ¶§¸¶´Ù ÀÌ ÇÔ¼ö°¡ ½ÇÇàµÊ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public void SetMasterVolume(float sliderValue)
     {
-        // ½½¶óÀÌ´õ °ª(0.0001 ~ 1)À» µ¥½Ãº§(-80 ~ 0)·Î º¯È¯ÇÏ´Â °ø½Ä
-        // ·Î±×(Log10)¸¦ ½á¾ß ÀÚ¿¬½º·´°Ô ÁÙ¾îµì´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½(0.0001 ~ 1)ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½(-80 ~ 0)ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½Î±ï¿½(Log10)ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½Ï´ï¿½.
         float volume = Mathf.Log10(sliderValue) * 20;
 
-        // "Master"´Â ¾Æ±î 2´Ü°è¿¡¼­ ¼³Á¤ÇÑ ±× ÀÌ¸§ÀÔ´Ï´Ù!
+        // "Master"ï¿½ï¿½ ï¿½Æ±ï¿½ 2ï¿½Ü°è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½Ô´Ï´ï¿½!
         audioMixer.SetFloat("Master", volume);
     }
 }

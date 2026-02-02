@@ -72,13 +72,13 @@ public class EnemyCtrl : MonoBehaviour
 
     void Update()
     {
-        if (playerTr == null) return;
+        
         if (animator == null) return;
         if (navi == null) return;
         if (!navi.enabled || !navi.isOnNavMesh) return;
 
-        // ✅ 공격 중(또는 공격 직후 잠깐)은 추적/판정 모두 멈추기
-        if (isAttacking)
+        //  공격/리코일 중에는 추적/판정 모두 멈추기
+        if (isAttacking||isRecoiling)
         {
             StopAgent();
             animator.SetBool("Trace", false);
@@ -87,16 +87,8 @@ public class EnemyCtrl : MonoBehaviour
             return;
         }
 
-        // ✅ 리코일 중에도 멈추기
-        if (isRecoiling)
-        {
-            StopAgent();
-            animator.SetBool("Trace", false);
-            if (lockZAxis) FixZ();
-            FaceToPlayer();
-            return;
-        }
-
+        
+        if (playerTr == null) return;
         Vector3 playerPos = playerTr.position;
         if (lockZAxis) playerPos.z = lockZ;
 
@@ -188,6 +180,13 @@ public class EnemyCtrl : MonoBehaviour
     void FaceToPlayer()
     {
         if (playerTr.position.x > transform.position.x)
+            transform.rotation = Quaternion.Euler(0, 90f, 0);
+        else
+            transform.rotation = Quaternion.Euler(0, -90f, 0);
+    }
+    void FaceToTarget(Vector3 targetPos)
+    {
+        if (targetPos.x > transform.position.x)
             transform.rotation = Quaternion.Euler(0, 90f, 0);
         else
             transform.rotation = Quaternion.Euler(0, -90f, 0);
