@@ -2102,7 +2102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5993334504838637060, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
       propertyPath: m_Name
@@ -2112,6 +2112,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 7011511055384582312, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: a920428107d2f3b459a126e7d58183ef, type: 2}
     - target: {fileID: 7011511055384582312, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
       propertyPath: itemId
       value: EnergyDrink
@@ -7525,6 +7529,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 731135049418854308, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4106814457344207211, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 52.353485
@@ -7573,6 +7581,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5618905992705423792, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 409b8c9bc1a90f84c9dd87f929c20f98, type: 2}
     - target: {fileID: 5618905992705423792, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
       propertyPath: itemId
       value: SoundBomb
@@ -10175,6 +10187,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4834525970282594512, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
+    - target: {fileID: 4834525970282594512, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
       propertyPath: itemId
       value: Glowgun
       objectReference: {fileID: 0}
@@ -11184,14 +11200,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d4bb3d64fefc34144abf16439c94d55d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 490516e8359d2564e91bb70bf24d98f5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11260,14 +11276,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.7921569, g: 0.7921569, b: 0.7921569, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d4bb3d64fefc34144abf16439c94d55d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 490516e8359d2564e91bb70bf24d98f5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12684,16 +12700,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot1: 
-  slot2: 
+  slot1: {fileID: 0}
+  slot2: {fileID: 0}
+  slot1Icon: {fileID: 1949720780}
+  slot2Icon: {fileID: 536467256}
   selectedSlot: 1
-  dropTable:
-  - itemId: EnergyDrink
-    prefab: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
-  - itemId: Glowgun
-    prefab: {fileID: 2687447825116020007, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
-  - itemId: SoundBomb
-    prefab: {fileID: 4106814457344636235, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
   dropPoint: {fileID: 1718376820}
   activeMode: 0
   selectingItem: 0
@@ -12712,19 +12723,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 2066094205}
-  noiseBombId: SoundBomb
+  noiseBombItem: {fileID: 11400000, guid: 409b8c9bc1a90f84c9dd87f929c20f98, type: 2}
   noiseBombPrefab: {fileID: 4106814457344636235, guid: 8c199d6252975fe4da7f14316296ad94, type: 3}
   throwPoint: {fileID: 545380296}
   spawnForwardOffset: 0.6
   spawnUpOffset: 1.2
-  throwForce: 12
-  upwardForce: 2.5
+  minThrowForce: 6
+  maxThrowForce: 16
+  minUpwardForce: 1.5
+  maxUpwardForce: 3.5
+  minAimDistance: 1.5
+  maxAimDistance: 10
   useMouseAim: 1
   aimCamera: {fileID: 564431115}
-  aimMaxDistance: 60
-  aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  ignoreOwnerColliders: 1
 --- !u!114 &2066094207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12738,7 +12750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 2066094205}
-  flareGunId: Glowgun
+  flareGunItem: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
   flareProjectile: {fileID: 5400000, guid: c8feb458f956e804e96677c55ad05416, type: 3}
   muzzle: {fileID: 756422886}
   spawnForwardOffset: 0.6
@@ -12767,7 +12779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inv: {fileID: 2066094205}
   hp: {fileID: 1957670590}
-  energyDrinkId: EnergyDrink
+  energyDrinkItem: {fileID: 11400000, guid: a920428107d2f3b459a126e7d58183ef, type: 2}
   healAmount: 25
 --- !u!1001 &467338350716574926
 PrefabInstance:

@@ -5,8 +5,8 @@ public class PlayerPotionUse : MonoBehaviour
     public PlayerItemTrigger inv;
     public PlayerHP hp;
 
-    [Header("Energy Drink")]
-    public string energyDrinkId = "EnergyDrink";
+    [Header("Energy Drink (WeaponItem)")]
+    public WeaponItem energyDrinkItem;   // ✅ 인스펙터에 EnergyDrink WeaponItem 에셋 넣기
     public float healAmount = 25f;
 
     void Awake()
@@ -17,24 +17,31 @@ public class PlayerPotionUse : MonoBehaviour
 
     void Update()
     {
-        // ✅ 좌클릭 입력 확인(디버그)
-        if (Input.GetMouseButtonDown(0))
-            Debug.Log($"[Click] 감지됨 / mode={inv?.activeMode} / item={inv?.GetSelectedItem()}");
-
         if (!Input.GetMouseButtonDown(0)) return;
         if (inv == null || hp == null) return;
 
         // 아이템 모드일 때만 발동
         if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
 
+        // 선택 아이템
+        WeaponItem selected = inv.GetSelectedItem();
+        if (selected == null) return;
+
         // 에너지 드링크만
-        if (inv.GetSelectedItem() != energyDrinkId) return;
+        if (energyDrinkItem == null)
+        {
+            Debug.LogWarning("[EnergyDrink] energyDrinkItem(WeaponItem)이 비어있어!");
+            return;
+        }
+        if (selected != energyDrinkItem) return;
 
-        // ✅ 체력 상관없이 사용
+        // 사용
         hp.Heal(healAmount);
-        inv.TryConsume(energyDrinkId);
 
-        // 사용 후 총로 복귀
+        // 소비
+        inv.TryConsume(selected);
+
+        // 총로 복귀
         inv.SwitchToGun();
 
         Debug.Log("[EnergyDrink] 사용됨 + 소비됨 + 총로 복귀");

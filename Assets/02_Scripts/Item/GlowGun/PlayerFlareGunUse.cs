@@ -4,23 +4,26 @@ public class PlayerFlareGunUse : MonoBehaviour
 {
     public PlayerItemTrigger inv;
 
-    [Header("Item")]
-    public string flareGunId = "Glowgun";
-    public Rigidbody flareProjectile;              // 발사체 프리팹(반드시 할당)
-    
+    [Header("Item (WeaponItem)")]
+    public WeaponItem flareGunItem;
+
+    [Header("Projectile")]
+    public Rigidbody flareProjectile;
+
     [Header("Muzzle / Spawn")]
-    public Transform muzzle;                       // 총구(권장)
-    public float spawnForwardOffset = 0.6f;        // muzzle 없을 때만
+    public Transform muzzle;
+    public float spawnForwardOffset = 0.6f;
     public float spawnUpOffset = 1.2f;
 
     [Header("Shoot Force")]
     public float shootForce = 35f;
-    public ForceMode forceMode = ForceMode.VelocityChange; // 질량 영향 덜 받게(안정적)
+    public ForceMode forceMode = ForceMode.VelocityChange;
 
     [Header("Aim")]
-    public bool forceFlatForward = true;           // 사이드/탑다운에서 수평으로만 쏘고 싶을 때
-    public bool useFacingByLocalScaleX = false;    // 캐릭터가 scale.x로 좌우 반전이면 true로
-    public Vector3 rightDir = Vector3.right;       // scale.x 기반일 때 사용
+    public bool useMouseAim = true;          // ✅ 추가
+    public Camera aimCamera;                // ✅ 추가
+    public bool useFacingByLocalScaleX = false;
+    public Vector3 rightDir = Vector3.right;
     public Vector3 leftDir = Vector3.left;
 
     [Header("FX (Optional)")]
@@ -35,6 +38,7 @@ public class PlayerFlareGunUse : MonoBehaviour
     {
         if (inv == null) inv = GetComponent<PlayerItemTrigger>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        if (aimCamera == null) aimCamera = Camera.main;
     }
 
     void Update()
@@ -43,7 +47,9 @@ public class PlayerFlareGunUse : MonoBehaviour
         if (inv == null) return;
 
         if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
-        if (inv.GetSelectedItem() != flareGunId) return;
+
+        var selected = inv.GetSelectedItem();
+        if (selected != flareGunItem) return;
 
         if (flareProjectile == null)
         {
@@ -51,79 +57,95 @@ public class PlayerFlareGunUse : MonoBehaviour
             return;
         }
 
-        // 1) 스폰 위치/회전
         Vector3 spawnPos = GetSpawnPos();
-        Vector3 dir = GetShootDir(spawnPos);
-        Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+        spawnPos.z = transform.position.z; // ✅ 사이드스크롤: 깊이 고정(카메라에 보이게)
 
-        // 2) 생성
+        Vector3 dir = GetShootDir_SideScroll(spawnPos);
+        Quaternion rot = Quaternion.LookRotation(Vector3.forward, dir); 
+        // ✅ 사이드스크롤(2D 느낌): forward는 Z, up은 dir(=XY 방향)
+        // 3D 모델이면 rot 방식은 바꿔야 할 수도 있음 (아래 참고)
+
         Rigidbody b = Instantiate(flareProjectile, spawnPos, rot);
 
-        // 3) 물리 세팅
         b.isKinematic = false;
         b.useGravity = true;
         b.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
         b.velocity = Vector3.zero;
         b.angularVelocity = Vector3.zero;
 
-        // 4) 충돌 무시(플레이어 몸에 박혀서 멈추는 문제 방지)
         if (ignoreOwnerColliders)
-        {
-            var projCol = b.GetComponent<Collider>();
-            if (projCol != null)
-            {
-                var ownerCols = GetComponentsInChildren<Collider>();
-                foreach (var c in ownerCols)
-                    Physics.IgnoreCollision(projCol, c, true);
-            }
-        }
+            IgnoreOwnerCollision(b);
 
-        // 5) 발사
+        // ✅ 확실하게 움직이게: velocity로도 가능
         b.AddForce(dir * shootForce, forceMode);
 
-        // 6) FX
         if (muzzleParticles != null)
             Instantiate(muzzleParticles, spawnPos, rot);
 
         if (audioSource != null && shotSound != null)
             audioSource.PlayOneShot(shotSound);
 
-        // 7) 소모 + 총로 복귀
-        inv.TryConsume(flareGunId);
+        inv.TryConsume(flareGunItem);
         inv.SwitchToGun();
     }
 
     Vector3 GetSpawnPos()
     {
         if (muzzle != null) return muzzle.position;
-
-        // muzzle 없을 때: 플레이어 앞 + 위
-        return transform.position + transform.forward * spawnForwardOffset + Vector3.up * spawnUpOffset;
+        return transform.position + transform.right * spawnForwardOffset + Vector3.up * spawnUpOffset;
+        // ✅ 사이드스크롤은 forward 대신 right가 보통 "정면"
     }
 
-    Vector3 GetShootDir(Vector3 spawnPos)
+    Vector3 GetShootDir_SideScroll(Vector3 spawnPos)
     {
-        // (옵션) 스케일 기반 좌/우 방향 강제(2D에서 가장 확실)
+        // 1) 마우스 에임
+        if (useMouseAim && aimCamera != null)
+        {
+            Ray ray = aimCamera.ScreenPointToRay(Input.mousePosition);
+
+            // ✅ Z=spawnPos.z 평면에서 마우스 월드 포인트 구하기
+            Plane plane = new Plane(Vector3.forward, new Vector3(0f, 0f, spawnPos.z));
+            if (plane.Raycast(ray, out float enter))
+            {
+                Vector3 point = ray.GetPoint(enter);
+                Vector3 d = point - spawnPos;
+                d.z = 0f;
+
+                if (d.sqrMagnitude > 0.0001f)
+                    return d.normalized;
+            }
+        }
+
+        // 2) (옵션) 스케일 기반 좌/우 고정
         if (useFacingByLocalScaleX)
         {
             bool facingRight = transform.lossyScale.x >= 0f;
             Vector3 d = facingRight ? rightDir : leftDir;
+            d.z = 0f;
             return SafeDir(d);
         }
 
-        // 기본: muzzle.forward 또는 플레이어 forward
-        Vector3 dir = (muzzle != null) ? muzzle.forward : transform.forward;
+        // 3) 기본: 캐릭터가 바라보는 방향
+        Vector3 fallback = transform.right; // ✅ 사이드스크롤 기본 정면
+        fallback.z = 0f;
+        return SafeDir(fallback);
+    }
 
-        if (forceFlatForward)
-            dir.y = 0f;
+    void IgnoreOwnerCollision(Rigidbody projRb)
+    {
+        if (projRb == null) return;
 
-        return SafeDir(dir);
+        Collider projCol = projRb.GetComponent<Collider>();
+        if (projCol == null) return;
+
+        var ownerCols = GetComponentsInChildren<Collider>();
+        foreach (var c in ownerCols)
+            if (c != null) Physics.IgnoreCollision(projCol, c, true);
     }
 
     Vector3 SafeDir(Vector3 d)
     {
-        if (d.sqrMagnitude < 0.0001f) d = Vector3.forward;
+        if (d.sqrMagnitude < 0.0001f) d = Vector3.right;
         return d.normalized;
     }
 }
