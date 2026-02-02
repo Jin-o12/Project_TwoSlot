@@ -12,6 +12,7 @@ public class ItemPickUpTrigger : MonoBehaviour
     // 이 아이템이 어떤 아이템인지 구분하는 ID (예: "Potion", "Key")
 
     [Header("UI")]
+    public bool showFPrompt = true;
     public string promptFormat = "F : 줍기 ({0})";
     // 플레이어가 근처에 왔을 때 보여줄 UI 문구
     // {0} 자리에 itemId가 들어감 → "F : 줍기 (GlowStick)"
@@ -45,9 +46,13 @@ public class ItemPickUpTrigger : MonoBehaviour
         _inv = other.GetComponent<PlayerItemTrigger>() 
             ?? other.GetComponentInParent<PlayerItemTrigger>();
 
+        if (showFPrompt && FPromptUI.I && _inv != null)
+            FPromptUI.I.Show(transform);
+        
         // 인벤토리가 있다면 UI 표시
         //if (_inv != null)
             //PickupUI.Instance?.Show(string.Format(promptFormat, itemId));
+
     }
 
     void OnTriggerExit(Collider other)
@@ -57,6 +62,9 @@ public class ItemPickUpTrigger : MonoBehaviour
 
         _playerIn = false;
         _inv = null;
+
+        if (showFPrompt && FPromptUI.I && FPromptUI.I.IsShowing(transform))
+            FPromptUI.I.Hide();
 
         // UI 숨기기
         //PickupUI.Instance?.Hide();
@@ -72,6 +80,9 @@ public class ItemPickUpTrigger : MonoBehaviour
         {
             // 인벤토리에 아이템 추가
             _inv.AddOrReplaceSelected(itemId);
+
+            if (showFPrompt && FPromptUI.I && FPromptUI.I.IsShowing(transform))
+                FPromptUI.I.Hide();
 
             // UI 숨기기
             //PickupUI.Instance?.Hide();
