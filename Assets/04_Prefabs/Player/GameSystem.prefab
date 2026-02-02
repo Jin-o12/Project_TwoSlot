@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7236633374060225641}
   - component: {fileID: 5082383920016367000}
   - component: {fileID: -7967143864336976114}
+  - component: {fileID: 6498024732410320148}
   m_Layer: 0
   m_Name: GameSystem
   m_TagString: Untagged
@@ -68,3 +69,19 @@ MonoBehaviour:
   slot1Item: {fileID: 0}
   slot2Item: {fileID: 0}
   score: 0
+--- !u!114 &6498024732410320148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169588646846680355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16b3782bec51bd4fbc474b055d8ca44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageList:
+  - Level_1_Scene
+  - Level_2_Scene
+  - Level_3_Scene

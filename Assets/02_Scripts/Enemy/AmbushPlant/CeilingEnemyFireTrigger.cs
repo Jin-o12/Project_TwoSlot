@@ -3,7 +3,7 @@ using UnityEngine;
 public class CeilingEnemyFireTrigger : MonoBehaviour
 {
     [SerializeField] private CeilingEnemyCTRL enemy; // 부모 컨트롤러
-    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private string playerTag;
 
     private void Awake()
     {
@@ -13,6 +13,8 @@ public class CeilingEnemyFireTrigger : MonoBehaviour
 
         if (enemy == null)
             Debug.LogError("[CeilingEnemyFireTrigger] 부모에서 CeilingEnemyCTRL을 찾지 못했습니다.");
+    
+        playerTag = "Player";
     }
 
     private void OnTriggerEnter(Collider other)

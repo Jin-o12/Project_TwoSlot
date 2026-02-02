@@ -1,12 +1,26 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // �� �̵��� ���� �ʼ�!
+using UnityEngine.SceneManagement;
+using System; // Scene을 관리하기 위해 필수
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("전체화면 버튼의 눌림 여부")]
-    public Toggle fullscreenToggle;
+    [Header("필요 컴포넌트")]
+    private StageManager stageManager;
+
+    [Header("UI")]
+    public GameObject settingsPanel;        // 게임 설정 팝업 UI
+
+    [Header("게임 설정")]
+    public Toggle fullscreenToggle;         // 전체화면 토글 버튼
+    public AudioMixer audioMixer;           // 오디오 믹서
+    public Slider masterVolumeSlider;       // 마스터 볼륨 조절 슬라이더
+
+    void Awake()
+    {
+        stageManager = StageManager.Instance;
+    }
 
     void Start()
     {
@@ -16,71 +30,49 @@ public class MainMenuManager : MonoBehaviour
             fullscreenToggle.isOn = Screen.fullScreen;
         }
     }
-    public void SetFullScreen(bool isFullScreen)
-    {
-        Screen.fullScreen = isFullScreen;
-    }
 
-    [Header("�̵��� �� �̸��� ���⿡ ��������")]
-    public string gameSceneName = "GameScene"; // �⺻���� GameScene (�ν����Ϳ��� ���� ����)
-
-    // ���� ���� ��ư (�� �̵�)
+    /* 게임 시작 버튼 */
     public void OnClickStartGame()
     {
-        Debug.Log("���� ���� ��ư Ŭ��! �̵��� ��: " + gameSceneName);
-
-        // �� �̸��� ������� �ʴٸ� �̵�
-        if (!string.IsNullOrEmpty(gameSceneName))
-        {
-            SceneManager.LoadScene(gameSceneName);
-        }
-        else
-        {
-            Debug.LogError("�̵��� �� �̸��� �������� �ʾҽ��ϴ�! GameManager�� Ȯ�����ּ���.");
-        }
+        stageManager.StartGame();
     }
 
-    // ���� ���� ��ư
+    /* 게임 종료 버튼 */
     public void OnClickExitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
-        Debug.Log("���� ����");
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                    Application.Quit();
+        #endif
+        Debug.Log("게임이 종료 되었습니다");
     }
-    [Header("���� â �г�(UI)�� ���⿡ �����ϼ���")]
-    public GameObject settingsPanel; // ���� â ������Ʈ�� ���� ����
 
-    // 1. ���� ��ư�� ������ �� -> â �ѱ�
+    /* 설정 창 팝업 띄우기 */
     public void OnClickOpenSettings()
     {
         settingsPanel.SetActive(true);
     }
 
-    // 2. �ݱ� ��ư�� ������ �� -> â ����
+    /* 설정 창 팝업 끄기 */
     public void OnClickCloseSettings()
     {
         settingsPanel.SetActive(false);
     }
-    [Header("����� �ͼ� ����")]
-    public AudioMixer audioMixer; // �Ʊ� ���� MainMixer ���� ��
 
-    [Header("�����̴� ����")]
-
-    public Slider masterVolumeSlider; // �����̴� UI ���� ��
-
-
-
-    // �����̴��� ������ ������ �� �Լ��� �����
+    /* 마스터 볼륨 슬라이더 */
     public void SetMasterVolume(float sliderValue)
     {
-        // �����̴� ��(0.0001 ~ 1)�� ���ú�(-80 ~ 0)�� ��ȯ�ϴ� ����
-        // �α�(Log10)�� ��� �ڿ������� �پ��ϴ�.
+        // 오디오 믹서의 0dB ~ -80dB 값을 0~1 사이 값으로 바꿔줌
         float volume = Mathf.Log10(sliderValue) * 20;
 
-        // "Master"�� �Ʊ� 2�ܰ迡�� ������ �� �̸��Դϴ�!
+        // "Master" 오디오 믹서 값을 volume으로 설정
         audioMixer.SetFloat("Master", volume);
+    }
+
+    /* 게임 설정: 전체 화면 */
+    public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
     }
 }

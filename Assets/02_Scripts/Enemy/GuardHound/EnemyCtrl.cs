@@ -47,6 +47,7 @@ public class EnemyCtrl : MonoBehaviour
         navi = GetComponent<NavMeshAgent>();
         enemyTr = transform;
         playerTr = GameObject.FindWithTag("Player")?.transform;
+        lockZ = gameObject.transform.position.z;
 
         if (navi != null)
         {
