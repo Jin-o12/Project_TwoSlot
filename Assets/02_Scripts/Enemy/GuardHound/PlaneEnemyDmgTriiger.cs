@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class PlaneEnemyDmgTrigger : MonoBehaviour
 {
-    public int hpInit = 100;
+    public int maxHp = 100;
     public int hp;
-    public bool isDie = false;
 
     private Animator animator;
 
@@ -13,8 +12,6 @@ public class PlaneEnemyDmgTrigger : MonoBehaviour
 
     void Awake()
     {
-        hp = hpInit;
-
         // Animator 안전하게
         animator = GetComponentInChildren<Animator>();
 
