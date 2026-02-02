@@ -4,115 +4,218 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip fireClip;
-    //public Animation fireAni;
+    [Header("총 오브젝트 이름")]
+    public string gunName;
+
     [Header("Refs")]
-    public Transform barrel;                 // Barrel_Location
-    public GameObject bulletPrefab;          // Bullet 프리팹
-    public ParticleSystem shootVfx;          // 발사 이펙트(파티클)
+    public Camera cam;
+    public Transform barrel;
+    public GameObject bulletPrefab;
+    public Transform gunObject;
+
+    [Header("Targeting")]
+    public LayerMask enemyMask;          // ENEMY
+    public LayerMask worldMask = ~0;
+    public float maxDistance = 200f;
+
+    [Header("2.5D")]
+    public float defaultCombatZ;
 
     [Header("Shoot")]
     public float bulletSpeed = 40f;
     public float fireCooldown = 0.1f;
+    public float spawnForwardOffset = 0.6f;
 
     [Header("Ammo")]
     public int maxAmmo = 10;
-    public float reloadTime = 1.0f;
+    public int currentAmmo = 10;
+    public float reloadTime = 1.5f;   // 재장전 시간
+    bool isReloading = false;
 
-    int currentAmmo;
-    bool isReloading;
-    float lastFireTime;
+    [Header("VFX / SFX")]
+    public AudioSource audioSource;
+    public AudioClip fireClip;
+    public ParticleSystem muzzleFlash;
+
+    float lastFire;
+    bool fireLocked;
+    public void LockFire(float sec)
+    {
+        CancelInvoke(nameof(UnlockFire));
+        fireLocked = true;
+        Invoke(nameof(UnlockFire), sec);
+    }
+    void UnlockFire() => fireLocked = false;
 
     void Awake()
     {
-        currentAmmo = maxAmmo;
+        if (cam == null) cam = Camera.main;
+        if (currentAmmo <= 0) currentAmmo = maxAmmo; // 시작 시 보정
+
+        // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
+        if(gunObject==null) gunObject = FindChildByName(transform, gunName);
+        audioSource = gunObject.GetComponent<AudioSource>();
+        muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        barrel = gunObject.transform;
+
+        // 플레이어와 Z 값 맞춤
+        defaultCombatZ = gameObject.transform.position.z;
+    }
+
+    /* 자식 오브젝트 중 특정 이름의 오브젝트를 가져오는 코드 */
+    Transform FindChildByName(Transform parent, string nameToFind)
+    {
+        Transform[] allChildren = parent.GetComponentsInChildren<Transform>(true);
+
+        // 자식 오브젝트를 순회하며 해당 이름의 오브젝트를 찾음
+        foreach (Transform child in allChildren)
+        {
+            if (child.name == nameToFind)
+            {
+                return child;
+            }
+        }
+        // 없을 시 null 반환
+        Debug.Log($"GunFire.cs: {transform.name} 오브젝트 하위에 {nameToFind}가 존재하지 않습니다.");
+        return null;
     }
 
     void Update()
     {
+        if (InputPauseManager.IsPaused) return;
+        // ✅ 단발: 클릭 1번에 1발
         if (Input.GetMouseButtonDown(0))
         {
-            TryShoot();
+            TryFire();
         }
     }
 
-    void TryShoot()
+    void TryFire()
     {
-        
+        if (fireLocked) return;
+        // 재장전 중이면 발사 불가
         if (isReloading) return;
 
-        // 쿨다운
-        if (Time.time - lastFireTime < fireCooldown) return;
-
-        // 탄이 없으면 자동 장전
+        // 탄 없으면 자동 리로드
         if (currentAmmo <= 0)
         {
             StartCoroutine(Reload());
             return;
         }
 
+        if (Time.time - lastFire < fireCooldown) return;
+
+        lastFire = Time.time;
+        currentAmmo--;
+
         Fire();
+
+    // 마지막 탄 쏜 직후에도 자동 리로드
+    if (currentAmmo <= 0)
+    {
+        StartCoroutine(Reload());
+    }
     }
 
     void Fire()
     {
-        
-        lastFireTime = Time.time;
-        audioSource.PlayOneShot(fireClip, 1.0f);
-        //fireAni.Play("fire");
-        // 1발 감소
-        currentAmmo--;
+        if (!cam || !barrel || !bulletPrefab) return;
 
-        // 총알 생성
-        Vector3 spawnPos = barrel.position + barrel.forward * 0.2f;
+        Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
 
-        GameObject b = Instantiate(bulletPrefab, spawnPos, barrel.rotation);
-        // 총구 방향(Barrel_Location의 파란축 forward 기준)
-        var bulletCol = b.GetComponent<Collider>();
+        float targetZ = defaultCombatZ;
+        bool hasEnemyHit = Physics.Raycast(mouseRay, out RaycastHit enemyHit, maxDistance, enemyMask);
+        if (hasEnemyHit)
+            targetZ = enemyHit.collider.transform.position.z;
+        else
+            targetZ = FindNearestEnemyZ(barrel.position, 20f);
 
-        if (bulletCol != null)
+        Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, targetZ));
+        Vector3 aimPoint;
+        if (!plane.Raycast(mouseRay, out float enter))
         {
-            foreach (var col in GetComponentsInParent<Collider>())
-            {
-                if (col != null)
-                Physics.IgnoreCollision(bulletCol, col, true);
-            }
+            aimPoint = barrel.position + barrel.forward * 10f;
+            aimPoint.z = targetZ;
         }
-        Rigidbody rb = b.GetComponent<Rigidbody>();
-        if (rb != null)
+        else
         {
-            rb.velocity = barrel.forward * bulletSpeed; // Unity 6+면 linearVelocity, 구버전이면 velocity
-        
+            aimPoint = mouseRay.GetPoint(enter);
         }
 
-        // 발사 이펙트 1회 재생
-        
-        if (shootVfx != null)
+        Vector3 dir = (aimPoint - barrel.position);
+        dir.z = 0f;
+        if (dir.sqrMagnitude < 0.000001f) return;
+        dir.Normalize();
+
+        Vector3 spawnPos = barrel.position + dir * spawnForwardOffset;
+        spawnPos.z = targetZ;
+
+        GameObject b = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(dir, Vector3.forward));
+
+        var lockZ = b.GetComponent<LockZ>();
+        if (lockZ != null) lockZ.fixedZ = targetZ;
+
+        IgnoreMyColliders(b);
+
+        if (b.TryGetComponent<Rigidbody>(out var rb))
         {
-            shootVfx.Clear(true);
-            shootVfx.Play(true);
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rb.velocity = dir * bulletSpeed;
         }
 
-        // 탄이 0이 되면 즉시 자동 장전 시작(원하면 즉시/지연 선택 가능)
-        if (currentAmmo <= 0)
-        {
-            StartCoroutine(Reload());
-        }
+        // ✅ 이펙트/사운드는 발사 성공 시에만 1번 실행
+        if (audioSource != null && fireClip != null)
+            audioSource.PlayOneShot(fireClip);
 
-        // 디버그
-        // Debug.Log($"Ammo: {currentAmmo}/{maxAmmo}");
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            muzzleFlash.Simulate(0f, true, true, true);
+            muzzleFlash.Play(true);
+        }
     }
 
-    IEnumerator Reload()
+    float FindNearestEnemyZ(Vector3 origin, float radius)
     {
-        if (isReloading) yield break;
-        isReloading = true;
+        Collider[] cols = Physics.OverlapSphere(origin, radius, enemyMask);
+        if (cols == null || cols.Length == 0) return defaultCombatZ;
 
-        // 여기서 재장전 애니/사운드 트리거 가능
-        yield return new WaitForSeconds(reloadTime);
+        float bestZ = cols[0].transform.position.z;
+        float best = float.MaxValue;
 
-        currentAmmo = maxAmmo;
-        isReloading = false;
+        foreach (var c in cols)
+        {
+            float dz = Mathf.Abs(c.transform.position.z - origin.z);
+            if (dz < best)
+            {
+                best = dz;
+                bestZ = c.transform.position.z;
+            }
+        }
+        return bestZ;
+    }
+
+    void IgnoreMyColliders(GameObject bullet)
+    {
+        var bulletCol = bullet.GetComponent<Collider>();
+        if (bulletCol == null) return;
+
+        foreach (var col in GetComponentsInParent<Collider>())
+        {
+            if (col != null) Physics.IgnoreCollision(bulletCol, col, true);
+        }
+    }
+    System.Collections.IEnumerator Reload()
+    {
+    if (isReloading) yield break;
+
+    isReloading = true;
+
+    // 여기서 리로드 사운드/애니 넣어도 됨
+
+    yield return new WaitForSeconds(reloadTime);
+
+    currentAmmo = maxAmmo;
+    isReloading = false;
     }
 }

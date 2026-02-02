@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AimAndFlip : MonoBehaviour
 {
-
+    public Vector3 AimWorldPoint { get; private set; }
     [Header("Refs")]
     public Camera cam;
     public Transform playerRoot;      // 캐릭터 전체를 뒤집을 루트 (Yaw 180)
@@ -26,15 +26,20 @@ public class AimAndFlip : MonoBehaviour
     // 내부 상태: 현재 캐릭터가 +X를 바라보는지(-X를 바라보는지)
     // +X면 facing = +1, -X면 facing = -1
     int facing = 1;
+    public int Facing => facing; // +1이면 오른쪽, -1이면 왼쪽(마우스 보는 방향)
     public float bodyTurnSpeed = 15f;
+    public bool IsDead { get; set; }
     void Awake()
     {
         if (!cam) cam = Camera.main;
         if (!playerRoot) playerRoot = transform;
+        aimPlaneZ = transform.position.z;
     }
 
     void LateUpdate()
     {
+        if (InputPauseManager.IsPaused) return;
+        if (IsDead) return;
         if (!cam || !playerRoot || !aimPivot || !ikTarget) return;
 
         // 1) 마우스를 월드로 (Z 평면 투영)
@@ -42,6 +47,7 @@ public class AimAndFlip : MonoBehaviour
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, aimPlaneZ));
         if (!plane.Raycast(ray, out float enter)) return;
         Vector3 mouseWorld = ray.GetPoint(enter);
+        AimWorldPoint = mouseWorld;
 
         // 2) pivot -> mouse 방향 (2D)
         Vector3 dir = mouseWorld - aimPivot.position;
