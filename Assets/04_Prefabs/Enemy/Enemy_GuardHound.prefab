@@ -1945,11 +1945,11 @@ MonoBehaviour:
   hitboxOnTime: 0.2
   playerLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   recoilDistance: 1
   recoilDuration: 0.12
   debugLog: 0
---- !u!114 &2296432061364746316
+--- !u!114 &9149514894186390466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
