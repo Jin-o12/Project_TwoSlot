@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5024575191702149347}
   - component: {fileID: 1230945687863078221}
   - component: {fileID: 4454286144416556738}
-  - component: {fileID: -7641925359361943845}
-  - component: {fileID: 2086580471083351900}
   m_Layer: 0
   m_Name: Gun Bullet
   m_TagString: Untagged
@@ -77,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86ef8b5838b5da43b6e2bae2b143f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 10
   lifeTime: 3
   speed: 10
 --- !u!96 &4454286144416556738
@@ -184,42 +182,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-7641925359361943845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4359504537769667221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963657941ce5ce74c8299abecac2f6ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixedZ: 0
---- !u!136 &2086580471083351900
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4359504537769667221}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.005
-  m_Height: 0.03
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.0136007285}
 --- !u!1001 &7763692259527686948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,10 +193,6 @@ PrefabInstance:
     - target: {fileID: 4362657251999731927, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
       propertyPath: m_Name
       value: 45ACP Bullet_Casing
-      objectReference: {fileID: 0}
-    - target: {fileID: 8109287143504409806, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8698172140991394757, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
       propertyPath: m_RootOrder
@@ -284,9 +242,7 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8819463411033753325, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
-    - {fileID: 8109287143504409806, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -304,14 +260,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2411981134277953500}
     m_Modifications:
-    - target: {fileID: 1329286381489647958, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1329286381489647958, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1773974481383211893, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -364,9 +312,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: UCP45 Bullet Head
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1773974481383211893, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
-    - {fileID: 1329286381489647958, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

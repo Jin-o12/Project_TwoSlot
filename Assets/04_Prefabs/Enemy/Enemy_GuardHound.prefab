@@ -1803,7 +1803,7 @@ GameObject:
   - component: {fileID: 791608432768917342}
   - component: {fileID: 396965048116946092}
   - component: {fileID: 4722212309635945363}
-  - component: {fileID: 9149514894186390466}
+  - component: {fileID: 2296432061364746316}
   m_Layer: 7
   m_Name: Enemy_GuardHound
   m_TagString: ENEMY
@@ -1958,13 +1958,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3635079647430067699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff369c452b6dd7844b73a3d7a9886337, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpInit: 100
-  hp: 0
-  isDie: 0
-  boxCol: {fileID: 4323793743331943132}
+  maxHp: 100
 --- !u!1 &3686083063275687073
 GameObject:
   m_ObjectHideFlags: 0

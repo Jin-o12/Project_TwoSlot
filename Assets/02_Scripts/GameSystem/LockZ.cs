@@ -5,15 +5,11 @@ using UnityEngine;
 public class LockZ : MonoBehaviour
 {
     public float fixedZ;
-    Rigidbody rb;
 
-    void Awake() => rb = GetComponent<Rigidbody>();
-
-    void FixedUpdate()
+    void LateUpdate()
     {
-        if (!rb) return;
-
-        var p = rb.position; p.z = fixedZ; rb.position = p;
-        var v = rb.velocity; v.z = 0f; rb.velocity = v;
+        var p = transform.position;
+        p.z = fixedZ;
+        transform.position = p;
     }
 }
