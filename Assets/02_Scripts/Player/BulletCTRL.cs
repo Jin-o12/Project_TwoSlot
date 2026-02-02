@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class BulletCtrl : MonoBehaviour
 {
-   public int damage = 1;
+    public int damage = 1;
     public float lifeTime = 3f;
+    public float speed = 10.0f;
 
     bool dead;
 
-    void Start() => Destroy(gameObject, lifeTime);
+    void Start()
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        Destroy(gameObject, lifeTime);
+    }
+    
 
     void OnCollisionEnter(Collision c)
     {

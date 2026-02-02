@@ -19,7 +19,7 @@ public class PlayerPotionUse : MonoBehaviour
     {
         // ✅ 좌클릭 입력 확인(디버그)
         if (Input.GetMouseButtonDown(0))
-            Debug.Log($"[Click] 감지됨 / mode={inv?.activeMode} / item={inv?.GetSelectedItem()}");
+            //Debug.Log($"[Click] 감지됨 / mode={inv?.activeMode} / item={inv?.GetSelectedItem()}");
 
         if (!Input.GetMouseButtonDown(0)) return;
         if (inv == null || hp == null) return;

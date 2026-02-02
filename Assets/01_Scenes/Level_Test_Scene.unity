@@ -13338,6 +13338,10 @@ PrefabInstance:
       propertyPath: hpText
       value: 
       objectReference: {fileID: 1800377188}
+    - target: {fileID: 5564705116494574469, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -2945409431951129265, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 64.7
@@ -13382,6 +13386,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: runFootstepClip.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: walkFootstepClip.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: runFootstepClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 764f3048494a9024881c802abe8df649, type: 3}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: walkFootstepClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fafa436656f292b41ace9013e0abd4a9, type: 3}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: walkFootstepClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ba835e6b03f5e8c47bc80f9a77615bd7, type: 3}
+    - target: {fileID: 8518714322319974980, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+      propertyPath: walkFootstepClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: fdd998cfaf6089d4b85285bb85462e8f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    [Header("컴포넌트")]
+    private AudioSource audioSource;
+
     [Header("HP")]
     public int maxHp = 100;
     public int hp;
@@ -31,15 +34,19 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     void Awake()
     {
-        hp = maxHp;
-
         if (!animator) animator = GetComponentInChildren<Animator>();
         if (!gunFire) gunFire = GetComponentInChildren<GunFire>();
         if (!playerMove) playerMove = GetComponent<PlayerMove>();
         if (!inventory) inventory = GetComponent<Inventory2Slots>();
         if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
 
         UpdateHPUI();
+    }
+
+    void Start()
+    {
+        hp = maxHp;
     }
 
     public void TakeDamage(int dmg)
@@ -55,11 +62,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             return;
         }
 
-        // ✅ Hit 애니
+        // Hit 애니
         if (animator && !string.IsNullOrEmpty(hitTrigger))
             animator.SetTrigger(hitTrigger);
 
-        // ✅ 0.5초 발사 금지
+        // 0.5초 발사 금지
         gunFire?.LockFire(0.5f);
     }
 
@@ -74,21 +81,21 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (isDead) return;
         isDead = true;
 
-        // ✅ 에임/IK 정지
+        // 에임/IK 정지
         if (aimAndFlip) aimAndFlip.IsDead = true;
         if (rig) rig.weight = 0f;
         if (rigBuilder) rigBuilder.enabled = false;
 
-        // ✅ 입력/전투/인벤 중단
+        // 입력/전투/인벤 중단
         if (gunFire) gunFire.enabled = false;
         if (inventory) inventory.enabled = false;
 
-        // ✅ 이동/사운드 중단
+        // 이동/사운드 중단
         if (playerMove)
         {
             playerMove.enabled = false;
-            if (playerMove.audioSource)
-                playerMove.audioSource.Stop();
+            if (audioSource)
+                audioSource.Stop();
         }
 
         // ✅ 죽음 애니
