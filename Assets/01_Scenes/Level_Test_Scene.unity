@@ -8912,8 +8912,8 @@ MonoBehaviour:
   Lookup: 119
   Shoot: 323
   UseItem: 324
-  Slot1: 49
-  Slot2: 50
+  Slot1Key: 113
+  Slot2Key: 101
 --- !u!4 &1230473302
 Transform:
   m_ObjectHideFlags: 0
@@ -9512,7 +9512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: playerLayer.m_Bits
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5636916723933723154, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: m_Layer
@@ -12834,104 +12834,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
   m_PrefabInstance: {fileID: 3976618100984294129}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &2066094203 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5564705116494574469, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 3976618100984294129}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2066094205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656216275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slot1: {fileID: 0}
-  slot2: {fileID: 0}
-  slot1Icon: {fileID: 1949720780}
-  slot2Icon: {fileID: 536467256}
-  selectedSlot: 1
-  dropPoint: {fileID: 1718376820}
-  activeMode: 0
-  selectingItem: 0
-  slot1Key: 113
-  slot2Key: 101
---- !u!114 &2066094206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656216275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5dc0caad32d20459c79316d709105a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inv: {fileID: 2066094205}
-  noiseBombItem: {fileID: 11400000, guid: 409b8c9bc1a90f84c9dd87f929c20f98, type: 2}
-  noiseBombPrefab: {fileID: 4106814457344636235, guid: 8c199d6252975fe4da7f14316296ad94, type: 3}
-  throwPoint: {fileID: 545380296}
-  spawnForwardOffset: 0.6
-  spawnUpOffset: 1.2
-  minThrowForce: 6
-  maxThrowForce: 16
-  minUpwardForce: 1.5
-  maxUpwardForce: 3.5
-  minAimDistance: 1.5
-  maxAimDistance: 10
-  useMouseAim: 1
-  aimCamera: {fileID: 564431115}
-  ignoreOwnerColliders: 1
---- !u!114 &2066094207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656216275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d21269f3c858a0b48b6765a67759ead5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inv: {fileID: 2066094205}
-  flareGunItem: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
-  flareProjectile: {fileID: 5400000, guid: c8feb458f956e804e96677c55ad05416, type: 3}
-  muzzle: {fileID: 756422886}
-  spawnForwardOffset: 0.6
-  spawnUpOffset: 1.2
-  shootForce: 35
-  forceMode: 2
-  forceFlatForward: 1
-  useFacingByLocalScaleX: 0
-  rightDir: {x: 1, y: 0, z: 0}
-  leftDir: {x: -1, y: 0, z: 0}
-  muzzleParticles: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}
-  audioSource: {fileID: 2066094203}
-  shotSound: {fileID: 8300000, guid: 0f01458ab91c1ac4883d0e6e549bff26, type: 3}
-  ignoreOwnerColliders: 1
---- !u!114 &2066094208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656216275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f79ab5613d9d724d95b4c8ec4f054a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inv: {fileID: 2066094205}
-  hp: {fileID: 1957670590}
-  energyDrinkItem: {fileID: 11400000, guid: a920428107d2f3b459a126e7d58183ef, type: 2}
-  healAmount: 25
 --- !u!1001 &467338350716574926
 PrefabInstance:
   m_ObjectHideFlags: 0
