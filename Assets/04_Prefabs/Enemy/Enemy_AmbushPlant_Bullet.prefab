@@ -27,7 +27,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_GameObject: {fileID: 2943000544469367980}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
@@ -178,22 +177,12 @@ Transform:
   m_GameObject: {fileID: 3613977975224282027}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
-=======
-  m_GameObject: {fileID: 1782395880954752}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   - {fileID: 8698693726716394947}
   m_Father: {fileID: 3360399981063478900}
-=======
-  - {fileID: 4615767745696060}
-  m_Father: {fileID: 0}
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &1846002718576556122
 ParticleSystem:
@@ -201,7 +190,6 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_GameObject: {fileID: 3613977975224282027}
   serializedVersion: 8
   lengthInSec: 0.25
@@ -211,17 +199,6 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-=======
-  m_GameObject: {fileID: 1782395880954752}
-  serializedVersion: 8
-  lengthInSec: 0.1
-  simulationSpeed: 1
-  stopAction: 0
-  cullingMode: 3
-  ringBufferMode: 0
-  ringBufferLoopRange: {x: 0, y: 1}
-  emitterVelocityMode: 1
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   looping: 0
   prewarm: 0
   playOnAwake: 0
@@ -290,11 +267,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
       scalar: 0.25
-=======
-      scalar: 0.05
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -728,11 +701,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
     maxNumParticles: 20
-=======
-    maxNumParticles: 1000
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -998,11 +967,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
       scalar: 1
-=======
-      scalar: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1112,13 +1077,8 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
         scalar: 20
         minScalar: 20
-=======
-        scalar: 1
-        minScalar: 30
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -1129,13 +1089,8 @@ ParticleSystem:
             outSlope: 0
             tangentMode: 0
             weightedMode: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
             inWeight: 0.33333334
             outWeight: 0.33333334
-=======
-            inWeight: 0
-            outWeight: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
           - serializedVersion: 3
             time: 1
             value: 1
@@ -1143,13 +1098,8 @@ ParticleSystem:
             outSlope: 0
             tangentMode: 0
             weightedMode: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
             inWeight: 0.33333334
             outWeight: 0.33333334
-=======
-            inWeight: 0
-            outWeight: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
@@ -1163,13 +1113,8 @@ ParticleSystem:
             outSlope: 0
             tangentMode: 0
             weightedMode: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
             inWeight: 0.33333334
             outWeight: 0.33333334
-=======
-            inWeight: 0
-            outWeight: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
           - serializedVersion: 3
             time: 1
             value: 1
@@ -1177,13 +1122,8 @@ ParticleSystem:
             outSlope: 0
             tangentMode: 0
             weightedMode: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
             inWeight: 0.33333334
             outWeight: 0.33333334
-=======
-            inWeight: 0
-            outWeight: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
@@ -1558,11 +1498,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_ColorSpace: -1
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
         m_NumColorKeys: 3
-=======
-        m_NumColorKeys: 2
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -5018,6 +4954,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5058,11 +4995,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_UseCustomVertexStreams: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_VertexStreams: 0001030405
-=======
-  m_VertexStreams: 00010304
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
@@ -5194,7 +5127,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_GameObject: {fileID: 6155939255118160217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -5205,28 +5137,12 @@ Transform:
   m_Father: {fileID: 5843929790395905925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &8160833040108721329
-=======
-  m_GameObject: {fileID: 1845643716156742}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0.14}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4977485751071522}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!198 &198671031628235618
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_GameObject: {fileID: 6155939255118160217}
-=======
-  m_GameObject: {fileID: 1845643716156742}
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   serializedVersion: 8
   lengthInSec: 0.1
   simulationSpeed: 1
@@ -5737,11 +5653,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
     maxNumParticles: 50
-=======
-    maxNumParticles: 1000
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -6117,13 +6029,8 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
         scalar: 50
         minScalar: 50
-=======
-        scalar: 1
-        minScalar: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -6543,13 +6450,8 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_ColorSpace: -1
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
         m_NumColorKeys: 4
         m_NumAlphaKeys: 2
-=======
-        m_NumColorKeys: 2
-        m_NumAlphaKeys: 4
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10003,12 +9905,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   - {fileID: 2100000, guid: 424be3af6ad117140887d3e652a89d24, type: 2}
   - {fileID: 0}
-=======
-  - {fileID: 2100000, guid: 3b9b73bdf59096b4f8ca30c0a5d98a45, type: 2}
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10049,11 +9947,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_UseCustomVertexStreams: 0
-<<<<<<< HEAD:Assets/04_Prefabs/Enemy/Enemy_AmbushPlant_Bullet.prefab
   m_VertexStreams: 0001030405
-=======
-  m_VertexStreams: 00010304
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Effects/MuzzleFlash.prefab
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}

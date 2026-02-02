@@ -2,71 +2,13 @@ fileFormatVersion: 2
 guid: 4e40d0d8064bab34e8723729cd5c0b75
 ModelImporter:
   serializedVersion: 22200
-<<<<<<< HEAD:Assets/03.Resource/Animation/Animation Clips/@Flying Back Death.fbx.meta
   internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
-=======
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: Pistol_45ACP_Bullet
-  - first:
-      1: 100004
-    second: Pistol_45ACP_Case
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: Pistol_45ACP_Bullet
-  - first:
-      4: 400004
-    second: Pistol_45ACP_Case
-  - first:
-      21: 2100000
-    second: Pistol_45mm
-  - first:
-      23: 2300000
-    second: Pistol_45ACP_Bullet
-  - first:
-      23: 2300002
-    second: Pistol_45ACP_Case
-  - first:
-      23: 2300004
-    second: //RootNode
-  - first:
-      33: 3300000
-    second: Pistol_45ACP_Bullet
-  - first:
-      33: 3300002
-    second: Pistol_45ACP_Case
-  - first:
-      33: 3300004
-    second: //RootNode
-  - first:
-      43: 4300000
-    second: Pistol_45ACP_Case
-  - first:
-      43: 4300002
-    second: Pistol_45ACP_Bullet
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pistol_45mm
-    second: {fileID: 2100000, guid: 4b40dbb00777f2141a8ff7278f450856, type: 2}
-  materials:
-    materialImportMode: 1
-    materialName: 2
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Meshes/45ACP Bullet.fbx.meta
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -100,19 +42,11 @@ ModelImporter:
     sortHierarchyByName: 1
     importPhysicalCameras: 1
     importVisibility: 1
-<<<<<<< HEAD:Assets/03.Resource/Animation/Animation Clips/@Flying Back Death.fbx.meta
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
-=======
-    importBlendShapes: 0
-    importCameras: 0
-    importLights: 0
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Meshes/45ACP Bullet.fbx.meta
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -129,11 +63,7 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-<<<<<<< HEAD:Assets/03.Resource/Animation/Animation Clips/@Flying Back Death.fbx.meta
     secondaryUVMarginMethod: 1
-=======
-    secondaryUVMarginMethod: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Meshes/45ACP Bullet.fbx.meta
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
@@ -148,11 +78,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-<<<<<<< HEAD:Assets/03.Resource/Animation/Animation Clips/@Flying Back Death.fbx.meta
   importAnimation: 1
-=======
-  importAnimation: 0
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Meshes/45ACP Bullet.fbx.meta
   humanDescription:
     serializedVersion: 3
     human: []
@@ -171,21 +97,12 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-<<<<<<< HEAD:Assets/03.Resource/Animation/Animation Clips/@Flying Back Death.fbx.meta
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
-=======
-  animationType: 0
-  humanoidOversampling: 1
-  avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
->>>>>>> Master:Assets/07.TestFiles/03.Resource/Gun/Modern Guns - Handgun/Meshes/45ACP Bullet.fbx.meta
   additionalBone: 0
   userData: 
   assetBundleName: 

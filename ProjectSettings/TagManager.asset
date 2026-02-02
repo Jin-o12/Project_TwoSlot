@@ -3,31 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - CinemachineTarget
-  - ENEMY
-  - Watcher
-<<<<<<< HEAD
-  - Gun
-  - Shell
-=======
-  - ITEM
->>>>>>> Master
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PLAYER
+  - 
   - Water
   - UI
-<<<<<<< HEAD
-  - BULLET
-=======
-  - Bullet
->>>>>>> Master
-  - ENEMY
-  - ENEMY ATTACK
-  - ITEM
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
