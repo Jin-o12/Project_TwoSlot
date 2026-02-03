@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2000762267682521237, guid: e8af7ffc54c8af84983c706c94f73a6f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5039712834798430271, guid: e8af7ffc54c8af84983c706c94f73a6f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -497,9 +501,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8082623572092511403, guid: e8af7ffc54c8af84983c706c94f73a6f, type: 3}
-      propertyPath: gameSceneName
-      value: Level_Test_Scene
+    - target: {fileID: 5986115284207370449, guid: e8af7ffc54c8af84983c706c94f73a6f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519083637034535851, guid: e8af7ffc54c8af84983c706c94f73a6f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

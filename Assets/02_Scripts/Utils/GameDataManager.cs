@@ -22,6 +22,8 @@ public class GameDataManager : MonoBehaviour
         if(Instance==null)
         {
             Instance = this;
+            // 부모가 있다면 부모 해제 후 보존 (싱글톤이 상속되어 있기 때문에 안전장치 추가)
+            transform.SetParent(null);
             // 씬이 바뀌어도 파괴되지 않음
             DontDestroyOnLoad(gameObject);
         }

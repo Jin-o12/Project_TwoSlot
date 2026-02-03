@@ -1,3 +1,6 @@
+/// <summary>
+/// MainmenuScene의 모든 상호작용을 관리함
+/// </summary>
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -19,7 +22,7 @@ public class MainMenuManager : MonoBehaviour
 
     void Awake()
     {
-        stageManager = StageManager.Instance;
+        if(!stageManager) stageManager = StageManager.Instance;
     }
 
     void Start()
