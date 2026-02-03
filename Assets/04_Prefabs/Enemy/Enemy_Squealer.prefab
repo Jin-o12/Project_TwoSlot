@@ -617,3 +617,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
+  audioSource: {fileID: 0}
+  dieClip: {fileID: 0}
