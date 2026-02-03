@@ -15,7 +15,7 @@ public class GunFire : MonoBehaviour
 
     [Header("Targeting")]
     public LayerMask enemyMask;             // 레이어: ENEMY
-    public float maxDistance = 200f;        // 탄환 z축 보정 최댓값
+    public float maxDistance = 20f;        // 탄환 z축 보정 최댓값
 
     [Header("2.5D")]
     public float defaultCombatZ;            //
@@ -29,12 +29,13 @@ public class GunFire : MonoBehaviour
     public int magSize = 10;                // 탄창 크기
     public int maxAmmo = 30;                // 최대 총알
     public int currentAmmo = 10;            // 현재 총알
-    public float reloadTime = 1.5f;         // 재장전 시간
+    public float reloadTime = 2.3f;         // 재장전 시간
     bool isReloading = false;
 
     [Header("VFX / SFX")]
     public AudioSource audioSource;
     public AudioClip fireClip;
+    public AudioClip reloadClip;
     public ParticleSystem muzzleFlash;
 
     float lastFire;
@@ -62,7 +63,7 @@ public class GunFire : MonoBehaviour
 
         // 총 발사에 관한 변수들 일관 초기화
         bulletSpeed = 40f;
-        fireCooldown = 0.1f;
+        fireCooldown = 0.25f;
         spawnForwardOffset = 0.6f;
     }
 
@@ -84,7 +85,7 @@ public class GunFire : MonoBehaviour
         return null;
     }
 
-    /* 게임 시작시 총 관련 수치 초기화 */
+    /* 게임 시작시 총알 수 초기화 */
     public void InitializedGun()
     {
         currentAmmo = Mathf.Clamp(currentAmmo, 0, magSize);
@@ -182,7 +183,7 @@ public class GunFire : MonoBehaviour
 
         // ✅ 이펙트/사운드는 발사 성공 시에만 1번 실행
         if (audioSource != null && fireClip != null)
-            audioSource.PlayOneShot(fireClip);
+            audioSource.PlayOneShot(fireClip, 0.55f);
 
         if (muzzleFlash != null)
         {
@@ -231,7 +232,7 @@ public class GunFire : MonoBehaviour
         if (currentAmmo >= magSize) yield break;
 
         isReloading = true;
-
+        audioSource.PlayOneShot(reloadClip, 1f);
         // 여기서 리로드 사운드/애니 넣어도 됨
 
         yield return new WaitForSeconds(reloadTime);

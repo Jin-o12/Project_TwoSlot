@@ -951,15 +951,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1277,6 +1277,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fdd998cfaf6089d4b85285bb85462e8f, type: 3}
   runFootstepClip:
   - {fileID: 8300000, guid: 764f3048494a9024881c802abe8df649, type: 3}
+  - {fileID: 8300000, guid: f7ba93ce1cb3e8c41af42d0fecfbd45c, type: 3}
+  - {fileID: 8300000, guid: 099005aa07afdbe46976cf3812ec352b, type: 3}
+  - {fileID: 8300000, guid: 5eee621ec736a8a4abfd2e9b276a8b53, type: 3}
   footstepMinSpeed: 0.2
   walkStepInterval: 0.5
   runStepInterval: 0.4
@@ -1300,7 +1303,7 @@ MonoBehaviour:
   playerRoot: {fileID: 6629044155553934615}
   aimPivot: {fileID: 6629044155553934609}
   ikTarget: {fileID: 7043388730541974759}
-  aimPlaneZ: -2
+  aimPlaneZ: 7.5
   targetDistance: 1.2
   maxArmAngle: 180
   flipHysteresis: 5
@@ -1319,10 +1322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ab5b43658e1604b9ff69ab0affce21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitClip: {fileID: 8300000, guid: 582a970523671434b8252db96db91d25, type: 3}
   maxHp: 100
   hp: 0
-  hpFill: {fileID: 0}
-  hpText: {fileID: 0}
   gunFire: {fileID: 0}
   rig: {fileID: 7282252910845497239}
   hitTrigger: Hit
@@ -1341,7 +1343,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot1: {fileID: 0}
   slot2: {fileID: 0}
-  slotIcon: {fileID: 0}
+  slotIcon1: {fileID: 0}
+  slotIcon2: {fileID: 0}
   selectedSlot: 1
   dropPoint: {fileID: 6259517043618871549}
   activeMode: 0
@@ -1360,8 +1363,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
   hp: {fileID: 0}
-  energyDrinkItem: {fileID: 0}
+  energyDrinkItem: {fileID: 11400000, guid: 9cc4070311001d34097d7851b1541cd7, type: 2}
   healAmount: 25
+  openSound: {fileID: 8300000, guid: 8813de00e113069479fa7b7967e56b25, type: 3}
 --- !u!114 &1334999349548124196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
-  noiseBombItem: {fileID: 0}
+  noiseBombItem: {fileID: 11400000, guid: 409b8c9bc1a90f84c9dd87f929c20f98, type: 2}
   noiseBombPrefab: {fileID: 4106814457344636235, guid: 8c199d6252975fe4da7f14316296ad94, type: 3}
   throwPoint: {fileID: 5710466545236975131}
   spawnForwardOffset: 0.6
@@ -1438,16 +1442,18 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 128
-  maxDistance: 200
+  maxDistance: 20
   defaultCombatZ: 0
   bulletSpeed: 40
-  fireCooldown: 0.1
+  fireCooldown: 0.25
   spawnForwardOffset: 0.6
+  magSize: 10
   maxAmmo: 10
   currentAmmo: 10
-  reloadTime: 1.5
+  reloadTime: 2.3
   audioSource: {fileID: 0}
   fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
+  reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
   muzzleFlash: {fileID: 0}
 --- !u!1001 &9076194093080187485
 PrefabInstance:

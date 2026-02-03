@@ -329,9 +329,9 @@ MonoBehaviour:
   shootForce: 35
   forceMode: 1
   muzzleParticles: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}
-  audioSource: {fileID: 0}
-  shotSound: {fileID: 0}
-  anim: {fileID: 0}
+  audioSource: {fileID: 4169424507580016564}
+  shotSound: {fileID: 8300000, guid: 0f01458ab91c1ac4883d0e6e549bff26, type: 3}
+  anim: {fileID: 6243335020048011625}
 --- !u!82 &4169424507580016564
 AudioSource:
   m_ObjectHideFlags: 0
