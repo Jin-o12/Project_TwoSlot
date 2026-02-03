@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3039400410434646099}
   - component: {fileID: -6790587370077466822}
   m_Layer: 0
-  m_Name: GlowBullet
+  m_Name: FlareGunBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

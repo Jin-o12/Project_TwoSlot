@@ -1437,7 +1437,7 @@ MonoBehaviour:
   gunObject: {fileID: 0}
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   maxDistance: 200
   defaultCombatZ: 0
   bulletSpeed: 40
