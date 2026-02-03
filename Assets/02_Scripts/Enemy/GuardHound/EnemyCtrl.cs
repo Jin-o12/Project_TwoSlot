@@ -11,7 +11,7 @@ public class EnemyCtrl : MonoBehaviour
     public float attackDist = 0.5f; // stoppingDistance 참고용
 
     [Header("Z축 고정")]
-    public float lockZ = 0f;
+    public float lockZ = 9f;
     public bool lockZAxis = true;
 
     public Transform enemyTr;
