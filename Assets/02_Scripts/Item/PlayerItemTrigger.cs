@@ -10,11 +10,12 @@ public class PlayerItemTrigger : MonoBehaviour
     private InputManager inputManager;
 
     [Header("아이템 슬롯 2칸 (WeaponItem)")]
-    public WeaponItem slot1;                        // 첫번째 아이템이 들어갈 번수
+    public WeaponItem slot1;                        // 첫번째 아이템이 들어갈 변수
     public WeaponItem slot2;                        // 두번째 아이템이 들어갈 변수
 
     [Header("슬롯 아이콘 UI (Image)")]
-    public Image slotIcon;                          // 아이템 슬롯 이미지
+    public Image slotIcon1;                          // 아이템 슬롯 이미지
+    public Image slotIcon2;                          // 아이템 슬롯 이미지
 
     [Header("아이템 슬롯(1/2)")]
     [Range(1, 2)]
@@ -49,10 +50,12 @@ public class PlayerItemTrigger : MonoBehaviour
     }
 
     /* 인벤토리 관련 기능 초기화 */
-    public void Initialized()
+    public void InitializedInventory()
     {
         activeMode = ActiveMode.Gun;
         selectedSlot = 1;
+        slot1 = null;
+        slot2 = null;
     }
 
     void Update()
@@ -183,8 +186,8 @@ public class PlayerItemTrigger : MonoBehaviour
 
     void RefreshUI()
     {
-        SetSlotIcon(slotIcon, slot1);
-        SetSlotIcon(slotIcon, slot2);
+        SetSlotIcon(slotIcon1, slot1);
+        SetSlotIcon(slotIcon2, slot2);
     }
 
     void SetSlotIcon(Image img, WeaponItem item)

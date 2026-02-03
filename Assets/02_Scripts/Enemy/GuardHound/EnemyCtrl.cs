@@ -6,8 +6,11 @@ public class EnemyCtrl : MonoBehaviour
 {
     public NavMeshAgent navi;
 
+    [Header("데미지")]
+    public int damage = 25;
+
     [Header("적 추적 범위와 공격 범위")]
-    public float traceDist = 30f;
+    public float traceDist = 12f;
     public float attackDist = 0.5f; // stoppingDistance 참고용
 
     [Header("Z축 고정")]
@@ -41,6 +44,7 @@ public class EnemyCtrl : MonoBehaviour
     public bool debugLog = false; // true로 켜면 공격 조건/log 확인 가능
 
     private Animator animator;
+    bool hitAppliedThisSwing = false;
 
     void Start()
     {
@@ -164,7 +168,28 @@ public class EnemyCtrl : MonoBehaviour
 
         return Physics.CheckBox(center, halfExtents, rot, playerLayer, QueryTriggerInteraction.Collide);
     }
+    void ApplyDamageByOverlapBox()
+    {
+        if (attackBox == null) return;
 
+        Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
+        Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
+        Quaternion rot = attackBox.transform.rotation;
+
+        Collider[] hits = Physics.OverlapBox(center, halfExtents, rot, playerLayer, QueryTriggerInteraction.Collide);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            // 콜라이더가 플레이어의 자식에 붙어있을 수 있으니 부모에서 IDamageable 찾기
+            var dmg = hits[i].GetComponentInParent<IDamageable>();
+            if (dmg != null)
+            {
+                dmg.TakeDamage(damage);
+                hitAppliedThisSwing = true;   // 한 번만 맞게 하려면
+                return;
+            }
+        }
+    }
     void StopAgent()
     {
         navi.isStopped = true;
@@ -197,8 +222,20 @@ public class EnemyCtrl : MonoBehaviour
     {
         if (attackBox == null) yield break;
 
+        hitAppliedThisSwing = false;
         attackBox.enabled = true;
-        yield return new WaitForSeconds(hitboxOnTime);
+
+        float t = 0f;
+        while (t < hitboxOnTime)
+        {
+            t += Time.deltaTime;
+
+            // ✅ 히트박스 켜진 동안 겹치면 데미지
+            if (!hitAppliedThisSwing)
+                ApplyDamageByOverlapBox();
+
+            yield return null;
+        };
         attackBox.enabled = false;
     }
 
