@@ -9,9 +9,6 @@ using System; // Scene을 관리하기 위해 필수
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("필요 컴포넌트")]
-    private StageManager stageManager;
-
     [Header("UI")]
     public GameObject settingsPanel;        // 게임 설정 팝업 UI
 
@@ -19,11 +16,6 @@ public class MainMenuManager : MonoBehaviour
     public Toggle fullscreenToggle;         // 전체화면 토글 버튼
     public AudioMixer audioMixer;           // 오디오 믹서
     public Slider masterVolumeSlider;       // 마스터 볼륨 조절 슬라이더
-
-    void Awake()
-    {
-        if(!stageManager) stageManager = StageManager.Instance;
-    }
 
     void Start()
     {
@@ -37,7 +29,14 @@ public class MainMenuManager : MonoBehaviour
     /* 게임 시작 버튼 */
     public void OnClickStartGame()
     {
-        stageManager.StartGame();
+        if (StageManager.Instance != null)
+        {
+            StageManager.Instance.StartGame();
+        }
+        else
+        {
+            Debug.LogError("StageManager.Instance가 존재하지 않습니다.");
+        }
     }
 
     /* 게임 종료 버튼 */

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ExitPoint : MonoBehaviour
 {
@@ -12,11 +9,11 @@ public class ExitPoint : MonoBehaviour
         stageManager = StageManager.Instance;
     }
 
-    public void OnColliderEnter(Collision col)
+    public void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            stageManager.GameOver();
+            stageManager.NextStage();
         }
     }
 }

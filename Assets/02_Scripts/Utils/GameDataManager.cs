@@ -8,14 +8,19 @@ using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
 {
+    // 싱글톤 제작
     public static GameDataManager Instance;
 
-    [Header("플레이어 데이터")]
-    public int currentHp;           // 현재 체력
-    public int currentAmmo;         // 현재 총알 수
-    public WeaponItem slot1Item;    // 현재 1번 슬롯의 아이템
-    public WeaponItem slot2Item;    // 현재 2번 슬롯의 아이템
-    public int score;               // 총 점수
+    [Header("데이터를 가져올 컴포넌트")]
+    private PlayerItemTrigger inventory;      // 플레이어 움직임 스크립트
+    private PlayerHealth playerHealth;  // 플레이어 체력 스크립트
+
+    [Header("저장 할 플레이어 데이터")]
+    public int currentHp;               // 현재 체력
+    public int currentAmmo;             // 현재 총알 수
+    public WeaponItem slot1Item;        // 현재 1번 슬롯의 아이템
+    public WeaponItem slot2Item;        // 현재 2번 슬롯의 아이템
+    public int score;                   // 총 점수
 
     void Awake()
     {
@@ -32,6 +37,19 @@ public class GameDataManager : MonoBehaviour
             // 씬 로드 과정에서 중복된 인스턴스가 생성되면 새 인스턴스를 제거하여 중복 방지
             Destroy(gameObject);
         }
+    }
+
+    public void GameDataInitialize()
+    {
+        // 플레이어 데이터를 찾고, 수치 일괄 초기화
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player)
+        {
+            inventory = player.GetComponent<PlayerItemTrigger>();
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
+        playerHealth.Initialized();
+        inventory.InitializedInventory();
     }
 
     /* 씬 전환 이전에 플레이어의 데이터를 받아서 저장해둔다 */

@@ -49,10 +49,12 @@ public class PlayerItemTrigger : MonoBehaviour
     }
 
     /* 인벤토리 관련 기능 초기화 */
-    public void Initialized()
+    public void InitializedInventory()
     {
         activeMode = ActiveMode.Gun;
         selectedSlot = 1;
+        slot1 = null;
+        slot2 = null;
     }
 
     void Update()

@@ -71,7 +71,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     /* 플레이어 생성 시 모든 상태 초기화 */
-    void InitializePlayer()
+    public void InitializePlayer()
     {
         inputManager = InputManager.Instance;                       // 키 입력 싱글톤 초기화
 

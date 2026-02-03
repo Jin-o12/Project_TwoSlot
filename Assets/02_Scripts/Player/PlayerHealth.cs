@@ -45,7 +45,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!audioSource) audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
+    /* 플레이어 체력 수치 초기화 */
+    public void Initialized()
     {
         hp = maxHp;
         UpdateHPUI();

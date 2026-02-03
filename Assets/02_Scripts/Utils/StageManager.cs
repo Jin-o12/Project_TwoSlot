@@ -20,6 +20,7 @@ public class StageManager : MonoBehaviour
     {
         if(Instance==null)
         {
+            Debug.Log("StageManager: 싱글톤 생성");
             Instance = this;
             // 부모가 있다면 부모 해제 후 보존 (싱글톤이 상속되어 있기 때문에 안전장치 추가)
             transform.SetParent(null);
@@ -27,6 +28,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("StageManager: 중복 싱글톤 삭제");
             Destroy(gameObject);
         }
     }
@@ -35,7 +37,6 @@ public class StageManager : MonoBehaviour
     {
         #region 테스트용 코드: 중간 스테이지 부터 실행할 경우 현재 씬에 대한 인텍스 번호로 갱신
         string currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == mainManuScene) return;  // 메인메뉴면 -1 유지
         for (int i = 0; i < stageSceneList.Length; i++)
         {
             if (stageSceneList[i] == currentSceneName)
@@ -47,19 +48,9 @@ public class StageManager : MonoBehaviour
         #endregion
     }
 
-    void Update()
-    {
-        #region 테스트용 코드: 씬 전환 테스트를 위한 임시 코드
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            NextStage();
-        }
-        #endregion
-    }
-
     public void Mainmenu()
     {
-        currentStageIndex = -1;                 // 메인메뉴 인덱스로 초기화
+        currentStageIndex = -1;                 // 인덱스 초기화
         SceneManager.LoadScene(mainManuScene);  // 메인메뉴 이동
     }
 
@@ -67,9 +58,12 @@ public class StageManager : MonoBehaviour
     public void StartGame()
     {
         // 스테이지가 하나라도 존재 한다면 로드
-        if(stageSceneList.Length > 0)
+        if (stageSceneList.Length > 0)
         {
-            SceneManager.LoadScene(stageSceneList[0]);
+            // 인덱스가 음수면 -1로 초기화, NextStage를 호출하면 0번째 스테이지가 로드
+            if (currentStageIndex < 0) currentStageIndex = -1;
+            Debug.Log($"StageManager.StartGame() currentStageIndex={currentStageIndex}");
+            NextStage();
         }
         else
         {
@@ -77,6 +71,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    /* 다음 스테이지로 전환 */
     public void NextStage()
     {
         // 다음 스테이지로 가기 위한 인덱스 증가
