@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d004597c01dd4e6418bdebcb22d05af8, type: 3}
-  m_Name: SoundBomb
+  m_Name: AdditionalAmmo
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 471951ce8911ada46897eb95d460b09b, type: 3}
-  weaponPrefab: {fileID: 4106814457344636235, guid: 8c199d6252975fe4da7f14316296ad94, type: 3}
-  pickupPrefab: {fileID: 4106814457344636235, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
+  icon: {fileID: 0}
+  weaponPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}
+  pickupPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}

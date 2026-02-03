@@ -15,7 +15,7 @@ public class GunFire : MonoBehaviour
 
     [Header("Targeting")]
     public LayerMask enemyMask;             // 레이어: ENEMY
-    public float maxDistance = 200f;        // 탄환 z축 보정 최댓값
+    public float maxDistance = 20f;        // 탄환 z축 보정 최댓값
 
     [Header("2.5D")]
     public float defaultCombatZ;            //
@@ -26,14 +26,16 @@ public class GunFire : MonoBehaviour
     public float spawnForwardOffset;        // 총알 발사 시 생성 지점 보정치
 
     [Header("Ammo")]
-    public int maxAmmo = 10;                // 최대 총알
+    public int magSize = 10;                // 탄창 크기
+    public int maxAmmo = 30;                // 최대 총알
     public int currentAmmo = 10;            // 현재 총알
-    public float reloadTime = 1.5f;         // 재장전 시간
+    public float reloadTime = 2.3f;         // 재장전 시간
     bool isReloading = false;
 
     [Header("VFX / SFX")]
     public AudioSource audioSource;
     public AudioClip fireClip;
+    public AudioClip reloadClip;
     public ParticleSystem muzzleFlash;
 
     float lastFire;
@@ -61,7 +63,7 @@ public class GunFire : MonoBehaviour
 
         // 총 발사에 관한 변수들 일관 초기화
         bulletSpeed = 40f;
-        fireCooldown = 0.1f;
+        fireCooldown = 0.25f;
         spawnForwardOffset = 0.6f;
     }
 
@@ -83,10 +85,11 @@ public class GunFire : MonoBehaviour
         return null;
     }
 
-    /* 게임 시작시 총 관련 수치 초기화 */
+    /* 게임 시작시 총알 수 초기화 */
     public void InitializedGun()
     {
-        if (currentAmmo <= 0) currentAmmo = maxAmmo; // 시작 시 총알이 없을 시 총알 보충
+        currentAmmo = Mathf.Clamp(currentAmmo, 0, magSize);
+        maxAmmo = Mathf.Max(0, maxAmmo); // 시작 시 총알이 없을 시 총알 보충
     }
 
     void Update()
@@ -108,7 +111,7 @@ public class GunFire : MonoBehaviour
         // 탄 없으면 자동 리로드
         if (currentAmmo <= 0)
         {
-            StartCoroutine(Reload());
+            if (maxAmmo > 0) StartCoroutine(Reload());
             return;
         }
 
@@ -120,7 +123,7 @@ public class GunFire : MonoBehaviour
         Fire();
 
         // 마지막 탄 쏜 직후에도 자동 리로드
-        if (currentAmmo <= 0)
+        if (currentAmmo <= 0 && maxAmmo > 0)
         {
             StartCoroutine(Reload());
         }
@@ -180,7 +183,7 @@ public class GunFire : MonoBehaviour
 
         // ✅ 이펙트/사운드는 발사 성공 시에만 1번 실행
         if (audioSource != null && fireClip != null)
-            audioSource.PlayOneShot(fireClip);
+            audioSource.PlayOneShot(fireClip, 0.55f);
 
         if (muzzleFlash != null)
         {
@@ -224,13 +227,28 @@ public class GunFire : MonoBehaviour
     {
         if (isReloading) yield break;
 
-        isReloading = true;
+        // 이미 꽉 찼거나 예비탄 없으면 리로드 안 함
+        if (maxAmmo <= 0) yield break;
+        if (currentAmmo >= magSize) yield break;
 
+        isReloading = true;
+        audioSource.PlayOneShot(reloadClip, 1f);
         // 여기서 리로드 사운드/애니 넣어도 됨
 
         yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = maxAmmo;
+        int need = magSize - currentAmmo;          // 채워야 할 탄 수
+        int load = Mathf.Min(need, maxAmmo);       // 예비탄에서 꺼낼 수 있는 만큼
+
+        currentAmmo += load;                        // 탄창 채우고
+        maxAmmo -= load;                            // 예비탄 차감
+
         isReloading = false;
+    }
+    public void AddMaxAmmo(int amount)
+    {
+        maxAmmo += amount;
+
+        //UpdateAmmoUI();      - 아직 구현 안됨
     }
 }

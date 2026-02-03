@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
       propertyPath: m_Name
-      value: NoiseBombThrow
+      value: NoiseBomb
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
       propertyPath: m_LocalScale.x
@@ -359,6 +359,6 @@ MonoBehaviour:
   noiseRadius: 60
   distractTime: 5
   audioSource: {fileID: 2351595705293902919}
-  noiseClip: {fileID: 8300000, guid: 0ed0d71c3db32c64aa047c6dc5794514, type: 3}
+  noiseClip: {fileID: 8300000, guid: 8f6d6273ded0b7242b26ddb46e1be806, type: 3}
   volume: 1
   vfxPrefab: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}

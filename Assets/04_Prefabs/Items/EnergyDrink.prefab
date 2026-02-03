@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02adf123fdb608e4fa776fae275dd308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a920428107d2f3b459a126e7d58183ef, type: 2}
+  item: {fileID: 11400000, guid: 9cc4070311001d34097d7851b1541cd7, type: 2}
   showFPrompt: 1
   promptFormat: "F : \uC90D\uAE30 ({0})"
   destroyOnPickup: 1

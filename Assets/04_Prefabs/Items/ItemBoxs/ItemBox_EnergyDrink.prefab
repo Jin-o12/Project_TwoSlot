@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d9a7383567454da609b8f28b5a428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
+  dropPrefab: {fileID: 6008074133677174885, guid: f54a467d7d6c3fb44857fc904ce450dd, type: 3}
   spawnPoint: {fileID: 4166322952308336065}
   popUpHeight: 1
   popUpTime: 0.12
