@@ -1934,13 +1934,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navi: {fileID: 791608432768917342}
+  damage: 25
   traceDist: 20
   attackDist: 0.5
-  lockZ: 9.5
+  lockZ: 8
   lockZAxis: 1
   enemyTr: {fileID: 422452467887860781}
   playerTr: {fileID: 0}
-  attackCooldown: 2
+  attackCooldown: 1.5
   attackLockTime: 1
   attackBox: {fileID: 4323793743331943132}
   hitboxOnTime: 0.2
@@ -1980,7 +1981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 30
 --- !u!1 &3686083063275687073
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,13 +2924,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5636916723933723154}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.003, y: 0.154, z: 0.096}
+  m_LocalRotation: {x: -0, y: -0.7132362, z: -0, w: 0.70092374}
+  m_LocalPosition: {x: -0.066, y: 0.154, z: -0.021}
   m_LocalScale: {x: 0.13415374, y: 0.15, z: 0.24099001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 422452467887860781}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.998, z: 0}
 --- !u!33 &5819396210659840421
 MeshFilter:
   m_ObjectHideFlags: 0

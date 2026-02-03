@@ -8,11 +8,13 @@ public class PlayerPotionUse : MonoBehaviour
     [Header("Energy Drink (WeaponItem)")]
     public WeaponItem energyDrinkItem;   // ✅ 인스펙터에 EnergyDrink WeaponItem 에셋 넣기
     public float healAmount = 25f;
+    public AudioClip openSound;
 
     void Awake()
     {
         if (inv == null) inv = GetComponent<PlayerItemTrigger>();
         if (hp == null) hp = GetComponent<PlayerHP>() ?? GetComponentInParent<PlayerHP>();
+        GetComponentInParent<AudioSource>();
     }
 
     void Update()
@@ -37,6 +39,7 @@ public class PlayerPotionUse : MonoBehaviour
 
         // 사용
         hp.Heal(healAmount);
+        AudioSource.PlayClipAtPoint(openSound, transform.position);
 
         // 소비
         inv.TryConsume(selected);
