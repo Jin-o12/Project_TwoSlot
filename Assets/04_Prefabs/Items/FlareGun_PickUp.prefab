@@ -259,7 +259,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4838962397732110739}
   - component: {fileID: 6243335020048011625}
-  - component: {fileID: 4286672085449181289}
   - component: {fileID: 4169424507580016564}
   - component: {fileID: 1530590050423633412}
   - component: {fileID: 4834525970282594512}
@@ -267,7 +266,7 @@ GameObject:
   - component: {fileID: 6708695712237669989}
   - component: {fileID: -1438084356315429518}
   m_Layer: 0
-  m_Name: Glowgun
+  m_Name: FlareGun_PickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,26 +311,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &4286672085449181289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687447825116020007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03cbc09bc53089f4886a33ab8aadee56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flareProjectile: {fileID: 0}
-  muzzle: {fileID: 0}
-  shootForce: 35
-  forceMode: 1
-  muzzleParticles: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}
-  audioSource: {fileID: 0}
-  shotSound: {fileID: 0}
-  anim: {fileID: 0}
 --- !u!82 &4169424507580016564
 AudioSource:
   m_ObjectHideFlags: 0
@@ -463,7 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02adf123fdb608e4fa776fae275dd308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
+  showFPrompt: 1
   promptFormat: "F : \uC90D\uAE30 ({0})"
   destroyOnPickup: 1
 --- !u!54 &1450549642659473632

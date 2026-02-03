@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5842802604760355822}
   - component: {fileID: -6378895436835612308}
   m_Layer: 0
-  m_Name: EnergyDrink
+  m_Name: EnergyDrink_PickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -201,10 +201,6 @@ PrefabInstance:
     - target: {fileID: 5869654171612050982, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
       propertyPath: m_Name
       value: CL_Aluminum_Can_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637637249452406294, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7637637249452406294, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
       propertyPath: m_LocalPosition.x

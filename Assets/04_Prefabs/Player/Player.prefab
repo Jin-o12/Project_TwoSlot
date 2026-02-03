@@ -1270,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.7
+      value: 64.371
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1278,7 +1278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 8.98
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1595,23 +1595,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   runSpeed: 5
-  inputManager: {fileID: 0}
   acceleration: 40
   deceleration: 50
-  isDead: 0
-  IsRunning: 0
-  faceByMoveInput: 1
-  faceByMouse: 0
-  lockZToStart: 1
-  audioSource: {fileID: 5564705116494574469}
-  runFootstepLoop: {fileID: 8300000, guid: 4c9f4a9ae2079dd47bc2682c13658660, type: 3}
+  moveInput: 0
+  lockedZ: 0
+  walkFootstepClip: []
+  runFootstepClip: []
   footstepMinSpeed: 0.2
-  animator: {fileID: 6629044155563443053}
+  walkStepInterval: 0.5
+  runStepInterval: 0.4
   speedParam: Speed
   isRunningParam: IsRunning
-  animSpeedDamp: 0.1
-  aimAndFlip: {fileID: 854970417521941714}
   isBackWalkParam: IsBackWalk
+  animSpeedDamp: 0.1
 --- !u!114 &854970417521941714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,12 +1647,7 @@ MonoBehaviour:
   hp: 0
   hpFill: {fileID: 0}
   hpText: {fileID: 0}
-  animator: {fileID: 6629044155563443053}
-  playerMove: {fileID: 8518714322319974980}
   gunFire: {fileID: 0}
-  inventory: {fileID: 0}
-  aimAndFlip: {fileID: 854970417521941714}
-  rigBuilder: {fileID: 6148351908671856004}
   rig: {fileID: 7282252910845497239}
   hitTrigger: Hit
   dieTrigger: Die
@@ -1672,21 +1663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot1: 
-  slot2: 
+  slot1: {fileID: 0}
+  slot2: {fileID: 0}
+  slotIcon: {fileID: 0}
   selectedSlot: 1
-  dropTable:
-  - itemId: EnergyDrink
-    prefab: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
-  - itemId: Glowgun
-    prefab: {fileID: 2687447825116020007, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
-  - itemId: SoundBomb
-    prefab: {fileID: 4106814457344636235, guid: 63423d13735776b40933a9d46ecb987e, type: 3}
-  dropPoint: {fileID: 6259517043618871549}
+  dropPoint: {fileID: 419431952913334656}
   activeMode: 0
   selectingItem: 0
-  slot1Key: 113
-  slot2Key: 101
 --- !u!114 &2124190996231296456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1701,7 +1684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
   hp: {fileID: 0}
-  energyDrinkId: EnergyDrink
+  energyDrinkItem: {fileID: 11400000, guid: 9cc4070311001d34097d7851b1541cd7, type: 2}
   healAmount: 25
 --- !u!114 &1334999349548124196
 MonoBehaviour:
@@ -1716,14 +1699,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
-  flareGunId: Glowgun
+  flareGunItem: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
   flareProjectile: {fileID: 5400000, guid: c8feb458f956e804e96677c55ad05416, type: 3}
   muzzle: {fileID: 0}
   spawnForwardOffset: 0.6
   spawnUpOffset: 1.2
   shootForce: 35
   forceMode: 2
-  forceFlatForward: 1
+  useMouseAim: 1
+  aimCamera: {fileID: 0}
   useFacingByLocalScaleX: 0
   rightDir: {x: 1, y: 0, z: 0}
   leftDir: {x: -1, y: 0, z: 0}
@@ -1744,19 +1728,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
-  noiseBombId: SoundBomb
+  noiseBombItem: {fileID: 11400000, guid: 409b8c9bc1a90f84c9dd87f929c20f98, type: 2}
   noiseBombPrefab: {fileID: 4106814457344636235, guid: 8c199d6252975fe4da7f14316296ad94, type: 3}
   throwPoint: {fileID: 5710466545236975131}
   spawnForwardOffset: 0.6
   spawnUpOffset: 1.2
-  throwForce: 12
-  upwardForce: 2.5
+  minThrowForce: 6
+  maxThrowForce: 16
+  minUpwardForce: 1.5
+  maxUpwardForce: 3.5
+  minAimDistance: 1.5
+  maxAimDistance: 10
   useMouseAim: 1
   aimCamera: {fileID: 0}
-  aimMaxDistance: 60
-  aimMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  ignoreOwnerColliders: 1
 --- !u!114 &4923646570420608638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1776,10 +1761,7 @@ MonoBehaviour:
   gunObject: {fileID: 0}
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
-  worldMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   maxDistance: 200
   defaultCombatZ: 0
   bulletSpeed: 40
@@ -1791,11 +1773,6 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
   muzzleFlash: {fileID: 0}
---- !u!95 &6629044155563443053 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
-  m_PrefabInstance: {fileID: 6629044155554067981}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9076194093080187485
 PrefabInstance:
   m_ObjectHideFlags: 0

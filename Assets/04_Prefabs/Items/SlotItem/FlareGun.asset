@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d004597c01dd4e6418bdebcb22d05af8, type: 3}
-  m_Name: GolwGun
+  m_Name: FlareGun
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: ace0313a47d220c4da5ba2227265c378, type: 3}
   weaponPrefab: {fileID: 2687447825116020007, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
-  pickupPrefab: {fileID: 2687447825116020007, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
+  pickupPrefab: {fileID: 2687447825116020007, guid: c30583e106717fd4d81733e494fec39f, type: 3}

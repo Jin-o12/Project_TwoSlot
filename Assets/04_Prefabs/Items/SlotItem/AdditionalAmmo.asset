@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d004597c01dd4e6418bdebcb22d05af8, type: 3}
-  m_Name: EnergyDrink
+  m_Name: AdditionalAmmo
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: f8f3b68de87af044db6910e81c42f86b, type: 3}
-  weaponPrefab: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
-  pickupPrefab: {fileID: 6008074133677174885, guid: 14a060ea2425f3149afdb6b7461ffb8f, type: 3}
+  icon: {fileID: 0}
+  weaponPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}
+  pickupPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}
