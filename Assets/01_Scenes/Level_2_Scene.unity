@@ -422,10 +422,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_GuardHound (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
-      propertyPath: lockZ
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1734,10 +1730,6 @@ PrefabInstance:
     - target: {fileID: 3635079647430067699, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: m_Name
       value: Enemy_GuardHound (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
-      propertyPath: lockZ
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4830,10 +4822,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_GuardHound
       objectReference: {fileID: 0}
-    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
-      propertyPath: lockZ
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6324,10 +6312,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1334999349548124196, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: flareGunItem
-      value: 
-      objectReference: {fileID: 11400000, guid: 819f685d9939daf439a52cd5e9c49069, type: 2}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -10571,10 +10555,6 @@ PrefabInstance:
     - target: {fileID: 3635079647430067699, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: m_Name
       value: Enemy_GuardHound (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
-      propertyPath: lockZ
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

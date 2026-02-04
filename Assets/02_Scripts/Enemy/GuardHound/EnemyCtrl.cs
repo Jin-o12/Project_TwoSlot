@@ -12,6 +12,13 @@ public class EnemyCtrl : MonoBehaviour
     [Header("적 추적 범위와 공격 범위")]
     public float traceDist = 12f;
     public float attackDist = 0.5f; // stoppingDistance 참고용
+    
+    [Header("추적 사운드")]
+    public AudioSource chaseAudio;          // 추적 사운드 재생용 AudioSource
+    public AudioClip chaseLoopClip;         // 추적 중 반복 재생할 클립
+    public bool chaseLoop = true;           // 보통 true 추천(반복)
+    public float chaseVolume = 1f;          // 볼륨
+    bool wasTracing = false;
 
     [Header("Z축 고정")]
     public float lockZ = 9f;
@@ -73,6 +80,15 @@ public class EnemyCtrl : MonoBehaviour
             // 공격 판정용 콜라이더는 기본 OFF
             attackBox.enabled = false;
         }
+        if (chaseAudio == null)
+            chaseAudio = GetComponent<AudioSource>(); // 같은 오브젝트에 AudioSource 달려있으면 자동 연결
+
+        if (chaseAudio != null)
+        {
+            chaseAudio.playOnAwake = false;
+            chaseAudio.loop = chaseLoop;
+            chaseAudio.volume = chaseVolume;
+        }
     }
 
     void Update()
@@ -107,11 +123,12 @@ public class EnemyCtrl : MonoBehaviour
         // {
         //     Debug.Log($"[EnemyCtrl] distX={distance:F2}, inAttackRange={inAttackRange}, time={Time.time:F2}, next={nextAttackTime:F2}");
         // }
-
+        bool isTracingNow = false;
         if (inAttackRange)
         {
             StopAgent();
             animator.SetBool("Trace", false);
+            isTracingNow = false;
 
             if (Time.time >= nextAttackTime)
             {
@@ -129,12 +146,15 @@ public class EnemyCtrl : MonoBehaviour
             navi.isStopped = false;
             navi.SetDestination(playerPos);
             animator.SetBool("Trace", true);
+            isTracingNow = true;
         }
         else
         {
             StopAgent();
             animator.SetBool("Trace", false);
+            isTracingNow = false;
         }
+        UpdateChaseAudio(isTracingNow);     //추적 사운드 갱신
 
         if (lockZAxis) FixZ();
         FaceToPlayer();
@@ -299,4 +319,27 @@ public class EnemyCtrl : MonoBehaviour
         Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
         Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
     }
+    void UpdateChaseAudio(bool isTracingNow)
+{
+    if (chaseAudio == null || chaseLoopClip == null) return;
+
+    // 추적 시작
+    if (isTracingNow && !wasTracing)
+    {
+        chaseAudio.clip = chaseLoopClip;
+        chaseAudio.loop = chaseLoop;
+        chaseAudio.volume = chaseVolume;
+
+        if (!chaseAudio.isPlaying)
+            chaseAudio.Play();
+    }
+    // 추적 종료
+    else if (!isTracingNow && wasTracing)
+    {
+        if (chaseAudio.isPlaying)
+            chaseAudio.Stop();
+    }
+
+    wasTracing = isTracingNow;
+}
 }
