@@ -729,7 +729,7 @@ MonoBehaviour:
   fadeTime: 0.35
   warningLight: {fileID: 6278276827972565315}
   lightDistance: 7
-  spawnDistance: 4.5
+  spawnDistance: 5
   rotateSpeed: 6
   enemyPrefab: {fileID: 3635079647430067699, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
   spawnPoint: {fileID: 6929133237571240301}

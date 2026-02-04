@@ -89,7 +89,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (InputPauseManager.IsPaused || isDead) return;   // 게임 일시정지 상태이거나 죽었을 시 입력 무시
+        if (PauseState.IsPaused || isDead) return;   // 게임 일시정지 상태이거나 죽었을 시 입력 무시
 
         ReadyMovement();
         PlayFootStepSound();
@@ -98,7 +98,7 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (InputPauseManager.IsPaused || isDead) return;
+        if (PauseState.IsPaused || isDead) return;
         
         GetMove();
     }

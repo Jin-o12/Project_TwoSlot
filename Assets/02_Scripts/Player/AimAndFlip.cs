@@ -38,7 +38,7 @@ public class AimAndFlip : MonoBehaviour
 
     void LateUpdate()
     {
-        if (InputPauseManager.IsPaused) return;
+        if (PauseState.IsPaused) return;
         if (IsDead) return;
         if (!cam || !playerRoot || !aimPivot || !ikTarget) return;
 
