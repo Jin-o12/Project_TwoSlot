@@ -92,7 +92,7 @@ public class EndingTyper : MonoBehaviour
     public void GoToMainMenu()
     {
         // "MainMenu" �κп� ���� ���� �޴� �� �̸� ����
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu_Scene");
     }
 
     public void QuitGame()

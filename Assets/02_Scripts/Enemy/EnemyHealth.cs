@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
-        GameDataManager.Instance.AddScore(150);
+        GameDataManager.Instance.AddScore(10);
         Destroy(gameObject);
         AudioSource.PlayClipAtPoint(dieClip, transform.position, 1f);
     }

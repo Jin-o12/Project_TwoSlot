@@ -817,11 +817,11 @@ MonoBehaviour:
   startDelay: 1
   audioSource: {fileID: 1079153410}
   keySoundArray:
-  - {fileID: 8300000, guid: 37a5196a916f9c4478fe3f114f445daa, type: 3}
-  - {fileID: 8300000, guid: 1c5e8d596c1b09d46950332c31f2ec6a, type: 3}
-  - {fileID: 8300000, guid: 1d93abec0ab649a499854a1200ece3a7, type: 3}
-  - {fileID: 8300000, guid: 8ab07cda3e9d1e54789190d3ea9a5126, type: 3}
-  enterSound: {fileID: 0}
+  - {fileID: 8300000, guid: 7052bfaeb71b4a0428380749f2526a01, type: 3}
+  - {fileID: 8300000, guid: 3ecd83ea40192e54a96a84f7f5432de6, type: 3}
+  - {fileID: 8300000, guid: 4655e040b75adc049ac08e72e58e2b21, type: 3}
+  - {fileID: 8300000, guid: 809f4000711e54f47a136809333daa80, type: 3}
+  enterSound: {fileID: 8300000, guid: ed369d90873e0a7419aba613970cde20, type: 3}
 --- !u!4 &1079153412
 Transform:
   m_ObjectHideFlags: 0

@@ -376,7 +376,7 @@ Transform:
   m_GameObject: {fileID: 8366942155632452801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: -1.603, z: 1.179}
+  m_LocalPosition: {x: 3, y: -1.603, z: 1.179}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -728,13 +728,13 @@ MonoBehaviour:
   alertClip: {fileID: 8300000, guid: 7cdc3fbfcec9e8f4f8599142a1258578, type: 3}
   fadeTime: 0.35
   warningLight: {fileID: 6278276827972565315}
-  lightDistance: 10
-  spawnDistance: 5
+  lightDistance: 7
+  spawnDistance: 4.5
   rotateSpeed: 6
   enemyPrefab: {fileID: 3635079647430067699, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
   spawnPoint: {fileID: 6929133237571240301}
   spawnCount: 3
-  spawnInterval: 0.3
+  spawnInterval: 1
   spawnSpreadX: 2
   minGap: 0.8
   maxTry: 15
