@@ -9,7 +9,7 @@ public class NoiseBomb_Throw : MonoBehaviour
 
     [Header("Noise")]
     public float noiseRadius = 15f;          // 이 반경 안의 적만 유인
-    public float distractTime = 5f;          // 적이 플레이어 대신 소리 위치 추적하는 시간
+    public float distractTime = 20f;          // 적이 플레이어 대신 소리 위치 추적하는 시간
 
     [Header("Sound")]
     public AudioSource audioSource;          // 프리팹에 AudioSource 붙이면 자동 연결

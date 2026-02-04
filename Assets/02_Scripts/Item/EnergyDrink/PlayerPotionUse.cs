@@ -3,50 +3,63 @@ using UnityEngine;
 public class PlayerPotionUse : MonoBehaviour
 {
     public PlayerItemTrigger inv;
-    public PlayerHP hp;
+    public PlayerHealth hp;   // ✅ PlayerHP → PlayerHealth로 변경
 
     [Header("Energy Drink (WeaponItem)")]
-    public WeaponItem energyDrinkItem;   // ✅ 인스펙터에 EnergyDrink WeaponItem 에셋 넣기
-    public float healAmount = 25f;
+    public WeaponItem energyDrinkItem;
+    public int healAmount = 25;
     public AudioClip openSound;
+
+    AudioSource audioSource;
 
     void Awake()
     {
-        if (inv == null) inv = GetComponent<PlayerItemTrigger>();
-        if (hp == null) hp = GetComponent<PlayerHP>() ?? GetComponentInParent<PlayerHP>();
-        GetComponentInParent<AudioSource>();
+        if (!inv) inv = GetComponent<PlayerItemTrigger>();
+
+        // ✅ PlayerHealth 찾기
+        if (!hp)
+            hp = GetComponent<PlayerHealth>() ?? GetComponentInParent<PlayerHealth>();
+
+        // ✅ AudioSource 캐싱 (PlayClipAtPoint보다 성능 좋음)
+        audioSource = GetComponentInParent<AudioSource>();
     }
 
     void Update()
     {
         if (!Input.GetMouseButtonDown(0)) return;
-        if (inv == null || hp == null) return;
+        if (!inv || !hp) return;
 
-        // 아이템 모드일 때만 발동
+        // 아이템 모드일 때만
         if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
 
-        // 선택 아이템
         WeaponItem selected = inv.GetSelectedItem();
-        if (selected == null) return;
+        if (!selected) return;
 
-        // 에너지 드링크만
-        if (energyDrinkItem == null)
+        if (!energyDrinkItem)
         {
-            Debug.LogWarning("[EnergyDrink] energyDrinkItem(WeaponItem)이 비어있어!");
+            Debug.LogWarning("[EnergyDrink] energyDrinkItem이 비어있음!");
             return;
         }
+
         if (selected != energyDrinkItem) return;
 
+        // ✅ 풀피면 사용 막기 (강력 추천)
+        if (hp.currentHp >= hp.maxHp) return;
+
+        //-------------------
         // 사용
+        //-------------------
+
         hp.Heal(healAmount);
-        AudioSource.PlayClipAtPoint(openSound, transform.position);
 
-        // 소비
+        if (audioSource && openSound)
+            audioSource.PlayOneShot(openSound);
+
+        //-------------------
+        // 소비 + 총 복귀
+        //-------------------
+
         inv.TryConsume(selected);
-
-        // 총로 복귀
         inv.SwitchToGun();
-
-        Debug.Log("[EnergyDrink] 사용됨 + 소비됨 + 총로 복귀");
     }
 }

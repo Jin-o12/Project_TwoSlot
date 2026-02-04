@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7011511055384582312}
   - component: {fileID: 5842802604760355822}
   - component: {fileID: -6378895436835612308}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnergyDrink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,9 +198,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7437772993699160815}
     m_Modifications:
+    - target: {fileID: 4875907273765177850, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5869654171612050982, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
       propertyPath: m_Name
       value: CL_Aluminum_Can_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869654171612050982, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7637637249452406294, guid: 4bf39f506b1d5ee4caf537ccfe018a7c, type: 3}
       propertyPath: m_RootOrder
@@ -308,9 +316,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7592749736941973317, guid: f2f378121613dc144a153addaad78074, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -6178662960935952092, guid: f2f378121613dc144a153addaad78074, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -3426134634721236490, guid: f2f378121613dc144a153addaad78074, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 596971467092199100, guid: f2f378121613dc144a153addaad78074, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2f378121613dc144a153addaad78074, type: 3}
       propertyPath: m_Name
       value: SM_Aluminum_Can_01_Closed
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2f378121613dc144a153addaad78074, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -374,9 +402,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3252384171246079698, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
       propertyPath: m_Name
       value: SM_Aluminum_Can_01_Tab
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030685944203408725, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4210006274768025032, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612681984566390766, guid: 6ba684b861bf7274ab05e3eb6ddfa15c, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

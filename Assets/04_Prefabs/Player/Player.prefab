@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inv: {fileID: 4047017968147893381}
-  hp: {fileID: 0}
+  hp: {fileID: 3439138498539923855}
   energyDrinkItem: {fileID: 11400000, guid: 9cc4070311001d34097d7851b1541cd7, type: 2}
   healAmount: 25
   openSound: {fileID: 8300000, guid: 8813de00e113069479fa7b7967e56b25, type: 3}
