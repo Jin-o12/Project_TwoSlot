@@ -10,7 +10,7 @@ public class EnemyCtrl : MonoBehaviour
     public int damage = 25;
 
     [Header("적 추적 범위와 공격 범위")]
-    public float traceDist = 12f;
+    public float traceDist = 7f;
     public float attackDist = 0.5f; // stoppingDistance 참고용
     
     [Header("추적 사운드")]

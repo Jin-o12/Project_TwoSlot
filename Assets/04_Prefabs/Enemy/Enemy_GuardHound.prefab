@@ -2032,7 +2032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navi: {fileID: 791608432768917342}
   damage: 25
-  traceDist: 20
+  traceDist: 7
   attackDist: 0.5
   chaseAudio: {fileID: 3628740730197274687}
   chaseLoopClip: {fileID: 8300000, guid: 05150f37780f10148a34ab3de1c009bc, type: 3}
