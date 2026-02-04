@@ -115,4 +115,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         stageManager.GameOver();
     }
+
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+        if (amount <= 0) return;
+
+        currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
+    }
 }
