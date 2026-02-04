@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AdditionalAmmo
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  weaponPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}
-  pickupPrefab: {fileID: 8107577268597085419, guid: 3891d67bd4812e34db02888d6b7ae428, type: 3}
+  weaponPrefab: {fileID: 8107577268597085419, guid: f06d6dd033ff96d4b82090e29c11f253, type: 3}
+  pickupPrefab: {fileID: 8107577268597085419, guid: f06d6dd033ff96d4b82090e29c11f253, type: 3}

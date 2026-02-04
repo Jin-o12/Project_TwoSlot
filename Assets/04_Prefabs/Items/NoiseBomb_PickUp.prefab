@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
       propertyPath: m_Name
-      value: SoundBomb
+      value: NoiseBomb_PickUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
       propertyPath: m_LocalScale.x

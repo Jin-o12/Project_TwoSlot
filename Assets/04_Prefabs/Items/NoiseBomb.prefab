@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoiseBomb
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 98be6ff539d1fa44894f66e5d0a5f007, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.4
