@@ -184,10 +184,16 @@ public class PlayerItemTrigger : MonoBehaviour
         Instantiate(item.pickupPrefab, pos, Quaternion.identity);
     }
 
-    void RefreshUI()
+    public void RefreshUI()
     {
         SetSlotIcon(slotIcon1, slot1);
         SetSlotIcon(slotIcon2, slot2);
+    }
+    public void SetSlots(WeaponItem s1, WeaponItem s2)
+    {
+        slot1 = s1;
+        slot2 = s2;
+        RefreshUI();
     }
 
     void SetSlotIcon(Image img, WeaponItem item)
