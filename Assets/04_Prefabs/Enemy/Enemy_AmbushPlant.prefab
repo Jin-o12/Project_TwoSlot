@@ -3219,10 +3219,11 @@ GameObject:
   - component: {fileID: 5119313724512705601}
   - component: {fileID: 6220408257662051687}
   - component: {fileID: 6611841087073680403}
+  - component: {fileID: 7098876596619313267}
+  - component: {fileID: 4661401226498611158}
   - component: {fileID: 8604156178319621709}
   - component: {fileID: 6624005023738488234}
-  - component: {fileID: 4661401226498611158}
-  - component: {fileID: 2421302932692242114}
+  - component: {fileID: 7097332280759745687}
   m_Layer: 7
   m_Name: Enemy_AmbushPlant
   m_TagString: ENEMY
@@ -3301,36 +3302,102 @@ CapsuleCollider:
   m_Height: 32.28
   m_Direction: 1
   m_Center: {x: 0, y: 10.2, z: -1.6}
---- !u!114 &8604156178319621709
-MonoBehaviour:
+--- !u!82 &7098876596619313267
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4020962383702482920}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2ec4b227d0b7e745bc7976fdad9125d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2943000544469367980, guid: 156326cc0c846c54d82a94395885fae8, type: 3}
-  firePoint: {fileID: 3292979446206917815}
-  bulletSpeed: 20
-  attackCooldown: 5
-  maxHealth: 20
---- !u!114 &6624005023738488234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020962383702482920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 100
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 8
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &4661401226498611158
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3358,7 +3425,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2421302932692242114
+--- !u!114 &8604156178319621709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ec4b227d0b7e745bc7976fdad9125d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2943000544469367980, guid: 156326cc0c846c54d82a94395885fae8, type: 3}
+  firePoint: {fileID: 3292979446206917815}
+  bulletSpeed: 20
+  attackCooldown: 5
+--- !u!114 &6624005023738488234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3370,7 +3453,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 30
+  audioSource: {fileID: 7098876596619313267}
+  dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
+--- !u!114 &7097332280759745687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22d60cca38b23a44a07c29880368b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  radius: 15
+  hysteresis: 0.5
+  loopClip: {fileID: 8300000, guid: 4ca672c7d9b9311489098d4cb1887849, type: 3}
+  volume: 1
+  fadeSpeed: 2
+  minDistance: 8
+  maxDistance: 15
 --- !u!1 &4033656146877792450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,7 +3655,7 @@ GameObject:
   - component: {fileID: 176407030202870154}
   - component: {fileID: 202823294914683263}
   - component: {fileID: 6503049594366253074}
-  - component: {fileID: 4010680436538381170}
+  - component: {fileID: 262236789174218648}
   m_Layer: 8
   m_Name: HitTrigger
   m_TagString: Untagged
@@ -3671,7 +3776,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4010680436538381170
+--- !u!114 &262236789174218648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

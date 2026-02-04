@@ -6,6 +6,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 {
     public int maxHp = 100;
     int hp;
+    public AudioSource audioSource;
+    public AudioClip dieClip;
 
     void Awake() => hp = maxHp;
 
@@ -18,5 +20,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         Destroy(gameObject);
+        AudioSource.PlayClipAtPoint(dieClip, transform.position, 1f);
     }
 }

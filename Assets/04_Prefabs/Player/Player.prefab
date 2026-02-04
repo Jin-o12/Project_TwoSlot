@@ -363,9 +363,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 161006458866234066}
     m_Modifications:
+    - target: {fileID: 496102652076110736, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544789224454778732, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2475275760003251957, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
       propertyPath: m_Name
       value: GoldenGolfBat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475275760003251957, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3019034293050598617, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
       propertyPath: m_LocalPosition.x
@@ -406,6 +418,22 @@ PrefabInstance:
     - target: {fileID: 3019034293050598617, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 265.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884326184313563399, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382612226406400189, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7744788354483626408, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240309144869333533, guid: ca06c0fbbe62a184cbb59023dcd5ba87, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
