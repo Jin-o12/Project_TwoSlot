@@ -3317,6 +3317,7 @@ MonoBehaviour:
   firePoint: {fileID: 3292979446206917815}
   bulletSpeed: 20
   attackCooldown: 5
+  maxHealth: 20
 --- !u!114 &6624005023738488234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3549,6 +3550,7 @@ GameObject:
   - component: {fileID: 176407030202870154}
   - component: {fileID: 202823294914683263}
   - component: {fileID: 6503049594366253074}
+  - component: {fileID: 4010680436538381170}
   m_Layer: 8
   m_Name: HitTrigger
   m_TagString: Untagged
@@ -3669,6 +3671,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4010680436538381170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098260319079963159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19ac1564f0f6d645b9a387eaaa2d38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8604156178319621709}
+  playerTag: Player
 --- !u!1 &4248904232982715650
 GameObject:
   m_ObjectHideFlags: 0
