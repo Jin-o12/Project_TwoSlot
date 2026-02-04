@@ -97,7 +97,7 @@ public class GunFire : MonoBehaviour
     void Update()
     {
         if (InputPauseManager.IsPaused) return;
-        // ✅ 단발: 클릭 1번에 1발
+        // 단발: 클릭 1번에 1발
         if (Input.GetMouseButtonDown(0))
         {
             TryFire();
@@ -253,4 +253,17 @@ public class GunFire : MonoBehaviour
 
         //UpdateAmmoUI();      - 아직 구현 안됨
     }
+    
+    public int GetCurrentAmmo() => currentAmmo;
+
+    public void SetCurrentAmmo(int ammo)
+    {
+        currentAmmo = Mathf.Clamp(ammo, 0, magSize);
+    }
+    public int GetMaxAmmo() => maxAmmo;
+
+public void SetMaxAmmo(int ammo)
+{
+    maxAmmo = Mathf.Max(0, ammo);
+}
 }

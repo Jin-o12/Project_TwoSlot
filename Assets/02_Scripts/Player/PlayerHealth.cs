@@ -45,12 +45,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!aimAndFlip)    aimAndFlip = GetComponent<AimAndFlip>();
         if(!stageManager)   stageManager = StageManager.Instance;
     }
-
-    public void Start()
+    void Start()
     {
         Initialized();
     }
-
     /* 플레이어 체력 수치 초기화 */
     public void Initialized()
     {
@@ -108,10 +106,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         // 사망 모션 재생 기다렸다가 씬 전환
         Invoke("GameoverScene", 3.0f);
     }
+    public void SetHp(int hp)
+    {
+        currentHp = Mathf.Clamp(hp, 0, maxHp);
+    }
 
     void GameoverScene()
     {
         stageManager.GameOver();
     }
 }
-

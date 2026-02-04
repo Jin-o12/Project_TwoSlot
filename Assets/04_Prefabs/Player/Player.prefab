@@ -1067,6 +1067,9 @@ PrefabInstance:
       addedObject: {fileID: 854970417521941714}
     - targetCorrespondingSourceObject: {fileID: 100154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4923646570420608638}
+    - targetCorrespondingSourceObject: {fileID: 100154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 3439138498539923855}
     - targetCorrespondingSourceObject: {fileID: 100154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       insertIndex: -1
@@ -1080,9 +1083,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2134934863273280731}
-    - targetCorrespondingSourceObject: {fileID: 100154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4923646570420608638}
   m_SourcePrefab: {fileID: 100100000, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
 --- !u!4 &6629044155553934485 stripped
 Transform:
@@ -1338,6 +1338,38 @@ MonoBehaviour:
   posSmooth: 25
   rotSmooth: 25
   bodyTurnSpeed: 15
+--- !u!114 &4923646570420608638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6629044155553968439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce69289488b87444a12846b403d3c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunName: M1911 Handgun Base
+  cam: {fileID: 0}
+  barrel: {fileID: 0}
+  bulletPrefab: {fileID: 4359504537769667221, guid: 6188ac556cf7bbb48b7008e2b14a011c, type: 3}
+  gunObject: {fileID: 0}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  maxDistance: 20
+  defaultCombatZ: 0
+  bulletSpeed: 40
+  fireCooldown: 0.25
+  spawnForwardOffset: 0.6
+  magSize: 10
+  maxAmmo: 10
+  reloadTime: 2.3
+  audioSource: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
+  reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
+  muzzleFlash: {fileID: 0}
 --- !u!114 &3439138498539923855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1447,38 +1479,6 @@ MonoBehaviour:
   useMouseAim: 1
   aimCamera: {fileID: 0}
   ignoreOwnerColliders: 1
---- !u!114 &4923646570420608638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6629044155553968439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce69289488b87444a12846b403d3c7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gunName: M1911 Handgun Base
-  cam: {fileID: 0}
-  barrel: {fileID: 0}
-  bulletPrefab: {fileID: 4359504537769667221, guid: 6188ac556cf7bbb48b7008e2b14a011c, type: 3}
-  gunObject: {fileID: 0}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 128
-  maxDistance: 20
-  defaultCombatZ: 0
-  bulletSpeed: 40
-  fireCooldown: 0.25
-  spawnForwardOffset: 0.6
-  magSize: 10
-  maxAmmo: 10
-  reloadTime: 2.3
-  audioSource: {fileID: 0}
-  fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
-  reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
-  muzzleFlash: {fileID: 0}
 --- !u!1001 &9076194093080187485
 PrefabInstance:
   m_ObjectHideFlags: 0

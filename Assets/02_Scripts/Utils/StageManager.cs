@@ -50,6 +50,8 @@ public class StageManager : MonoBehaviour
 
     public void Mainmenu()
     {
+        GameDataManager.Instance?.SavePlayerData();
+
         currentStageIndex = -1;                 // 인덱스 초기화
         SceneManager.LoadScene(mainManuScene);  // 메인메뉴 이동
     }
@@ -74,6 +76,9 @@ public class StageManager : MonoBehaviour
     /* 다음 스테이지로 전환 */
     public void NextStage()
     {
+        // 씬 넘어가기 전 저장
+        GameDataManager.Instance?.SavePlayerData();
+
         // 다음 스테이지로 가기 위한 인덱스 증가
         int nextIndex = currentStageIndex+1;
 
@@ -93,6 +98,8 @@ public class StageManager : MonoBehaviour
     /* 게임 패배시 종료 씬 전환 */
     public void GameOver()
     {
+        GameDataManager.Instance?.SavePlayerData();
+        
         SceneManager.LoadScene(gameEndScene);
     }
 }
