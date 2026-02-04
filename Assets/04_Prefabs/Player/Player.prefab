@@ -1261,7 +1261,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0, y: 1, z: -0}
@@ -1352,7 +1352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitClip: {fileID: 8300000, guid: 582a970523671434b8252db96db91d25, type: 3}
   maxHp: 100
-  hp: 0
   gunFire: {fileID: 0}
   rig: {fileID: 7282252910845497239}
   hitTrigger: Hit
@@ -1369,8 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot1: {fileID: 0}
-  slot2: {fileID: 0}
   slotIcon1: {fileID: 0}
   slotIcon2: {fileID: 0}
   selectedSlot: 1
@@ -1477,7 +1474,6 @@ MonoBehaviour:
   spawnForwardOffset: 0.6
   magSize: 10
   maxAmmo: 10
-  currentAmmo: 10
   reloadTime: 2.3
   audioSource: {fileID: 0}
   fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
