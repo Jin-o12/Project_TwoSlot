@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            // 부모가 있다면 부모 해제 후 보존 (싱글톤이 상속되어 있기 때문에 안전장치 추가)
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
         }
         // 이미 존재 할 시 기존의 것을 삭제하여 중복 되는 일이 없게 함

@@ -81,7 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16b3782bec51bd4fbc474b055d8ca44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageList:
+  stageSceneList:
   - Level_1_Scene
   - Level_2_Scene
   - Level_3_Scene
+  mainManuScene: MainMenu_Scene
+  gameEndScene: GameEnd_Scene

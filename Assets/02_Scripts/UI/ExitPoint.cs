@@ -1,15 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameEndManager : MonoBehaviour
+public class ExitPoint : MonoBehaviour
 {
-    public void OnColliderEnter(Collision col)
+    private static StageManager stageManager;
+
+    void Awake()
+    {
+        stageManager = StageManager.Instance;
+    }
+
+    public void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("GameEnd_Scene");
+            stageManager.NextStage();
         }
     }
 }

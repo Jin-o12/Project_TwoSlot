@@ -1822,7 +1822,7 @@ Transform:
   m_GameObject: {fileID: 3635079647430067699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.57, y: 0.020000458, z: 0.010000229}
+  m_LocalPosition: {x: -23.57, y: 0.020000458, z: 8}
   m_LocalScale: {x: 12.174999, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2041,7 +2041,7 @@ MonoBehaviour:
   lockZ: 8
   lockZAxis: 1
   enemyTr: {fileID: 422452467887860781}
-  playerTr: {fileID: 0}
+  playerTr: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
   attackCooldown: 1.5
   attackLockTime: 1
   attackBox: {fileID: 4323793743331943132}
