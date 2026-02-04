@@ -61,11 +61,13 @@ public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
         // Debug.Log($"[Bullet] downDir={downDir}, vel={rb.velocity}");
     }
 
+    /* 데미지를 받고, 체력이 다할 시 사망 */
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            GameDataManager.Instance.AddScore(200);
             Destroy(gameObject);
         }
     }

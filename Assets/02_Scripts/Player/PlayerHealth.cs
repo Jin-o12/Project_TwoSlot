@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+/// <summary>
+/// 플레이어의 체력 수치 관링와 사망 판정 수행
+/// </summary>
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
@@ -15,10 +17,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private PlayerMove playerMove;
     private AimAndFlip aimAndFlip;
     private RigBuilder rigBuilder;
+    private StageManager stageManager;
 
     [Header("HP")]
-    public int maxHp = 100;
-    public int hp;
+    public int maxHp = 100;                 // 최대 체력
+    public int currentHp                    // 현재 체력
+    { get; private set; }
 
     [Header("Refs")]
     public GunFire gunFire;
@@ -33,18 +37,24 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     void Awake()
     {
         // 모든 컴포넌트 및 스크립트를 찾아서 할당
-        if (!animator) animator = GetComponentInChildren<Animator>();
-        if (!gunFire) gunFire = GetComponentInChildren<GunFire>();
-        if (!playerMove) playerMove = GetComponent<PlayerMove>();
-        if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
-        if (!audioSource) audioSource = GetComponent<AudioSource>();
-        if (!aimAndFlip) aimAndFlip = GetComponent<AimAndFlip>();
+        if (!animator)      animator = GetComponentInChildren<Animator>();
+        if (!gunFire)       gunFire = GetComponentInChildren<GunFire>();
+        if (!playerMove)    playerMove = GetComponent<PlayerMove>();
+        if (!rigBuilder)    rigBuilder = GetComponent<RigBuilder>();
+        if (!audioSource)   audioSource = GetComponent<AudioSource>();
+        if (!aimAndFlip)    aimAndFlip = GetComponent<AimAndFlip>();
+        if(!stageManager)   stageManager = StageManager.Instance;
+    }
+
+    public void Start()
+    {
+        Initialized();
     }
 
     /* 플레이어 체력 수치 초기화 */
     public void Initialized()
     {
-        hp = maxHp;        
+        currentHp = maxHp;        
     }
 
     /* 피해를 입음 */
@@ -52,9 +62,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (isDead) return;
 
-        hp = Mathf.Clamp(hp - dmg, 0, maxHp);
+        currentHp = Mathf.Clamp(currentHp - dmg, 0, maxHp);
         
-        if (hp <= 0)
+        if (currentHp <= 0)
         {
             Die();
             return;
@@ -94,6 +104,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         // 죽음 애니메이션
         if (animator)
             animator.SetTrigger(dieTrigger);
+
+        // 사망 모션 재생 기다렸다가 씬 전환
+        Invoke("GameoverScene", 3.0f);
+    }
+
+    void GameoverScene()
+    {
+        stageManager.GameOver();
     }
 }
 

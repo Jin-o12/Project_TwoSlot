@@ -17,6 +17,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
+        GameDataManager.Instance.AddScore(150);
         Destroy(gameObject);
     }
 }

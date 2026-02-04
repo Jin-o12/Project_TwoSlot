@@ -28,7 +28,8 @@ public class GunFire : MonoBehaviour
     [Header("Ammo")]
     public int magSize = 10;                // 탄창 크기
     public int maxAmmo = 30;                // 최대 총알
-    public int currentAmmo = 10;            // 현재 총알
+    public int currentAmmo                  // 현재 총알
+    { get; private set; }
     public float reloadTime = 2.3f;         // 재장전 시간
     bool isReloading = false;
 
@@ -65,6 +66,7 @@ public class GunFire : MonoBehaviour
         bulletSpeed = 40f;
         fireCooldown = 0.25f;
         spawnForwardOffset = 0.6f;
+        currentAmmo = 10;
     }
 
     /* 자식 오브젝트 중 특정 이름의 오브젝트를 가져오는 코드 */

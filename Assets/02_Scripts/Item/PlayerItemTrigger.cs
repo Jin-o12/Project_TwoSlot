@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class PlayerItemTrigger : MonoBehaviour
 {
     private InputManager inputManager;
-
-    [Header("아이템 슬롯 2칸 (WeaponItem)")]
-    public WeaponItem slot1;                        // 첫번째 아이템이 들어갈 변수
-    public WeaponItem slot2;                        // 두번째 아이템이 들어갈 변수
+    public WeaponItem slot1                         // 첫번째 아이템이 들어갈 변수
+    { get; private set; }
+    public WeaponItem slot2                         // 두번째 아이템이 들어갈 변수
+    { get; private set; }
 
     [Header("슬롯 아이콘 UI (Image)")]
-    public Image slotIcon1;                          // 아이템 슬롯 이미지
-    public Image slotIcon2;                          // 아이템 슬롯 이미지
+    public Image slotIcon1;                         // 아이템 슬롯 이미지
+    public Image slotIcon2;                         // 아이템 슬롯 이미지
 
     [Header("아이템 슬롯(1/2)")]
     [Range(1, 2)]

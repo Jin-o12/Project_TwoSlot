@@ -1,18 +1,18 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement; // ¾À ÀÌµ¿À» À§ÇØ ÇÊ¼ö!
+using UnityEngine.SceneManagement; // ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½!
 
 public class EndingTyper : MonoBehaviour
 {
     [Header("UI Settings")]
     public TextMeshProUGUI textComponent;
-    public GameObject buttonGroup; // ¹öÆ°µéÀ» ¹­¾î³õÀº ºÎ¸ğ ¿ÀºêÁ§Æ®
+    public GameObject buttonGroup; // ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
     [Header("Text Content")]
     [TextArea(5, 10)]
     public string fullText;
-    public string cursorChar = "¡á";
+    public string cursorChar = "ï¿½ï¿½";
 
     [Header("Typing Settings")]
     public float typingSpeed = 0.08f;
@@ -25,12 +25,15 @@ public class EndingTyper : MonoBehaviour
 
     private void Start()
     {
-        // 1. ½ÃÀÛÇÏÀÚ¸¶ÀÚ ¹öÆ° ¼û±â±â
+        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½
         if (buttonGroup != null)
             buttonGroup.SetActive(false);
 
         textComponent.text = "";
         StartCoroutine(TypeWriterRoutine());
+
+        int score = GameDataManager.Instance.score;
+        fullText = $"ê³„ì•½ ì¢…ë£Œ...\n\n\n\n[SYSTEM MESSAGE]\n\n\nì‚¬ìœ  : ìì‚° íŒŒì† ìœ„í—˜, ì‘ì—… ìˆ˜í–‰ëŠ¥ë ¥ ë¯¸ë‹¬, ê³„ì•½ ë¯¸ì´í–‰.\n\nì²­êµ¬ ëª©ë¡ : ì‹œì‹  ìˆ˜ìŠµ ë¹„ìš©, ê³„ì•½ ë¯¸ì´í–‰ í™˜ìˆ˜ê¸ˆ\n\n\nì •ì‚° í›„ ìµœì¢… í•©ê³„ : {score}- 700 = {score-700}$\n\n\nê·€í•˜ì˜ ë…¸ê³ ì— ì§„ì‹¬ìœ¼ë¡œ ê°ì‚¬ë“œë¦½ë‹ˆë‹¤. 	-í•œë¹› ì‹œìŠ¤í…œì¦ˆ-";
     }
 
     IEnumerator TypeWriterRoutine()
@@ -50,15 +53,15 @@ public class EndingTyper : MonoBehaviour
             else yield return new WaitForSeconds(typingSpeed);
         }
 
-        // Å¸ÀÌÇÎ ³¡
+        // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         StartCoroutine(BlinkCursor());
 
-        // 2. 1ÃÊ µÚ¿¡ ¹öÆ° ±×·ì ÄÑ±â
+        // 2. 1ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½Æ° ï¿½×·ï¿½ ï¿½Ñ±ï¿½
         yield return new WaitForSeconds(1.0f);
         if (buttonGroup != null)
         {
             buttonGroup.SetActive(true);
-            // (¼±ÅÃ»çÇ×) ¹öÆ° ³ª¿Ã ¶§ ¼Ò¸® ÇÏ³ª ³Ö¾îÁÖ¸é ÁÁÀ½
+            // (ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½) ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½Ï³ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (enterSound != null) audioSource.PlayOneShot(enterSound);
         }
     }
@@ -84,11 +87,11 @@ public class EndingTyper : MonoBehaviour
         }
     }
 
-    // ¹öÆ° ±â´É ÇÔ¼ö Ãß°¡ (ÀÎ½ºÆåÅÍ¿¡¼­ ¿¬°á¿ë)
+    // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ß°ï¿½ (ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½)
 
     public void GoToMainMenu()
     {
-        // "MainMenu" ºÎºĞ¿¡ ½ÇÁ¦ ¸ŞÀÎ ¸Ş´º ¾À ÀÌ¸§ Àû±â
+        // "MainMenu" ï¿½ÎºĞ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş´ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -96,7 +99,7 @@ public class EndingTyper : MonoBehaviour
     {
         UnityEditor.EditorApplication.isPlaying = false;
 
-        Debug.Log("°ÔÀÓ Á¾·á!");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
         Application.Quit();
     }
 }
