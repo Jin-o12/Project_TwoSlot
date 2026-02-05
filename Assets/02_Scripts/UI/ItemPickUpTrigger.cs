@@ -39,7 +39,7 @@ public class ItemPickUpTrigger : MonoBehaviour
         _inv = other.GetComponent<PlayerItemTrigger>()
                ?? other.GetComponentInParent<PlayerItemTrigger>();
 
-        if (showFPrompt && FPromptUI.I && _inv != null)
+        if (showFPrompt && FPromptUI.I && _inv != null && !IsSameAsEquipped())
             FPromptUI.I.Show(transform);
     }
 
@@ -61,6 +61,18 @@ public class ItemPickUpTrigger : MonoBehaviour
 
         // ✅ 쿨다운: 0.5초면 1초에 최대 2번 입력만 허용
         if (Time.time < _nextAllowedTime) return;
+        // 손에 든 아이템과 동일하면: 줍기 막고, UI도 숨김
+        if (IsSameAsEquipped())
+        {
+            if (showFPrompt && FPromptUI.I && FPromptUI.I.IsShowing(transform))
+                FPromptUI.I.Hide();
+            return;
+        }
+
+        // 동일 아이템이 아닌 경우: UI가 꺼져있으면 다시 켜기(선택)
+        if (showFPrompt && FPromptUI.I && !FPromptUI.I.IsShowing(transform))
+            FPromptUI.I.Show(transform);
+
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -88,5 +100,19 @@ public class ItemPickUpTrigger : MonoBehaviour
             if (destroyOnPickup) Destroy(gameObject);
             else gameObject.SetActive(false);
         }
+    }
+    bool IsSameAsEquipped()
+    {
+        if (_inv == null) return false;
+        if (_inv.EquippedItem == null) return false;
+        if (item == null) return false;
+
+        // 1) 같은 ScriptableObject 참조면 같은 아이템
+        if (_inv.EquippedItem == item) return true;
+
+        // 2) (선택) ID가 있으면 ID 비교로도 막기
+        // return _inv.EquippedItem.itemId == item.itemId;
+
+        return false;
     }
 }
