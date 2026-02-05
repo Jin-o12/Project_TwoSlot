@@ -50,7 +50,7 @@ public class StageManager : MonoBehaviour
 
     public void Mainmenu()
     {
-        GameDataManager.Instance?.SavePlayerData();
+        GameDataManager.Instance?.ResetData();  // 플레이어 데이터 초기화
 
         currentStageIndex = -1;                 // 인덱스 초기화
         SceneManager.LoadScene(mainManuScene);  // 메인메뉴 이동
@@ -59,12 +59,13 @@ public class StageManager : MonoBehaviour
     /* 게임 첫 시작 */
     public void StartGame()
     {
+        GameDataManager.Instance?.ResetData();  // 플레이어 데이터 초기화
+
         // 스테이지가 하나라도 존재 한다면 로드
         if (stageSceneList.Length > 0)
         {
-            // 인덱스가 음수면 -1로 초기화, NextStage를 호출하면 0번째 스테이지가 로드
-            if (currentStageIndex < 0) currentStageIndex = -1;
-            Debug.Log($"StageManager.StartGame() currentStageIndex={currentStageIndex}");
+            // NextStage를 호출하면 0번째 스테이지가 로드
+            currentStageIndex = -1;
             NextStage();
         }
         else
@@ -86,8 +87,8 @@ public class StageManager : MonoBehaviour
         if(nextIndex < stageSceneList.Length)
         {
             currentStageIndex = nextIndex;
-            SceneManager.LoadScene(stageSceneList[currentStageIndex]);
             Debug.Log($"{currentStageIndex}번째 스테이지로 이동");
+            SceneManager.LoadScene(stageSceneList[nextIndex]);
         }
         else
         {
