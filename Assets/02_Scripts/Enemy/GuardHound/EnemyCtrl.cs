@@ -12,13 +12,22 @@ public class EnemyCtrl : MonoBehaviour
     [Header("적 추적 범위와 공격 범위")]
     public float traceDist = 7f;
     public float attackDist = 0.5f; // stoppingDistance 참고용
-    
+
     [Header("추적 사운드")]
     public AudioSource chaseAudio;          // 추적 사운드 재생용 AudioSource
     public AudioClip chaseLoopClip;         // 추적 중 반복 재생할 클립
     public bool chaseLoop = true;           // 보통 true 추천(반복)
     public float chaseVolume = 1f;          // 볼륨
     bool wasTracing = false;
+
+    [Header("추적 가속(부드럽게 빨라지기)")]
+    public float startTraceSpeed = 1.2f;   // 추적 시작 속도
+    public float chaseSpeed = 3.5f;        // 추적 최고 속도
+    public float startTraceAccel = 4f;     // 시작 가속
+    public float chaseAccel = 20f;         // 추적 가속
+    public float rampTime = 0.7f;          // 몇 초에 걸쳐 빨라질지
+
+    private Coroutine traceRampCo;
 
     [Header("Z축 고정")]
     public float lockZ = 9f;
@@ -71,6 +80,10 @@ public class EnemyCtrl : MonoBehaviour
 
             // ✅ 필요하면 에이전트 반지름도 줄이기(붙게 만들기)
             navi.radius = 0.15f; // 0.1~0.25 테스트
+
+            // ✅ 기본(추적 시작) 값 세팅
+            navi.speed = startTraceSpeed;
+            navi.acceleration = startTraceAccel;
         }
 
         animator = GetComponent<Animator>();
@@ -80,6 +93,7 @@ public class EnemyCtrl : MonoBehaviour
             // 공격 판정용 콜라이더는 기본 OFF
             attackBox.enabled = false;
         }
+
         if (chaseAudio == null)
             chaseAudio = GetComponent<AudioSource>(); // 같은 오브젝트에 AudioSource 달려있으면 자동 연결
 
@@ -93,14 +107,14 @@ public class EnemyCtrl : MonoBehaviour
 
     void Update()
     {
-        
         if (animator == null) return;
         if (navi == null) return;
         if (!navi.enabled || !navi.isOnNavMesh) return;
 
-        //  공격/리코일 중에는 추적/판정 모두 멈추기
-        if (isAttacking||isRecoiling)
+        // ✅ 공격/리코일 중에는 추적/판정 모두 멈추기 (+ 가속 램프 중단)
+        if (isAttacking || isRecoiling)
         {
+            StopTraceRampOnly(); // 램프만 끊고
             StopAgent();
             animator.SetBool("Trace", false);
             if (lockZAxis) FixZ();
@@ -108,7 +122,6 @@ public class EnemyCtrl : MonoBehaviour
             return;
         }
 
-        
         if (playerTr == null) return;
         Vector3 playerPos = playerTr.position;
         if (lockZAxis) playerPos.z = lockZ;
@@ -119,13 +132,11 @@ public class EnemyCtrl : MonoBehaviour
         // ★ 공격 판정: 공격 박스 안에 플레이어가 있는지
         bool inAttackRange = IsPlayerInAttackBox();
 
-        // if (debugLog)
-        // {
-        //     Debug.Log($"[EnemyCtrl] distX={distance:F2}, inAttackRange={inAttackRange}, time={Time.time:F2}, next={nextAttackTime:F2}");
-        // }
         bool isTracingNow = false;
+
         if (inAttackRange)
         {
+            StopTraceRampOnly(); // 공격 들어갈 땐 램프 중단
             StopAgent();
             animator.SetBool("Trace", false);
             isTracingNow = false;
@@ -143,6 +154,10 @@ public class EnemyCtrl : MonoBehaviour
         }
         else if (distance < traceDist)
         {
+            // ✅ 추적 "진입 순간"에만 부드러운 가속 시작
+            if (!wasTracing)
+                StartTraceRamp();
+
             navi.isStopped = false;
             navi.SetDestination(playerPos);
             animator.SetBool("Trace", true);
@@ -150,17 +165,88 @@ public class EnemyCtrl : MonoBehaviour
         }
         else
         {
+            StopTraceRampOnly();
             StopAgent();
             animator.SetBool("Trace", false);
             isTracingNow = false;
+
+            // 추적이 끊기면 다음 추적을 위해 시작값으로 복귀(원치 않으면 지워도 됨)
+            ResetTraceMove();
         }
-        UpdateChaseAudio(isTracingNow);     //추적 사운드 갱신
+
+        UpdateChaseAudio(isTracingNow);     // 추적 사운드 갱신
 
         if (lockZAxis) FixZ();
         FaceToPlayer();
     }
 
-    // ✅ 공격 애니가 보이도록 잠깐 멈추기
+    // =======================
+    // ✅ 부드러운 추적 가속 램프
+    // =======================
+    void StartTraceRamp()
+    {
+        if (navi == null) return;
+
+        if (traceRampCo != null) StopCoroutine(traceRampCo);
+        traceRampCo = StartCoroutine(RampChase());
+    }
+
+    void StopTraceRampOnly()
+    {
+        if (traceRampCo != null)
+        {
+            StopCoroutine(traceRampCo);
+            traceRampCo = null;
+        }
+    }
+
+    void ResetTraceMove()
+    {
+        if (navi == null) return;
+
+        // 다음 추적 시작을 위해 시작값으로 복귀
+        navi.speed = startTraceSpeed;
+        navi.acceleration = startTraceAccel;
+    }
+
+    IEnumerator RampChase()
+    {
+        float t = 0f;
+
+        float s0 = startTraceSpeed;
+        float s1 = chaseSpeed;
+
+        float a0 = startTraceAccel;
+        float a1 = chaseAccel;
+
+        navi.speed = s0;
+        navi.acceleration = a0;
+
+        while (t < rampTime)
+        {
+            // 공격/리코일 들어가면 램프 중단
+            if (isAttacking || isRecoiling) yield break;
+
+            t += Time.deltaTime;
+            float r = Mathf.Clamp01(t / rampTime);
+
+            // ✅ SmoothStep(부드럽게 빨라지는 느낌)
+            float smooth = r * r * (3f - 2f * r);
+
+            navi.speed = Mathf.Lerp(s0, s1, smooth);
+            navi.acceleration = Mathf.Lerp(a0, a1, smooth);
+
+            yield return null;
+        }
+
+        navi.speed = s1;
+        navi.acceleration = a1;
+        traceRampCo = null;
+    }
+
+    // =======================
+    // 공격 애니/판정
+    // =======================
     IEnumerator AttackLock()
     {
         isAttacking = true;
@@ -173,21 +259,17 @@ public class EnemyCtrl : MonoBehaviour
         isAttacking = false;
     }
 
-    // ★ 플레이어가 공격 박스 안에 있는지 확인 (안정 버전)
     bool IsPlayerInAttackBox()
     {
         if (attackBox == null) return false;
 
-        // BoxCollider의 로컬 center -> 월드 center
         Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
-
-        // 로컬 size 반영 + 월드 스케일 적용
         Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
-
         Quaternion rot = attackBox.transform.rotation;
 
         return Physics.CheckBox(center, halfExtents, rot, playerLayer, QueryTriggerInteraction.Collide);
     }
+
     void ApplyDamageByOverlapBox()
     {
         if (attackBox == null) return;
@@ -200,16 +282,40 @@ public class EnemyCtrl : MonoBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
-            // 콜라이더가 플레이어의 자식에 붙어있을 수 있으니 부모에서 IDamageable 찾기
             var dmg = hits[i].GetComponentInParent<IDamageable>();
             if (dmg != null)
             {
                 dmg.TakeDamage(damage);
-                hitAppliedThisSwing = true;   // 한 번만 맞게 하려면
+                hitAppliedThisSwing = true;
                 return;
             }
         }
     }
+
+    IEnumerator EnableHitboxTemporarily()
+    {
+        if (attackBox == null) yield break;
+
+        hitAppliedThisSwing = false;
+        attackBox.enabled = true;
+
+        float t = 0f;
+        while (t < hitboxOnTime)
+        {
+            t += Time.deltaTime;
+
+            if (!hitAppliedThisSwing)
+                ApplyDamageByOverlapBox();
+
+            yield return null;
+        }
+
+        attackBox.enabled = false;
+    }
+
+    // =======================
+    // 이동/회전 보조
+    // =======================
     void StopAgent()
     {
         navi.isStopped = true;
@@ -225,55 +331,25 @@ public class EnemyCtrl : MonoBehaviour
 
     void FaceToPlayer()
     {
-        if (playerTr.position.x > transform.position.x)
-            transform.rotation = Quaternion.Euler(0, 90f, 0);
-        else
-            transform.rotation = Quaternion.Euler(0, -90f, 0);
-    }
-    void FaceToTarget(Vector3 targetPos)
-    {
-        if (targetPos.x > transform.position.x)
+        if (playerTr != null && playerTr.position.x > transform.position.x)
             transform.rotation = Quaternion.Euler(0, 90f, 0);
         else
             transform.rotation = Quaternion.Euler(0, -90f, 0);
     }
 
-    IEnumerator EnableHitboxTemporarily()
-    {
-        if (attackBox == null) yield break;
-
-        hitAppliedThisSwing = false;
-        attackBox.enabled = true;
-
-        float t = 0f;
-        while (t < hitboxOnTime)
-        {
-            t += Time.deltaTime;
-
-            // ✅ 히트박스 켜진 동안 겹치면 데미지
-            if (!hitAppliedThisSwing)
-                ApplyDamageByOverlapBox();
-
-            yield return null;
-        };
-        attackBox.enabled = false;
-    }
-
-    // ✅ 플레이어 반대 방향으로 "항상" 튕기기 (부호 꼬임 방지: 벡터 기반)
+    // =======================
+    // 리코일
+    // =======================
     IEnumerator RecoilBack()
     {
         isRecoiling = true;
 
         Vector3 start = transform.position;
 
-        // 플레이어로부터 멀어지는 방향(플레이어 -> 적)
         Vector3 away = (transform.position - playerTr.position);
-
-        // 2.5D: X축만 사용
         away.y = 0f;
         away.z = 0f;
 
-        // 겹쳤을 때(0벡터) 안전 처리: 적의 오른쪽 기준 반대로
         if (away.sqrMagnitude < 0.0001f)
         {
             away = -transform.right;
@@ -302,16 +378,17 @@ public class EnemyCtrl : MonoBehaviour
 
         isRecoiling = false;
 
-        // NavMeshAgent 위치 동기화(꼬임 방지)
         if (navi != null && navi.enabled && navi.isOnNavMesh)
             navi.Warp(transform.position);
     }
 
+    // =======================
+    // 디버그 기즈모
+    // =======================
     void OnDrawGizmosSelected()
     {
         if (attackBox == null) return;
 
-        // CheckBox와 동일한 방식으로 기즈모 표시
         Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
         Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
         Quaternion rot = attackBox.transform.rotation;
@@ -319,27 +396,29 @@ public class EnemyCtrl : MonoBehaviour
         Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
         Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
     }
+
+    // =======================
+    // 추적 사운드
+    // =======================
     void UpdateChaseAudio(bool isTracingNow)
-{
-    if (chaseAudio == null || chaseLoopClip == null) return;
-
-    // 추적 시작
-    if (isTracingNow && !wasTracing)
     {
-        chaseAudio.clip = chaseLoopClip;
-        chaseAudio.loop = chaseLoop;
-        chaseAudio.volume = chaseVolume;
+        if (chaseAudio == null || chaseLoopClip == null) return;
 
-        if (!chaseAudio.isPlaying)
-            chaseAudio.Play();
-    }
-    // 추적 종료
-    else if (!isTracingNow && wasTracing)
-    {
-        if (chaseAudio.isPlaying)
-            chaseAudio.Stop();
-    }
+        if (isTracingNow && !wasTracing)
+        {
+            chaseAudio.clip = chaseLoopClip;
+            chaseAudio.loop = chaseLoop;
+            chaseAudio.volume = chaseVolume;
 
-    wasTracing = isTracingNow;
-}
+            if (!chaseAudio.isPlaying)
+                chaseAudio.Play();
+        }
+        else if (!isTracingNow && wasTracing)
+        {
+            if (chaseAudio.isPlaying)
+                chaseAudio.Stop();
+        }
+
+        wasTracing = isTracingNow;
+    }
 }
