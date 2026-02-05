@@ -3455,6 +3455,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 30
   audioSource: {fileID: 7098876596619313267}
+  hitClips:
+  - {fileID: 8300000, guid: 3982bff2ea8d2bd43b9091c201c22740, type: 3}
+  - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
+  - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
   dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
 --- !u!114 &7097332280759745687
 MonoBehaviour:
