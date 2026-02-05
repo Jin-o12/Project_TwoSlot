@@ -4,9 +4,12 @@
 /// </summary>
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerItemTrigger : MonoBehaviour
 {
+    private WeaponItem equippedItem;   // 현재 손에 든 아이템
+    public WeaponItem EquippedItem => equippedItem;
     private InputManager inputManager;
     public WeaponItem slot1                         // 첫번째 아이템이 들어갈 변수
     { get; private set; }
@@ -21,6 +24,10 @@ public class PlayerItemTrigger : MonoBehaviour
     [Range(1, 2)]
     public int selectedSlot;                        // 선택 된 슬롯
 
+    [Header("손 장착(추가)")]
+    [SerializeField] private Transform handSocket;   // 오른손 본/손 위치
+    private GameObject heldInstance;
+
     [Header("드롭 위치(선택)")]
     public Transform dropPoint;                     // 아이템이 떨어질 위치
 
@@ -32,9 +39,13 @@ public class PlayerItemTrigger : MonoBehaviour
 
     public enum ActiveMode { Gun, Item }            // 아이템 활성화 여부: 총 or 아이템(선택 슬롯)
 
+    [Header("총 비활성화 제어(추가)")]
+    [SerializeField] private GameObject gunRoot;              // 총/손 모델 루트(또는 무기 전체)
+    [SerializeField] private Behaviour[] gunBehaviours;       // 총 발사/조준 스크립트(선택)
+    private Coroutine useRoutine;
+
     // ====== 편의 프로퍼티 ======
     public bool IsFull => slot1 != null && slot2 != null;
-    public bool Has(WeaponItem item) => item != null && (slot1 == item || slot2 == item);
     public WeaponItem GetSelectedItem() => selectedSlot == 1 ? slot1 : slot2;
 
     // 총을 쏴도 되는지(총 스크립트에서 이걸로 막으면 “통합” 완성)
@@ -47,6 +58,7 @@ public class PlayerItemTrigger : MonoBehaviour
     void Start()
     {
         RefreshUI();
+        SetGunActive(true);
     }
 
     /* 인벤토리 관련 기능 초기화 */
@@ -56,6 +68,8 @@ public class PlayerItemTrigger : MonoBehaviour
         selectedSlot = 1;
         slot1 = null;
         slot2 = null;
+        selectingItem = false;
+        SetGunActive(true);
     }
 
     void Update()
@@ -100,6 +114,11 @@ public class PlayerItemTrigger : MonoBehaviour
         activeMode = ActiveMode.Item;
         selectingItem = false;
         Debug.Log($"[ItemSelect] ✅ 아이템 모드로 전환! (슬롯 {selectedSlot})");
+        
+        //장착(보이게) 처리
+        EquipSelectedToHand();
+        // 아이템 들고 있는 동안 총을 숨기기
+         SetGunActive(false);
     }
 
     // 아이템 사용 후 자동으로 총로 돌아가고 싶을 때 호출
@@ -107,7 +126,88 @@ public class PlayerItemTrigger : MonoBehaviour
     {
         activeMode = ActiveMode.Gun;
         selectingItem = false;
+
+        UnequipHandItem();
         Debug.Log("[ItemSelect] 총 모드로 복귀");
+        SetGunActive(true);
+    }
+
+    void EquipSelectedToHand()
+{
+    // 기존 들고 있던 것 제거
+    if (heldInstance != null) Destroy(heldInstance);
+
+    var item = GetSelectedItem();
+    if (item == null || item.pickupPrefab == null) return;
+
+    equippedItem = item; // 지금 장착한 아이템 저장
+
+    heldInstance = Instantiate(item.pickupPrefab, handSocket);
+    heldInstance.transform.localPosition = item.heldLocalPos;
+    heldInstance.transform.localRotation = Quaternion.Euler(item.heldLocalEuler);
+    heldInstance.transform.localScale = item.heldLocalScale;
+}
+
+void UnequipHandItem()
+{
+    if (heldInstance != null) Destroy(heldInstance);
+    heldInstance = null;
+    equippedItem = null;
+}
+
+    // ================== ✅ 아이템 사용 시작/종료 API (추가) ==================
+    /// <summary>
+    /// 아이템 사용을 시작할 때 호출: 총 잠시 비활성화
+    /// </summary>
+    public void BeginUseItem(float autoEndAfterSeconds = 0f)
+    {
+        // 이미 사용 중이면 리셋
+        if (useRoutine != null)
+        {
+            StopCoroutine(useRoutine);
+            useRoutine = null;
+        }
+
+        activeMode = ActiveMode.Item;
+        selectingItem = false;
+        EquipSelectedToHand();
+        SetGunActive(false);
+        
+
+        if (autoEndAfterSeconds > 0f)
+            useRoutine = StartCoroutine(AutoEndUse(autoEndAfterSeconds));
+    }
+
+    /// <summary>
+    /// 아이템 사용이 끝났을 때 호출: 총 다시 활성화 + 총 모드 복귀
+    /// </summary>
+    public void EndUseItem()
+    {
+        if (useRoutine != null)
+        {
+            StopCoroutine(useRoutine);
+            useRoutine = null;
+        }
+        UnequipHandItem();
+        SwitchToGun();
+    }
+
+    IEnumerator AutoEndUse(float t)
+    {
+        yield return new WaitForSeconds(t);
+        useRoutine = null;
+        SwitchToGun();
+    }
+
+    void SetGunActive(bool on)
+    {
+        if (gunRoot != null) gunRoot.SetActive(on);
+
+        if (gunBehaviours != null)
+        {
+            for (int i = 0; i < gunBehaviours.Length; i++)
+                if (gunBehaviours[i] != null) gunBehaviours[i].enabled = on;
+        }
     }
 
     // ================== 인벤/드롭 로직 ==================
@@ -210,4 +310,12 @@ public class PlayerItemTrigger : MonoBehaviour
         img.enabled = true;
         img.sprite = item.icon;
     }
+    public WeaponItem CurrentEquippedItem
+{
+    get
+    {
+        if (activeMode != ActiveMode.Item) return null;
+        return GetSelectedItem(); // 네 코드에 이미 있는 함수
+    }
+}
 }

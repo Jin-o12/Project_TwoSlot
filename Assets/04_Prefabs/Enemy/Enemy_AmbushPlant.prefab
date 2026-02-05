@@ -3224,6 +3224,7 @@ GameObject:
   - component: {fileID: 8604156178319621709}
   - component: {fileID: 6624005023738488234}
   - component: {fileID: 7097332280759745687}
+  - component: {fileID: -6815712111764138996}
   m_Layer: 7
   m_Name: Enemy_AmbushPlant
   m_TagString: ENEMY
@@ -3256,6 +3257,7 @@ Transform:
   - {fileID: 4805296654361773225}
   - {fileID: 9218542670525029386}
   - {fileID: 3292979446206917815}
+  - {fileID: 2645345598977706442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!95 &6220408257662051687
@@ -3480,6 +3482,29 @@ MonoBehaviour:
   fadeSpeed: 2
   minDistance: 8
   maxDistance: 15
+--- !u!114 &-6815712111764138996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a666fa84b29ca6e4ead7bd7e048f8706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropSpawnPoint: {fileID: 2645345598977706442}
+  oilDropPrefab: {fileID: 2421556905976870601, guid: ee6cbaa544876fd49862d516aed3cd1d, type: 3}
+  puddlePrefab: {fileID: 2578846122977356927, guid: c98d1ad06c3f1b24ca32e0df65f644d7, type: 3}
+  interval: 2
+  randomInterval: 0.5
+  startDownVelocity: 0
+  randomSideForce: 0.2
+  dropScale: 0.15
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &4033656146877792450
 GameObject:
   m_ObjectHideFlags: 0
@@ -5403,6 +5428,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6104160431472352497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2645345598977706442}
+  m_Layer: 7
+  m_Name: OilDropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2645345598977706442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104160431472352497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 30.3, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5119313724512705601}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6233084121086748689
 GameObject:
   m_ObjectHideFlags: 0
