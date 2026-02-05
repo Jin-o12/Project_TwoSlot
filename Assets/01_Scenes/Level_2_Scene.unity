@@ -7307,6 +7307,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 950059871656284884, guid: 70820ac48763c31478110ffd819ebe53, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 950059871656284884, guid: 70820ac48763c31478110ffd819ebe53, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1980
+      objectReference: {fileID: 0}
     - target: {fileID: 1366717669448446817, guid: 70820ac48763c31478110ffd819ebe53, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9351,6 +9359,14 @@ PrefabInstance:
     - target: {fileID: 4791368444023034883, guid: 43ccccf10148858409c651aa5328a3dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901771797716726100, guid: 43ccccf10148858409c651aa5328a3dd, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901771797716726100, guid: 43ccccf10148858409c651aa5328a3dd, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1980
       objectReference: {fileID: 0}
     - target: {fileID: 7120665809083608460, guid: 43ccccf10148858409c651aa5328a3dd, type: 3}
       propertyPath: gunFireScript

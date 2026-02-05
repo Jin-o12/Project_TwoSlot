@@ -979,7 +979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1304,7 +1304,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ba835e6b03f5e8c47bc80f9a77615bd7, type: 3}
   - {fileID: 8300000, guid: fdd998cfaf6089d4b85285bb85462e8f, type: 3}
   runFootstepClip:
-  - {fileID: 8300000, guid: 764f3048494a9024881c802abe8df649, type: 3}
   - {fileID: 8300000, guid: f7ba93ce1cb3e8c41af42d0fecfbd45c, type: 3}
   - {fileID: 8300000, guid: 099005aa07afdbe46976cf3812ec352b, type: 3}
   - {fileID: 8300000, guid: 5eee621ec736a8a4abfd2e9b276a8b53, type: 3}
@@ -1403,9 +1402,13 @@ MonoBehaviour:
   slotIcon1: {fileID: 0}
   slotIcon2: {fileID: 0}
   selectedSlot: 1
+  handSocket: {fileID: 0}
   dropPoint: {fileID: 6259517043618871549}
   activeMode: 0
   selectingItem: 0
+  gunRoot: {fileID: 9075631833854561705}
+  gunBehaviours:
+  - {fileID: 4923646570420608638}
 --- !u!114 &2124190996231296456
 MonoBehaviour:
   m_ObjectHideFlags: 0
