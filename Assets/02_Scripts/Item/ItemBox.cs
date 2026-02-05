@@ -8,6 +8,8 @@ public class ItemBox : MonoBehaviour
     [Header("Spawn")]
     public GameObject dropPrefab;   // 드롭될 아이템 프리팹
     public Transform spawnPoint;    // 박스 위/앞 위치
+    public AudioSource source;
+    public AudioClip openClip;
     public float popUpHeight = 1.0f;
     public float popUpTime = 0.12f;
     public float fallTime = 0.18f;
@@ -33,6 +35,9 @@ public class ItemBox : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             opened = true;
+            // 오픈 사운드
+            if (source && openClip)
+                source.PlayOneShot(openClip, 0.3f);
             if (FPromptUI.I) FPromptUI.I.Hide();
             StartCoroutine(SpawnPopDrop());
         }

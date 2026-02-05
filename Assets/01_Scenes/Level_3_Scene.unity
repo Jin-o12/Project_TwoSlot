@@ -4948,11 +4948,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8227751335381866931, guid: f1f36ead82a0b104084aaebc919b2764, type: 3}
   m_PrefabInstance: {fileID: 642082837}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &643245386 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9075631833854561705, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 1958321542}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &647457149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6984,11 +6979,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2691549628323001401, guid: ecad917932b04754ca77ddba10590332, type: 3}
   m_PrefabInstance: {fileID: 214291150}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &880565437 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6259517043618871549, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 1958321542}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &887057828 stripped
 MonoBehaviour:
@@ -14383,18 +14373,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2134934863273280731, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: aimCamera
-      value: 
-      objectReference: {fileID: 2009762057}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: gunRoot
-      value: 
-      objectReference: {fileID: 643245386}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: dropPoint
-      value: 
-      objectReference: {fileID: 880565437}
     - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: slotIcon1
       value: 
@@ -14403,18 +14381,6 @@ PrefabInstance:
       propertyPath: slotIcon2
       value: 
       objectReference: {fileID: 1422601217}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: handSocket
-      value: 
-      objectReference: {fileID: 2000095728}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: gunBehaviours.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: gunBehaviours.Array.data[0]
-      value: 
-      objectReference: {fileID: 1890036724}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -14806,11 +14772,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6527417505701192453, guid: 62040fdf2b7ac22408fd4c102b214098, type: 3}
   m_PrefabInstance: {fileID: 162911016}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2000095728 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 419431952913334656, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 1958321542}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2003489075
 PrefabInstance:
