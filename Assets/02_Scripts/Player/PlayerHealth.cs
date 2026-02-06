@@ -32,6 +32,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public string hitTrigger = "Hit";
     public string dieTrigger = "Die";
 
+    [Header("Low HP Effect")]
+    public LowHealthEffect lowHealthEffect; 
+
     bool isDead;
 
     void Awake()
@@ -44,6 +47,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!audioSource)   audioSource = GetComponent<AudioSource>();
         if (!aimAndFlip)    aimAndFlip = GetComponent<AimAndFlip>();
         if(!stageManager)   stageManager = StageManager.Instance;
+
+        if (!lowHealthEffect) lowHealthEffect = FindFirstObjectByType<LowHealthEffect>();
     }
     void Start()
     {
@@ -52,7 +57,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     /* 플레이어 체력 수치 초기화 */
     public void Initialized()
     {
-        currentHp = maxHp;        
+        currentHp = maxHp;       
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp); 
     }
 
     /* 피해를 입음 */
@@ -61,6 +67,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (isDead) return;
 
         currentHp = Mathf.Clamp(currentHp - dmg, 0, maxHp);
+
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
         
         if (currentHp <= 0)
         {
@@ -68,11 +76,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             return;
         }
 
-        // Hit 애니
+        // Hit 애니 + 피격 사운드
         if (animator && !string.IsNullOrEmpty(hitTrigger))
+        {
             animator.SetTrigger(hitTrigger);
-            audioSource.PlayOneShot(hitClip);
+        }
 
+        if (audioSource && hitClip)
+        {
+            audioSource.PlayOneShot(hitClip);
+        }
         // 0.5초 발사 금지
         gunFire?.LockFire(0.5f);
     }
@@ -82,6 +95,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (isDead) return;
         isDead = true;
+
+        lowHealthEffect?.UpdateHealthState(0, maxHp);
 
         // 에임/IK 정지
         if (aimAndFlip) aimAndFlip.IsDead = true;
@@ -109,6 +124,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void SetHp(int hp)
     {
         currentHp = Mathf.Clamp(hp, 0, maxHp);
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
     }
 
     void GameoverScene()
@@ -122,5 +138,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (amount <= 0) return;
 
         currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
     }
 }

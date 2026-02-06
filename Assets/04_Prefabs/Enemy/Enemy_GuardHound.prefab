@@ -1841,7 +1841,7 @@ Animator:
   m_GameObject: {fileID: 3635079647430067699}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8df5b386369d54778a922298504d1aba, type: 2}
+  m_Controller: {fileID: 9100000, guid: b77614c8f8c72194696906703b97d272, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1889,13 +1889,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
+  m_Speed: 0
   m_Acceleration: 40
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0.05
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -2032,12 +2032,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navi: {fileID: 791608432768917342}
   damage: 25
-  traceDist: 6
-  attackDist: 0.5
+  traceDist: 7
+  attackDist: 0.2
   chaseAudio: {fileID: 3628740730197274687}
   chaseLoopClip: {fileID: 8300000, guid: 05150f37780f10148a34ab3de1c009bc, type: 3}
   chaseLoop: 1
   chaseVolume: 1
+  startTraceSpeed: 0.8
+  chaseSpeed: 10
+  startTraceAccel: 1
+  chaseAccel: 30
+  rampTime: 4
   lockZ: 8
   lockZAxis: 1
   enemyTr: {fileID: 422452467887860781}
@@ -2084,6 +2089,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 30
   audioSource: {fileID: 3628740730197274687}
+  hitClips:
+  - {fileID: 8300000, guid: 3982bff2ea8d2bd43b9091c201c22740, type: 3}
+  - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
+  - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
   dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
 --- !u!1 &3686083063275687073
 GameObject:
