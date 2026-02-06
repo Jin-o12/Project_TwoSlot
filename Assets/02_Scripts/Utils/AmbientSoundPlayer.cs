@@ -11,7 +11,7 @@ public class AmbientSoundPlayer : MonoBehaviour
 
     [Header("재생 간격 설정 (초)")]
     public float minInterval = 5.0f;  // 최소 몇 초 뒤에 나올지
-    public float maxInterval = 15.0f; // 최대 몇 초 안에 나올지
+    public float maxInterval = 10.0f; // 최대 몇 초 안에 나올지
 
     [Header("볼륨 랜덤 설정")]
     public float minVolume = 0.5f;
