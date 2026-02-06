@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;   // UI (Toggle) »ç¿ëÀ» À§ÇØ Ãß°¡
-using UnityEngine.Audio; // AudioMixer »ç¿ëÀ» À§ÇØ Ãß°¡
+using UnityEngine.UI;   // UI (Toggle) ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+using UnityEngine.Audio; // AudioMixer ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 
 public class GamePauseManager : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÆĞÅÏ
+    // ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static GamePauseManager Instance { get; private set; }
 
-    [Header("¿¬°áÇÒ ¿ÀºêÁ§Æ®µé")]
-    public GameObject pausePanel;       // ÀÏ½ÃÁ¤Áö UI ÆĞ³Î
-    public GameObject blurVolume;       // ºí·¯ º¼·ı
-    public GameObject gameplayUI;       // HUD (Ã¼·Â¹Ù µî)
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½")]
+    public GameObject pausePanel;       // ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½Ğ³ï¿½
+    public GameObject blurVolume;       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public GameObject gameplayUI;       // HUD (Ã¼ï¿½Â¹ï¿½ ï¿½ï¿½)
 
-    [Header("È¯°æ¼³Á¤ UI")]
-    public GameObject settingsPanelUI;  // È¯°æ¼³Á¤ Ã¢ ÇÁ¸®ÆÕ
+    [Header("È¯ï¿½æ¼³ï¿½ï¿½ UI")]
+    public GameObject settingsPanelUI;  // È¯ï¿½æ¼³ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ¡å [Ãß°¡µÊ] È¯°æ¼³Á¤ ±â´É ¿¬°á
-    [Header("È¯°æ¼³Á¤ ±â´É ¿¬°á")]
-    public AudioMixer audioMixer;       // ¿Àµğ¿À ¹Í¼­ (MainMixer)
-    public Toggle fullscreenToggle;     // ÀüÃ¼È­¸é Åä±Û
+    // ï¿½ï¿½ [ï¿½ß°ï¿½ï¿½ï¿½] È¯ï¿½æ¼³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [Header("È¯ï¿½æ¼³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public AudioMixer audioMixer;       // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ (MainMixer)
+    public Toggle fullscreenToggle;     // ï¿½ï¿½Ã¼È­ï¿½ï¿½ ï¿½ï¿½ï¿½
 
     public bool IsPaused { get; private set; } = false;
+
+    public static bool Paused => Instance != null && Instance.IsPaused;
 
     private void Awake()
     {
@@ -32,7 +34,7 @@ public class GamePauseManager : MonoBehaviour
             settingsPanelUI.SetActive(false);
     }
 
-    // ¡å [Ãß°¡µÊ] ½ÃÀÛÇÒ ¶§ ÇöÀç ÀüÃ¼È­¸é »óÅÂ¸¦ Åä±Û¿¡ ¹İ¿µ
+    // ï¿½ï¿½ [ï¿½ß°ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼È­ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½Û¿ï¿½ ï¿½İ¿ï¿½
     private void Start()
     {
         if (fullscreenToggle != null)
@@ -45,12 +47,12 @@ public class GamePauseManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // ¼³Á¤Ã¢ÀÌ ÄÑÁ®ÀÖÀ¸¸é ¼³Á¤Ã¢¸¸ ´İ±â
+            // ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½İ±ï¿½
             if (settingsPanelUI != null && settingsPanelUI.activeSelf)
             {
                 CloseSettings();
             }
-            // ¾Æ´Ï¸é ÀÏ½ÃÁ¤Áö Åä±Û
+            // ï¿½Æ´Ï¸ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             else
             {
                 if (IsPaused) ResumeGame();
@@ -61,15 +63,23 @@ public class GamePauseManager : MonoBehaviour
 
     public void PauseGame()
     {
+
+        
         IsPaused = true;
+
+        
         pausePanel.SetActive(true);
         if (blurVolume != null) blurVolume.SetActive(true);
         if (gameplayUI != null) gameplayUI.SetActive(false);
 
         Time.timeScale = 0f;
 
+        AudioListener.pause = true; //ì˜¤ë””ì˜¤ ì¬ìƒë„ ì¼ì‹œì •ì§€
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        
     }
 
     public void ResumeGame()
@@ -82,7 +92,9 @@ public class GamePauseManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        // Ä¿¼­ Àá±×±â
+        AudioListener.pause = false; // ì˜¤ë””ì˜¤ ë‹¤ì‹œ ì¬ìƒ
+
+        // Ä¿ï¿½ï¿½ ï¿½ï¿½×±ï¿½
         // Cursor.visible = false;
 
     }
@@ -117,20 +129,20 @@ public class GamePauseManager : MonoBehaviour
     }
 
     // ================================================================================
-    // ¡å [Ãß°¡µÊ] º¼·ı ¹× ÀüÃ¼È­¸é ±â´É ¡å
+    // ï¿½ï¿½ [ï¿½ß°ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼È­ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½
     // ================================================================================
 
-    // ½½¶óÀÌ´õ¿Í ¿¬°áÇÒ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void SetMasterVolume(float sliderValue)
     {
         if (audioMixer == null) return;
 
-        // ·Î±× ½ºÄÉÀÏ º¯È¯ (ÀÚ¿¬½º·¯¿î ¼Ò¸® Á¶Àı)
+        // ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ (ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½)
         float volume = Mathf.Log10(Mathf.Max(sliderValue, 0.0001f)) * 20;
         audioMixer.SetFloat("Master", volume);
     }
 
-    // Åä±Û°ú ¿¬°áÇÒ ÇÔ¼ö
+    // ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void SetFullScreen(bool isFullScreen)
     {
         Screen.fullScreen = isFullScreen;

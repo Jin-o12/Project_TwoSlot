@@ -6890,10 +6890,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: slotIcon1
       value: 
       objectReference: {fileID: 962827425}
@@ -6944,10 +6940,6 @@ PrefabInstance:
     - target: {fileID: 6629044155553968439, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9075631833854561705, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
