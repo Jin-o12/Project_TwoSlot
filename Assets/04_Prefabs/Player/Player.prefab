@@ -656,6 +656,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &5194136786548816922
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9077724853466014757}
+    m_Modifications:
+    - target: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_Name
+      value: MuzzleFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199226664080650972, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199899835747133198, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+--- !u!4 &5189528977292054328 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4977485751071522, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+  m_PrefabInstance: {fileID: 5194136786548816922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5781467655118358257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1260,7 +1330,7 @@ AudioSource:
   m_GameObject: {fileID: 6629044155553968439}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2945409431951129265, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1425,20 +1495,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a7edc77aef3d4ba73adc2448ee516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 3
-  runSpeed: 5
+  walkSpeed: 1.5
+  runSpeed: 3
   acceleration: 40
   deceleration: 50
-  moveInput: 0
-  lockedZ: 0
   walkFootstepClip:
   - {fileID: 8300000, guid: fafa436656f292b41ace9013e0abd4a9, type: 3}
   - {fileID: 8300000, guid: ba835e6b03f5e8c47bc80f9a77615bd7, type: 3}
   - {fileID: 8300000, guid: fdd998cfaf6089d4b85285bb85462e8f, type: 3}
   runFootstepClip:
-  - {fileID: 8300000, guid: f7ba93ce1cb3e8c41af42d0fecfbd45c, type: 3}
-  - {fileID: 8300000, guid: 099005aa07afdbe46976cf3812ec352b, type: 3}
-  - {fileID: 8300000, guid: 5eee621ec736a8a4abfd2e9b276a8b53, type: 3}
+  - {fileID: 8300000, guid: 3f6038003249a144ba788efe89f897f0, type: 3}
+  - {fileID: 8300000, guid: 3a1d7f4a3ae3dcc43bfaf16061030676, type: 3}
+  - {fileID: 8300000, guid: 94621b091d978d14f9e78925091cf62d, type: 3}
+  - {fileID: 8300000, guid: e66172f0884c4cc4985da05f67c46cca, type: 3}
+  - {fileID: 8300000, guid: 631559a4c48a84549900425b40b6d0e7, type: 3}
   footstepMinSpeed: 0.2
   walkStepInterval: 0.5
   runStepInterval: 0.4
@@ -1466,9 +1536,11 @@ MonoBehaviour:
   targetDistance: 1.2
   maxArmAngle: 180
   flipHysteresis: 5
+  flipLockSeconds: 0.12
   posSmooth: 25
   rotSmooth: 25
   bodyTurnSpeed: 15
+  ikEulerOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &4923646570420608638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1497,8 +1569,11 @@ MonoBehaviour:
   magSize: 10
   maxAmmo: 10
   reloadTime: 2.3
-  audioSource: {fileID: 0}
-  fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
+  audioSource: {fileID: 5564705116494574469}
+  fireClips:
+  - {fileID: 8300000, guid: e164ed7fcb195534b981ece1c92191d3, type: 3}
+  - {fileID: 8300000, guid: f0495c7fff7743745884f70d7c3bf27b, type: 3}
+  - {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
   reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
   muzzleFlash: {fileID: 2917831876856478760}
 --- !u!114 &3439138498539923855
@@ -1579,7 +1654,7 @@ MonoBehaviour:
   muzzle: {fileID: 0}
   spawnForwardOffset: 0.6
   spawnUpOffset: 1.2
-  shootForce: 35
+  shootForce: 10
   forceMode: 2
   useMouseAim: 1
   aimCamera: {fileID: 0}

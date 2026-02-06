@@ -2046,7 +2046,7 @@ MonoBehaviour:
   lockZ: 8
   lockZAxis: 1
   enemyTr: {fileID: 422452467887860781}
-  playerTr: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
+  playerTr: {fileID: 0}
   attackCooldown: 1.5
   attackLockTime: 1
   attackBox: {fileID: 4323793743331943132}

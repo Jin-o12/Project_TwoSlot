@@ -15,7 +15,7 @@ public class GunFire : MonoBehaviour
 
     [Header("Targeting")]
     public LayerMask enemyMask;             // 레이어: ENEMY
-    public float maxDistance = 20f;        // 탄환 z축 보정 최댓값
+    public float maxDistance = 20f;         // 탄환 z축 보정 최댓값
 
     [Header("2.5D")]
     public float defaultCombatZ;            //
@@ -35,12 +35,16 @@ public class GunFire : MonoBehaviour
 
     [Header("VFX / SFX")]
     public AudioSource audioSource;
-    public AudioClip fireClip;
+
+    // [변경됨] 단일 AudioClip에서 배열로 변경
+    public AudioClip[] fireClips;
+
     public AudioClip reloadClip;
     public ParticleSystem muzzleFlash;
 
     float lastFire;
     bool fireLocked;
+
     public void LockFire(float sec)
     {
         CancelInvoke(nameof(UnlockFire));
@@ -54,10 +58,10 @@ public class GunFire : MonoBehaviour
         if (cam == null) cam = Camera.main;
 
         // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
-        if(gunObject==null)     gunObject = FindChildByName(transform, gunName);
-        if(audioSource==null)   audioSource = gunObject.GetComponent<AudioSource>();
-        if(muzzleFlash==null)   muzzleFlash = gunObject.GetComponent<ParticleSystem>();
-        if(barrel==null)        barrel = gunObject.transform;
+        if (gunObject == null) gunObject = FindChildByName(transform, gunName);
+        if (audioSource == null) audioSource = gunObject.GetComponent<AudioSource>();
+        if (muzzleFlash == null) muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        if (barrel == null) barrel = gunObject.transform;
 
         // 플레이어와 Z 값 맞춤
         defaultCombatZ = gameObject.transform.position.z;
@@ -172,7 +176,7 @@ public class GunFire : MonoBehaviour
         spawnPos.z = targetZ;
 
         GameObject b = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(dir, Vector3.forward));
-        
+
 
         var lockZ = b.GetComponent<LockZ>();
         if (lockZ != null) lockZ.fixedZ = targetZ;
@@ -185,13 +189,21 @@ public class GunFire : MonoBehaviour
             rb.velocity = dir * bulletSpeed;
         }
 
-        // 이펙트/사운드는 발사 성공 시에만 1번 실행
-        if (audioSource != null && fireClip != null)
-            audioSource.PlayOneShot(fireClip, 0.55f);
+        // [변경됨] 이펙트/사운드는 발사 성공 시에만 1번 실행 (랜덤 재생)
+        if (audioSource != null && fireClips != null && fireClips.Length > 0)
+        {
+            // 배열 인덱스 중 하나를 랜덤으로 선택
+            int randomIndex = Random.Range(0, fireClips.Length);
+
+            // 선택된 클립 재생
+            if (fireClips[randomIndex] != null)
+            {
+                audioSource.PlayOneShot(fireClips[randomIndex], 0.55f);
+            }
+        }
 
         if (muzzleFlash != null)
         {
-            
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.forward);
 
             var mf = Instantiate(muzzleFlash.gameObject, barrel.position, rot);
@@ -246,11 +258,11 @@ public class GunFire : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        int need = magSize - currentAmmo;          // 채워야 할 탄 수
-        int load = Mathf.Min(need, maxAmmo);       // 예비탄에서 꺼낼 수 있는 만큼
+        int need = magSize - currentAmmo;           // 채워야 할 탄 수
+        int load = Mathf.Min(need, maxAmmo);        // 예비탄에서 꺼낼 수 있는 만큼
 
-        currentAmmo += load;                        // 탄창 채우고
-        maxAmmo -= load;                            // 예비탄 차감
+        currentAmmo += load;                         // 탄창 채우고
+        maxAmmo -= load;                             // 예비탄 차감
 
         isReloading = false;
     }
@@ -258,9 +270,9 @@ public class GunFire : MonoBehaviour
     {
         maxAmmo += amount;
 
-        //UpdateAmmoUI();      - 아직 구현 안됨
+        //UpdateAmmoUI();       - 아직 구현 안됨
     }
-    
+
     public int GetCurrentAmmo() => currentAmmo;
 
     public void SetCurrentAmmo(int ammo)
@@ -269,8 +281,8 @@ public class GunFire : MonoBehaviour
     }
     public int GetMaxAmmo() => maxAmmo;
 
-public void SetMaxAmmo(int ammo)
-{
-    maxAmmo = Mathf.Max(0, ammo);
-}
+    public void SetMaxAmmo(int ammo)
+    {
+        maxAmmo = Mathf.Max(0, ammo);
+    }
 }

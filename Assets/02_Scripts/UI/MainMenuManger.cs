@@ -11,7 +11,7 @@ public class MainMenuManager : MonoBehaviour
 {
     [Header("UI")]
     public GameObject settingsPanel;        // 게임 설정 팝업 UI
-
+    public GameObject tutorialPanel;
     [Header("게임 설정")]
     public Toggle fullscreenToggle;         // 전체화면 토글 버튼
     public AudioMixer audioMixer;           // 오디오 믹서
@@ -23,6 +23,18 @@ public class MainMenuManager : MonoBehaviour
         if (fullscreenToggle != null)
         {
             fullscreenToggle.isOn = Screen.fullScreen;
+        }
+    }
+    public void OnClickOpenTutorial()
+    {
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Tutorial Panel이 할당되지 않았습니다. 바로 게임을 시작합니다.");
+            OnClickStartGame(); // 패널이 없으면 바로 시작
         }
     }
 
@@ -75,6 +87,22 @@ public class MainMenuManager : MonoBehaviour
     /* 게임 설정: 전체 화면 */
     public void SetFullScreen(bool isFullScreen)
     {
-        Screen.fullScreen = isFullScreen;
+        // 현재 해상도 정보를 가져옵니다.
+        int width = Screen.width;
+        int height = Screen.height;
+
+        if (isFullScreen)
+        {
+            // 전체 화면 모드: 현재 모니터의 해상도에 맞춰 '전체 창 모드'로 전환
+            // (ExclusiveFullScreen은 성능은 좋으나 화면 전환 시 깜빡임이 있을 수 있음)
+            Resolution currentResolution = Screen.currentResolution;
+            Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
+        }
+        else
+        {
+            // 창 모드: 명시적으로 'Windowed' 모드로 설정
+            // 이 모드를 써야 창 테두리가 생기고 해상도 변경이 가능해집니다.
+            Screen.SetResolution(width, height, FullScreenMode.Windowed);
+        }
     }
 }

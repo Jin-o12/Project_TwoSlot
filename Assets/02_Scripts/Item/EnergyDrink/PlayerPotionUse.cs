@@ -24,42 +24,37 @@ public class PlayerPotionUse : MonoBehaviour
         audioSource = GetComponentInParent<AudioSource>();
     }
 
-    void Update()
+void Update()
+{
+    if (GamePauseManager.Paused) return;          // ✅ 1) 일시정지면 입력 무시
+    if (!Input.GetMouseButtonDown(0)) return;
+    if (!inv || !hp) return;
+
+    // 아이템 모드일 때만
+    if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
+
+    WeaponItem selected = inv.GetSelectedItem();
+    if (!selected) return;
+
+    if (!energyDrinkItem)
     {
-        if (!Input.GetMouseButtonDown(0)) return;
-        if (!inv || !hp) return;
+        Debug.LogWarning("[EnergyDrink] energyDrinkItem이 비어있음!");
+        return;
+    }
 
-        // 아이템 모드일 때만
-        if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
+    if (selected != energyDrinkItem) return;
 
-        WeaponItem selected = inv.GetSelectedItem();
-        if (!selected) return;
+    // ✅ 풀피면 사용 막기 (강력 추천)
+    if (hp.currentHp >= hp.maxHp) return;
 
-        if (!energyDrinkItem)
-        {
-            Debug.LogWarning("[EnergyDrink] energyDrinkItem이 비어있음!");
-            return;
-        }
+    // 사용
+    hp.Heal(healAmount);
 
-        if (selected != energyDrinkItem) return;
+    if (audioSource && openSound)
+        audioSource.PlayOneShot(openSound);
 
-        // ✅ 풀피면 사용 막기 (강력 추천)
-        if (hp.currentHp >= hp.maxHp) return;
-
-        //-------------------
-        // 사용
-        //-------------------
-
-        hp.Heal(healAmount);
-
-        if (audioSource && openSound)
-            audioSource.PlayOneShot(openSound);
-
-        //-------------------
-        // 소비 + 총 복귀
-        //-------------------
-
-        inv.TryConsume(selected);
-        inv.SwitchToGun();
+    // 소비 + 총 복귀
+    inv.TryConsume(selected);
+    inv.SwitchToGun();
     }
 }
