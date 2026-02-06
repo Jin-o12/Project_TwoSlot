@@ -5068,7 +5068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd136654d2ef1a040ad1a37c42e477e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flareTimer: 9
+  flareTimer: 10
   destroyDelay: 1
   burnIntensityRange: {x: 2, y: 6}
   flyIntensityRange: {x: 1.2, y: 2.2}

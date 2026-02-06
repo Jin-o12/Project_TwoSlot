@@ -521,6 +521,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 199226664080650972, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199899835747133198, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -986,15 +994,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.7246246
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3796935
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9108934
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1006,7 +1014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1018,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1304,8 +1312,6 @@ MonoBehaviour:
   runSpeed: 5
   acceleration: 40
   deceleration: 50
-  moveInput: 0
-  lockedZ: 0
   walkFootstepClip:
   - {fileID: 8300000, guid: fafa436656f292b41ace9013e0abd4a9, type: 3}
   - {fileID: 8300000, guid: ba835e6b03f5e8c47bc80f9a77615bd7, type: 3}
@@ -1341,9 +1347,11 @@ MonoBehaviour:
   targetDistance: 1.2
   maxArmAngle: 180
   flipHysteresis: 5
+  flipLockSeconds: 0.12
   posSmooth: 25
   rotSmooth: 25
   bodyTurnSpeed: 15
+  ikEulerOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &4923646570420608638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,6 +1402,7 @@ MonoBehaviour:
   rig: {fileID: 7282252910845497239}
   hitTrigger: Hit
   dieTrigger: Die
+  lowHealthEffect: {fileID: 0}
 --- !u!114 &4047017968147893381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1453,7 +1462,7 @@ MonoBehaviour:
   muzzle: {fileID: 0}
   spawnForwardOffset: 0.6
   spawnUpOffset: 1.2
-  shootForce: 35
+  shootForce: 10
   forceMode: 2
   useMouseAim: 1
   aimCamera: {fileID: 0}

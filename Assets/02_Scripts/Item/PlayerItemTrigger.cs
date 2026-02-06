@@ -81,6 +81,8 @@ public class PlayerItemTrigger : MonoBehaviour
 
     void Update()
     {
+        if (GamePauseManager.Paused) return;   // ✅ 일시정지면 슬롯 입력 무시
+        
         if (Input.GetKeyDown(inputManager.Slot1Key)) HandleSlotKey(1);
         else if (Input.GetKeyDown(inputManager.Slot2Key)) HandleSlotKey(2);
     }

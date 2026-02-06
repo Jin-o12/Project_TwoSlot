@@ -36,6 +36,7 @@ public class PlayerNoiseBombUse : MonoBehaviour
 
     void Update()
     {
+        if (GamePauseManager.Paused) return;   // ✅ 일시정지면 발사/사용 금지
         if (!Input.GetMouseButtonDown(0)) return;
         if (inv == null) return;
         if (inv.activeMode != PlayerItemTrigger.ActiveMode.Item) return;
