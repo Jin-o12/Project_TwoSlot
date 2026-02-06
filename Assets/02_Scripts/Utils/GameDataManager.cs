@@ -1,8 +1,6 @@
 /// <summary>
 /// 게임 전체의 데이터들을 계속해서 저장 및 관리 할 싱글톤
 /// 총알, 체력, 아이템 등 유지 되어야 할 정보들을 저장해둡니다
-/// 
-/// (02.03/강다영) 플레이어의 데이터를 저장하는 과정에서 코드가 난잡합니다. 이후 최적화 할 예정입니다. 
 /// </summary>
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -57,10 +55,30 @@ public class GameDataManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ChangePlayerObject();
-    
-    // 저장 데이터가 있으면 1프레임 뒤 적용(Start() 이후 보장)
-        if (hasSavedData)
+
+        // 플레이어 캐릭터가 없는 씬이라면 실행 안 함
+        if (playerHealth == null) return;
+
+        // 데이터 저장 여부에 따른 분기 처리
+        if (!hasSavedData)
+        {
+            // [첫 게임 시작] 초기 데이터 세팅 후 저장 플래그 활성화
+            GameDataInitialize();
+            Debug.Log("[INIT] 첫 번째 스테이지: 플레이어 데이터 초기화 완료");
+        }
+        else
+        {
+            // [씬 전환] 이미 저장된 데이터가 있다면 1프레임 뒤에 적용
             StartCoroutine(ApplyNextFrame());
+            Debug.Log("[LOAD] 스테이지 이동: 저장된 데이터 복구 완료");
+        }
+    }
+
+    public void ResetData()
+    {
+        hasSavedData = false;
+        score = 0;
+        // 필요 시 아이템이나 기타 변수들도 기본값으로 초기화
     }
 
     IEnumerator ApplyNextFrame()
@@ -83,6 +101,7 @@ public class GameDataManager : MonoBehaviour
         }
         Debug.Log($"[APPLY] hp={currentHp} ammo={currentAmmo}/{savedMaxAmmo}");
     }
+
     // 씬 전환 이전에 플레이어의 데이터를 받아서 저장해둔다
     public void SavePlayerData()
     {
@@ -107,6 +126,7 @@ public class GameDataManager : MonoBehaviour
         Debug.Log($"[SAVE] hp={currentHp} ammo={currentAmmo}/{savedMaxAmmo}");
     }
 
+    /* 씬 전환시 새로 생성된 플레이어 오브젝트로 플레이어 데이터 새로 할당 */
     public void ChangePlayerObject()
     {
         GameObject player = GameObject.FindWithTag("Player");
@@ -117,6 +137,7 @@ public class GameDataManager : MonoBehaviour
             playerGun = player.GetComponent<GunFire>();             // 플레이어 총알 갯수
         }
     }
+    
     /* 게임 시작시 플레이어 데이터 일괄 초기화 하는 함수 */
     public void GameDataInitialize()
     {

@@ -2089,6 +2089,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 30
   audioSource: {fileID: 3628740730197274687}
+  hitClips:
+  - {fileID: 8300000, guid: 3982bff2ea8d2bd43b9091c201c22740, type: 3}
+  - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
+  - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
   dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
 --- !u!1 &3686083063275687073
 GameObject:

@@ -1,40 +1,46 @@
 using UnityEngine;
-using TMPro; // ÅØ½ºÆ®¸Ş½¬ÇÁ·Î »ç¿ë ÇÊ¼ö
+using TMPro; // TextMeshProë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìˆ˜
 
 public class AmmoUI : MonoBehaviour
 {
-    [Header("UI ¿¬°á")]
-    public TextMeshProUGUI ammoText; // ¼ıÀÚ¸¦ Ç¥½ÃÇÒ ÅØ½ºÆ® UI
+    [Header("UI í…ìŠ¤íŠ¸")]
+    public TextMeshProUGUI ammoText;            // ì´ì•Œ í…ìŠ¤íŠ¸ UI
 
-    [Header("µ¥ÀÌÅÍ ¿¬°á")]
-    // ÇÃ·¹ÀÌ¾îÀÇ ÃÑ ½Ã½ºÅÛ(GunFire)À» ¿¬°áÇÒ º¯¼ö
-    public GunFire gunFireScript;
+    [Header("ì°¸ì¡° ì»´í¬ë„ŒíŠ¸")]
+    public GunFire gunFireScript;               // ì´ ë°œì‚¬ì— ê´€í•œ ìŠ¤í¬ë¦½íŠ¸
 
-    [Header("»ö»ó ¼³Á¤ (¿É¼Ç)")]
-    public Color normalColor = Color.white;  // Æò¼Ò »ö±ò
-    public Color emptyColor = Color.red;     // ÃÑ¾Ë ¾øÀ» ¶§ »ö±ò
+    [Header("ì´ì•Œ ê°¯ìˆ˜ì— ë”°ë¥¸ UI ìƒ‰ìƒ")]
+    public Color normalColor = Color.white;     // í‰ì†Œì˜ ìƒ‰ê¹”
+    public Color emptyColor = Color.red;        // ì¥ì „ëœ ì´ì•Œì´ ì—†ì„ ì‹œ UI ìƒ‰ê¹”
+
+    private int current;
+    private int max;
 
     void Update()
     {
-        // 1. ¿¬°áµÈ ÃÑ ½ºÅ©¸³Æ®°¡ ¾øÀ¸¸é ÀÛµ¿ ÁßÁö (¿¡·¯ ¹æÁö)
+        // 1. ì´ ë°œì‚¬ì— ê´€í•œ ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ì„ ì‹œ ì´ì•Œ ê°¯ìˆ˜ë¥¼ í‘œì‹œí•˜ì§€ ì•ŠìŒ
         if (gunFireScript == null)
         {
             ammoText.text = "- / -";
             return;
         }
 
-        // 2. GunFire ½ºÅ©¸³Æ®¿¡¼­ Åº¾à Á¤º¸ °¡Á®¿À±â
-        int current = gunFireScript.currentAmmo; // ÇöÀç ÅºÃ¢ (6)
-        int max = gunFireScript.maxAmmo;         // ³²Àº Åº¾à (30)
+        UpdateBulletNumText();
 
-        // 3. ÅØ½ºÆ® °»½Å (¿¹: "6/30")
-        
-        ammoText.text = $"{current}/{max}";
-
-        // 4. (Ãß°¡ ±â´É) ÃÑ¾ËÀÌ 0¹ßÀÌ¸é »¡°£»öÀ¸·Î °æ°í
+        // 4. ì¥íƒ„ ìˆ˜ì— ë”°ë¥¸ UI ìƒ‰ìƒ ë³€ê²½
         if (current <= 0)
             ammoText.color = emptyColor;
         else
             ammoText.color = normalColor;
+    }
+
+    private void UpdateBulletNumText()
+    {
+        // 2. GunFire ìŠ¤í¬ë¦½íŠ¸ë¡œ ë¶€í„° í˜„ì¬ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
+        current = gunFireScript.currentAmmo; // í˜„ì¬ ì´ì•Œ ê°¯ìˆ˜
+        max = gunFireScript.maxAmmo;         // ìµœëŒ€ ì´ì•Œ ê°¯ìˆ˜
+
+        // 3. "í˜„ì¬ ì´ì•Œ ê°¯ìˆ˜/ìµœëŒ€ ì´ì•Œ ê°¯ìˆ˜"ê°€ UI ìƒì— í‘œì‹œ
+        ammoText.text = $"{current}/{max}";
     }
 }
