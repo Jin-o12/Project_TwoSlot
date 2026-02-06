@@ -25,11 +25,15 @@ public class PlayerMove : MonoBehaviour
     private bool isBackWalkNow;
 
     [Header("Footsteps")]
-    public AudioClip[] walkFootstepClip;
-    public AudioClip[] runFootstepClip;
-    public float footstepMinSpeed = 0.2f;
-    public float walkStepInterval = 0.5f;
-    public float runStepInterval = 0.4f;
+    public AudioClip[] walkFootstepClip;            // 걸을 때 발소리 사운드 클립
+    public AudioClip[] runFootstepClip;             // 달릴 때 발소리 사운드 클립
+
+    public float footstepMinSpeed = 0.2f;           // 이 속도 이상일 때만 발소리
+    private float minPitch;                         // 다양한 크기의 발소리 연출을 위한 최소 피치
+    private float maxPitch;                         // 사운드 클립의 최대 피치
+    public float walkStepInterval = 0.5f;           // 걷는 발소리 재생 간격
+    public float runStepInterval = 0.4f;            // 뛰는 발소리 재생 간격
+    private float footstepTimer = 0f;               // 발소리 재생 간격을 재는 타이머
 
     private float footstepTimer;
     private float minPitch = 0.9f;

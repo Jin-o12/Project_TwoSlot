@@ -1143,7 +1143,7 @@ AudioSource:
   m_GameObject: {fileID: 6629044155553968439}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2945409431951129265, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1317,12 +1317,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ba835e6b03f5e8c47bc80f9a77615bd7, type: 3}
   - {fileID: 8300000, guid: fdd998cfaf6089d4b85285bb85462e8f, type: 3}
   runFootstepClip:
-  - {fileID: 8300000, guid: f7ba93ce1cb3e8c41af42d0fecfbd45c, type: 3}
-  - {fileID: 8300000, guid: 099005aa07afdbe46976cf3812ec352b, type: 3}
-  - {fileID: 8300000, guid: 5eee621ec736a8a4abfd2e9b276a8b53, type: 3}
+  - {fileID: 8300000, guid: 3f6038003249a144ba788efe89f897f0, type: 3}
+  - {fileID: 8300000, guid: 3a1d7f4a3ae3dcc43bfaf16061030676, type: 3}
+  - {fileID: 8300000, guid: 94621b091d978d14f9e78925091cf62d, type: 3}
+  - {fileID: 8300000, guid: e66172f0884c4cc4985da05f67c46cca, type: 3}
+  - {fileID: 8300000, guid: 631559a4c48a84549900425b40b6d0e7, type: 3}
   footstepMinSpeed: 0.2
   walkStepInterval: 0.5
   runStepInterval: 0.4
+  walkVolume: 0.5
+  runVolume: 3
   speedParam: Speed
   isRunningParam: IsRunning
   isBackWalkParam: IsBackWalk
@@ -1380,8 +1384,11 @@ MonoBehaviour:
   magSize: 10
   maxAmmo: 10
   reloadTime: 2.3
-  audioSource: {fileID: 0}
-  fireClip: {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
+  audioSource: {fileID: 5564705116494574469}
+  fireClips:
+  - {fileID: 8300000, guid: e164ed7fcb195534b981ece1c92191d3, type: 3}
+  - {fileID: 8300000, guid: f0495c7fff7743745884f70d7c3bf27b, type: 3}
+  - {fileID: 8300000, guid: 9c122c07e045fc3449510f7c3bd77255, type: 3}
   reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
   muzzleFlash: {fileID: 198719912503724044, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
 --- !u!114 &3439138498539923855
