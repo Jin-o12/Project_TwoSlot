@@ -33,7 +33,7 @@ public class EndingTyper : MonoBehaviour
         StartCoroutine(TypeWriterRoutine());
 
         int score = GameDataManager.Instance.score;
-        fullText = $"계약 종료...\n\n\n\n[SYSTEM MESSAGE]\n\n\n사유 : 자산 파손 위험, 작업 수행능력 미달, 계약 미이행.\n\n청구 목록 : 시신 수습 비용, 계약 미이행 환수금\n\n\n정산 후 최종 합계 : {score}- 700 = {score-700}$\n\n\n귀하의 노고에 진심으로 감사드립니다. 	-한빛 시스템즈-";
+        fullText = $"계약 종료...\n\n\n\n[SYSTEM MESSAGE]\n\n\n사유 : 자산 파손 위험, 작업 수행능력 미달, 계약 미이행.\n\n청구 목록 : 시신 수습 비용, 계약 미이행 환수금\n\n\n정산 후 최종 합계 : {score} - 700 = {score-700}$\n\n\n귀하의 노고에 진심으로 감사드립니다. 	-한빛 시스템즈-";
     }
 
     IEnumerator TypeWriterRoutine()
