@@ -97,9 +97,15 @@ public class EndingTyper : MonoBehaviour
 
     public void QuitGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        // 1. 유니티 에디터에서 실행 중일 때
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            
+        // 2. 실제 빌드된 파일에서 실행 중일 때
+        #else
+            Application.Quit();
+        #endif
 
         Debug.Log("���� ����!");
-        Application.Quit();
     }
 }
