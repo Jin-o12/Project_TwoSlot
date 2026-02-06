@@ -207,6 +207,10 @@ MonoBehaviour:
   damage: 10
   lifeTime: 3
   speed: 10
+  enemyLayerName: ENEMY
+  hitVfxPrefab: {fileID: 1000011128802252, guid: c561451837d41c04daec0e33a98d6e9d, type: 3}
+  hitSfx: {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
+  hitSfxVolume: 1
 --- !u!114 &-7641925359361943845
 MonoBehaviour:
   m_ObjectHideFlags: 0

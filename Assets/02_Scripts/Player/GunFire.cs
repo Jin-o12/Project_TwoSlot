@@ -151,6 +151,7 @@ public class GunFire : MonoBehaviour
         }
 
         Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, targetZ));
+
         Vector3 aimPoint;
         if (!plane.Raycast(mouseRay, out float enter))
         {
@@ -171,6 +172,7 @@ public class GunFire : MonoBehaviour
         spawnPos.z = targetZ;
 
         GameObject b = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(dir, Vector3.forward));
+        
 
         var lockZ = b.GetComponent<LockZ>();
         if (lockZ != null) lockZ.fixedZ = targetZ;
@@ -183,15 +185,20 @@ public class GunFire : MonoBehaviour
             rb.velocity = dir * bulletSpeed;
         }
 
-        // ✅ 이펙트/사운드는 발사 성공 시에만 1번 실행
+        // 이펙트/사운드는 발사 성공 시에만 1번 실행
         if (audioSource != null && fireClip != null)
             audioSource.PlayOneShot(fireClip, 0.55f);
 
         if (muzzleFlash != null)
         {
-            muzzleFlash.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            muzzleFlash.Simulate(0f, true, true, true);
-            muzzleFlash.Play(true);
+            
+            Quaternion rot = Quaternion.LookRotation(dir, Vector3.forward);
+
+            var mf = Instantiate(muzzleFlash.gameObject, barrel.position, rot);
+            var ps = mf.GetComponentInChildren<ParticleSystem>();
+            if (ps) ps.Play(true);
+
+            Destroy(mf, 0.5f);
         }
     }
 
