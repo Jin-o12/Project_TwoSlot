@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Footsteps")]
     public AudioClip[] walkFootstepClip;            // 걸을 때 발소리 사운드 클립
     public AudioClip[] runFootstepClip;             // 달릴 때 발소리 사운드 클립
+
     public float footstepMinSpeed = 0.2f;           // 이 속도 이상일 때만 발소리
     private float minPitch;                         // 다양한 크기의 발소리 연출을 위한 최소 피치
     private float maxPitch;                         // 사운드 클립의 최대 피치
