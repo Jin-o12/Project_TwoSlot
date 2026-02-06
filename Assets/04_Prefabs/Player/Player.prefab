@@ -598,8 +598,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5478390685738721994, guid: a9e91c13267ad2b409a75bc9383ed702, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148205539482688968}
   m_SourcePrefab: {fileID: 100100000, guid: a9e91c13267ad2b409a75bc9383ed702, type: 3}
+--- !u!1 &2034713882533979195 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5478390685738721994, guid: a9e91c13267ad2b409a75bc9383ed702, type: 3}
+  m_PrefabInstance: {fileID: 5781467655118358257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148205539482688968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034713882533979195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886840f8e1453c04faf996cde6fc00af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anisotropy: 0.25
+  scattering: 1
+  radius: 0.2
 --- !u!4 &4307286702766225311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7781490475774079342, guid: a9e91c13267ad2b409a75bc9383ed702, type: 3}
@@ -963,15 +986,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: -7.7246246
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 3.3796935
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: -1.9108934
       objectReference: {fileID: 0}
     - target: {fileID: 400154, guid: bdd7a03fd93bf2d4cb6babd63ceabee8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1383,6 +1406,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ac27c0bb602c4a8a0d268fd57a678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popScale: 1.2
+  popDuration: 0.15
   slotIcon1: {fileID: 0}
   slotIcon2: {fileID: 0}
   selectedSlot: 1
