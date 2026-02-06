@@ -1308,8 +1308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a7edc77aef3d4ba73adc2448ee516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 3
-  runSpeed: 5
+  walkSpeed: 1.5
+  runSpeed: 3
   acceleration: 40
   deceleration: 50
   walkFootstepClip:
@@ -1325,8 +1325,6 @@ MonoBehaviour:
   footstepMinSpeed: 0.2
   walkStepInterval: 0.5
   runStepInterval: 0.4
-  walkVolume: 0.5
-  runVolume: 3
   speedParam: Speed
   isRunningParam: IsRunning
   isBackWalkParam: IsBackWalk

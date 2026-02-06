@@ -1537,10 +1537,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_GuardHound (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 3635079647430067699, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: playerTr
       value: 
@@ -2198,6 +2194,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_GuardHound
       objectReference: {fileID: 0}
+    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
+      propertyPath: chaseAccel
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722212309635945363, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
+      propertyPath: chaseSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6704487949700277038, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: sfxMixerGroup
       value: 
@@ -2411,11 +2415,6 @@ PrefabInstance:
       addedObject: {fileID: 698692132}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e165296e857d75045883f0cc200d2643, type: 3}
---- !u!82 &640135373 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5564705116494574469, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-  m_PrefabInstance: {fileID: 1650514244}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &665049203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5303,10 +5302,6 @@ PrefabInstance:
       propertyPath: slotIcon2
       value: 
       objectReference: {fileID: 1143414745}
-    - target: {fileID: 4923646570420608638, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 640135373}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -7859,13 +7854,9 @@ SceneRoots:
   - {fileID: 1903473754}
   - {fileID: 2066980309}
   - {fileID: 1601643944}
-  - {fileID: 1383379520}
   - {fileID: 1457986203}
   - {fileID: 1865696801}
   - {fileID: 423990310}
-  - {fileID: 423990310}
-  - {fileID: 1865696801}
-  - {fileID: 1457986203}
   - {fileID: 1101802726}
   - {fileID: 1608137771}
   - {fileID: 1298445337}

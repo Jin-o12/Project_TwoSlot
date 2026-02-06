@@ -35,10 +35,6 @@ public class PlayerMove : MonoBehaviour
     public float runStepInterval = 0.4f;            // 뛰는 발소리 재생 간격
     private float footstepTimer = 0f;               // 발소리 재생 간격을 재는 타이머
 
-    private float footstepTimer;
-    private float minPitch = 0.9f;
-    private float maxPitch = 1.1f;
-
     [Header("Animation")]
     public string speedParam = "Speed";
     public string isRunningParam = "IsRunning";
