@@ -1135,7 +1135,7 @@ AudioSource:
   m_GameObject: {fileID: 6629044155553968439}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2945409431951129265, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1394,6 +1394,7 @@ MonoBehaviour:
   rig: {fileID: 7282252910845497239}
   hitTrigger: Hit
   dieTrigger: Die
+  lowHealthEffect: {fileID: 0}
 --- !u!114 &4047017968147893381
 MonoBehaviour:
   m_ObjectHideFlags: 0
