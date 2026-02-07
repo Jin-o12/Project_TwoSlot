@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,9 @@ public class GunFire : MonoBehaviour
     public AudioClip reloadClip;
     public ParticleSystem muzzleFlash;
 
+    // ✅ 추가: 발사 “성공” 이벤트 (번쩍/카메라쉐이크/반동 등 외부에서 구독)
+    public Action OnFired;
+
     float lastFire;
     bool fireLocked;
     public void LockFire(float sec)
@@ -54,10 +58,10 @@ public class GunFire : MonoBehaviour
         if (cam == null) cam = Camera.main;
 
         // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
-        if(gunObject==null)     gunObject = FindChildByName(transform, gunName);
-        if(audioSource==null)   audioSource = gunObject.GetComponent<AudioSource>();
-        if(muzzleFlash==null)   muzzleFlash = gunObject.GetComponent<ParticleSystem>();
-        if(barrel==null)        barrel = gunObject.transform;
+        if (gunObject == null) gunObject = FindChildByName(transform, gunName);
+        if (audioSource == null && gunObject != null) audioSource = gunObject.GetComponent<AudioSource>();
+        if (muzzleFlash == null && gunObject != null) muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        if (barrel == null && gunObject != null) barrel = gunObject.transform;
 
         // 플레이어와 Z 값 맞춤
         defaultCombatZ = gameObject.transform.position.z;
@@ -172,7 +176,9 @@ public class GunFire : MonoBehaviour
         spawnPos.z = targetZ;
 
         GameObject b = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(dir, Vector3.forward));
-        
+
+        // ✅ 추가: “발사 성공” 확정 순간 (총알 생성 직후)
+        OnFired?.Invoke();
 
         var lockZ = b.GetComponent<LockZ>();
         if (lockZ != null) lockZ.fixedZ = targetZ;
@@ -191,7 +197,6 @@ public class GunFire : MonoBehaviour
 
         if (muzzleFlash != null)
         {
-            
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.forward);
 
             var mf = Instantiate(muzzleFlash.gameObject, barrel.position, rot);
@@ -232,6 +237,7 @@ public class GunFire : MonoBehaviour
             if (col != null) Physics.IgnoreCollision(bulletCol, col, true);
         }
     }
+
     IEnumerator Reload()
     {
         if (isReloading) yield break;
@@ -241,7 +247,7 @@ public class GunFire : MonoBehaviour
         if (currentAmmo >= magSize) yield break;
 
         isReloading = true;
-        audioSource.PlayOneShot(reloadClip, 1f);
+        if (audioSource != null && reloadClip != null) audioSource.PlayOneShot(reloadClip, 1f);
         // 여기서 리로드 사운드/애니 넣어도 됨
 
         yield return new WaitForSeconds(reloadTime);
@@ -254,23 +260,24 @@ public class GunFire : MonoBehaviour
 
         isReloading = false;
     }
+
     public void AddMaxAmmo(int amount)
     {
         maxAmmo += amount;
-
         //UpdateAmmoUI();      - 아직 구현 안됨
     }
-    
+
     public int GetCurrentAmmo() => currentAmmo;
 
     public void SetCurrentAmmo(int ammo)
     {
         currentAmmo = Mathf.Clamp(ammo, 0, magSize);
     }
+
     public int GetMaxAmmo() => maxAmmo;
 
-public void SetMaxAmmo(int ammo)
-{
-    maxAmmo = Mathf.Max(0, ammo);
-}
+    public void SetMaxAmmo(int ammo)
+    {
+        maxAmmo = Mathf.Max(0, ammo);
+    }
 }

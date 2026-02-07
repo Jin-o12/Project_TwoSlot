@@ -9,7 +9,7 @@ public class AmbushPlantOilDripper : MonoBehaviour
 
     [Header("Timing")]
     public float interval = 1.2f;       // 몇 초마다 떨어질지
-    public float randomInterval = 0.4f; // 랜덤 추가 (0이면 고정)
+    public float randomInterval = 1.0f; // 랜덤 추가 (0이면 고정)
 
     [Header("Drop Physics")]
     public float startDownVelocity = 0f;  // 살짝 아래로 속도 주기(원하면)
