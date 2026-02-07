@@ -774,3 +774,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
   - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
   dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
+  hitVfxPrefab: {fileID: 408759531892612412, guid: 22561396b9d6c634c8af6ff23a8c228c, type: 3}
+  hitVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForHitVfx: 0
+  hitVfxUseContactPoint: 1
+  hitVfxMinInterval: 0.05
+  deathVfxPrefab: {fileID: 9035704992113836218, guid: 0a2e9a686eca5c1419f8e71374d39e97, type: 3}
+  deathVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForVfx: 0

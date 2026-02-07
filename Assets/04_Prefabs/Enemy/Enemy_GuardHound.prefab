@@ -1931,7 +1931,7 @@ AudioSource:
   m_GameObject: {fileID: 3635079647430067699}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2093,7 +2093,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3982bff2ea8d2bd43b9091c201c22740, type: 3}
   - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
   - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
-  dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
+  dieClip: {fileID: 8300000, guid: 8384d03b4af384945b5fa7449b091310, type: 3}
+  hitVfxPrefab: {fileID: 408759531892612412, guid: 22561396b9d6c634c8af6ff23a8c228c, type: 3}
+  hitVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForHitVfx: 0
+  hitVfxUseContactPoint: 1
+  hitVfxMinInterval: 0.05
+  deathVfxPrefab: {fileID: 9083677376886972344, guid: 54bfc9693403a8645bdaf98279c0407c, type: 3}
+  deathVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForVfx: 0
 --- !u!1 &3686083063275687073
 GameObject:
   m_ObjectHideFlags: 0

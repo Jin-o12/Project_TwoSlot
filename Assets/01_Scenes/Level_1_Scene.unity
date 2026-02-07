@@ -2203,6 +2203,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6704487949700277038, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
+      propertyPath: dieClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8384d03b4af384945b5fa7449b091310, type: 3}
+    - target: {fileID: 6704487949700277038, guid: a22183ae37f7c544f96c0cd6e8689ccb, type: 3}
       propertyPath: sfxMixerGroup
       value: 
       objectReference: {fileID: 24300002, guid: 8802c4a08785e8c43b7077e2faac1423, type: 2}
