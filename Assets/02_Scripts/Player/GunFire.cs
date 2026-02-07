@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class GunFire : MonoBehaviour
 
     [Header("Targeting")]
     public LayerMask enemyMask;             // 레이어: ENEMY
-    public float maxDistance = 20f;         // 탄환 z축 보정 최댓값
+    public float maxDistance = 20f;        // 탄환 z축 보정 최댓값
 
     [Header("2.5D")]
     public float defaultCombatZ;            //
@@ -35,16 +36,15 @@ public class GunFire : MonoBehaviour
 
     [Header("VFX / SFX")]
     public AudioSource audioSource;
-
-    // [변경됨] 단일 AudioClip에서 배열로 변경
-    public AudioClip[] fireClips;
-
+    public AudioClip fireClip;
     public AudioClip reloadClip;
     public ParticleSystem muzzleFlash;
 
+    // ✅ 추가: 발사 “성공” 이벤트 (번쩍/카메라쉐이크/반동 등 외부에서 구독)
+    public Action OnFired;
+
     float lastFire;
     bool fireLocked;
-
     public void LockFire(float sec)
     {
         CancelInvoke(nameof(UnlockFire));
@@ -59,9 +59,9 @@ public class GunFire : MonoBehaviour
 
         // 총 오브젝트 관련 컴포넌트 불러오기 및 초기화
         if (gunObject == null) gunObject = FindChildByName(transform, gunName);
-        if (audioSource == null) audioSource = gunObject.GetComponent<AudioSource>();
-        if (muzzleFlash == null) muzzleFlash = gunObject.GetComponent<ParticleSystem>();
-        if (barrel == null) barrel = gunObject.transform;
+        if (audioSource == null && gunObject != null) audioSource = gunObject.GetComponent<AudioSource>();
+        if (muzzleFlash == null && gunObject != null) muzzleFlash = gunObject.GetComponent<ParticleSystem>();
+        if (barrel == null && gunObject != null) barrel = gunObject.transform;
 
         // 플레이어와 Z 값 맞춤
         defaultCombatZ = gameObject.transform.position.z;
@@ -177,6 +177,8 @@ public class GunFire : MonoBehaviour
 
         GameObject b = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(dir, Vector3.forward));
 
+        // ✅ 추가: “발사 성공” 확정 순간 (총알 생성 직후)
+        OnFired?.Invoke();
 
         var lockZ = b.GetComponent<LockZ>();
         if (lockZ != null) lockZ.fixedZ = targetZ;
@@ -189,18 +191,9 @@ public class GunFire : MonoBehaviour
             rb.velocity = dir * bulletSpeed;
         }
 
-        // [변경됨] 이펙트/사운드는 발사 성공 시에만 1번 실행 (랜덤 재생)
-        if (audioSource != null && fireClips != null && fireClips.Length > 0)
-        {
-            // 배열 인덱스 중 하나를 랜덤으로 선택
-            int randomIndex = Random.Range(0, fireClips.Length);
-
-            // 선택된 클립 재생
-            if (fireClips[randomIndex] != null)
-            {
-                audioSource.PlayOneShot(fireClips[randomIndex], 0.55f);
-            }
-        }
+        // 이펙트/사운드는 발사 성공 시에만 1번 실행
+        if (audioSource != null && fireClip != null)
+            audioSource.PlayOneShot(fireClip, 0.55f);
 
         if (muzzleFlash != null)
         {
@@ -244,6 +237,7 @@ public class GunFire : MonoBehaviour
             if (col != null) Physics.IgnoreCollision(bulletCol, col, true);
         }
     }
+
     IEnumerator Reload()
     {
         if (isReloading) yield break;
@@ -253,24 +247,24 @@ public class GunFire : MonoBehaviour
         if (currentAmmo >= magSize) yield break;
 
         isReloading = true;
-        audioSource.PlayOneShot(reloadClip, 1f);
+        if (audioSource != null && reloadClip != null) audioSource.PlayOneShot(reloadClip, 1f);
         // 여기서 리로드 사운드/애니 넣어도 됨
 
         yield return new WaitForSeconds(reloadTime);
 
-        int need = magSize - currentAmmo;           // 채워야 할 탄 수
-        int load = Mathf.Min(need, maxAmmo);        // 예비탄에서 꺼낼 수 있는 만큼
+        int need = magSize - currentAmmo;          // 채워야 할 탄 수
+        int load = Mathf.Min(need, maxAmmo);       // 예비탄에서 꺼낼 수 있는 만큼
 
-        currentAmmo += load;                         // 탄창 채우고
-        maxAmmo -= load;                             // 예비탄 차감
+        currentAmmo += load;                        // 탄창 채우고
+        maxAmmo -= load;                            // 예비탄 차감
 
         isReloading = false;
     }
+
     public void AddMaxAmmo(int amount)
     {
         maxAmmo += amount;
-
-        //UpdateAmmoUI();       - 아직 구현 안됨
+        //UpdateAmmoUI();      - 아직 구현 안됨
     }
 
     public int GetCurrentAmmo() => currentAmmo;
@@ -279,6 +273,7 @@ public class GunFire : MonoBehaviour
     {
         currentAmmo = Mathf.Clamp(ammo, 0, magSize);
     }
+
     public int GetMaxAmmo() => maxAmmo;
 
     public void SetMaxAmmo(int ammo)

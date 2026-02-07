@@ -3506,7 +3506,7 @@ MonoBehaviour:
   oilDropPrefab: {fileID: 2421556905976870601, guid: ee6cbaa544876fd49862d516aed3cd1d, type: 3}
   puddlePrefab: {fileID: 2578846122977356927, guid: c98d1ad06c3f1b24ca32e0df65f644d7, type: 3}
   interval: 2
-  randomInterval: 0.5
+  randomInterval: 1
   startDownVelocity: 0
   randomSideForce: 0.2
   dropScale: 0.15
