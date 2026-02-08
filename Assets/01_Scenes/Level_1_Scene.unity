@@ -3657,6 +3657,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7824721396740572023, guid: b71797b89559dba40a898c4c94df2df9, type: 3}
   m_PrefabInstance: {fileID: 53813578}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1045625391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 52933353925316341, guid: 1ce04ac56d928214bbdbb68507ff22c9, type: 3}
+  m_PrefabInstance: {fileID: 1101802726}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1045625394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045625391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ccc0869f41602144ab7ffc5eeaeef53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairTexture: {fileID: 2800000, guid: 363d51c77f6139a4a99ad9e455fdb7b2, type: 3}
 --- !u!4 &1052250219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2328685790658381652, guid: cc3feee37faa6e34e88487c92863d95f, type: 3}
@@ -3786,7 +3804,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 52933353925316341, guid: 1ce04ac56d928214bbdbb68507ff22c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1045625394}
   m_SourcePrefab: {fileID: 100100000, guid: 1ce04ac56d928214bbdbb68507ff22c9, type: 3}
 --- !u!1001 &1109162996
 PrefabInstance:
@@ -5298,10 +5319,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2917831876856478760, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 4047017968147893381, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: slotIcon1
       value: 
@@ -5310,10 +5327,6 @@ PrefabInstance:
       propertyPath: slotIcon2
       value: 
       objectReference: {fileID: 1143414745}
-    - target: {fileID: 4923646570420608638, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
-      propertyPath: muzzleFlash
-      value: 
-      objectReference: {fileID: 198719912503724044, guid: 541ce353e8fb0bb479764506d0f4b76a, type: 3}
     - target: {fileID: 6629044155553934615, guid: d522d44ff5f5ed244a08d100d09d40f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1

@@ -66,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHp: 0
   currentAmmo: 0
+  savedMaxAmmo: 0
   slot1Item: {fileID: 0}
   slot2Item: {fileID: 0}
   score: 0
@@ -84,6 +85,7 @@ MonoBehaviour:
   mainManuScene: MainMenu_Scene
   gameEndScene: Game_End_Scene
   stageSceneList:
+  - ChariManScene
   - Level_1_Scene
   - Level_2_Scene
   - Level_3_Scene
