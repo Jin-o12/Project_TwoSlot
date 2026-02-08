@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1581784987304002660}
   - component: {fileID: 5692003062216561487}
   - component: {fileID: 8750912596799053055}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: OilDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +149,8 @@ MonoBehaviour:
   puddlePrefab: {fileID: 2578846122977356927, guid: c98d1ad06c3f1b24ca32e0df65f644d7, type: 3}
   puddleScaleMin: 0.8
   puddleScaleMax: 1.3
+  puddleLifeTime: 10
+  destroyPuddleAfterTime: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295

@@ -7,6 +7,10 @@ public class OilDrop : MonoBehaviour
     public float puddleScaleMin = 0.8f;
     public float puddleScaleMax = 1.3f;
 
+    [Header("Puddle Lifetime")]
+    public float puddleLifeTime = 10f;      // ✅ 웅덩이 지속 시간(초) - 필요하면 조절
+    public bool destroyPuddleAfterTime = true;
+
     [Header("Raycast")]
     public LayerMask groundMask = ~0;       // 바닥 레이어만 지정하면 더 안전
     public float rayDistance = 0.6f;        // 바닥 체크 거리
@@ -55,5 +59,11 @@ public class OilDrop : MonoBehaviour
 
         float s = Random.Range(puddleScaleMin, puddleScaleMax);
         puddle.transform.localScale = new Vector3(s, s, s);
+
+        // ✅ 생성된 웅덩이 자동 제거
+        if (destroyPuddleAfterTime && puddleLifeTime > 0f)
+        {
+            Destroy(puddle, puddleLifeTime);
+        }
     }
 }

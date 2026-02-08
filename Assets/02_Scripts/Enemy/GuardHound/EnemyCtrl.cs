@@ -26,7 +26,6 @@ public class EnemyCtrl : MonoBehaviour
     public float startTraceAccel = 4f;     // 시작 가속
     public float chaseAccel = 20f;         // 추적 가속
     public float rampTime = 0.7f;          // 몇 초에 걸쳐 빨라질지
-
     private Coroutine traceRampCo;
 
     [Header("Z축 고정")]
@@ -56,46 +55,165 @@ public class EnemyCtrl : MonoBehaviour
     public float recoilDuration = 0.25f;
     private bool isRecoiling = false;
 
+    [Header("패트롤(좌우 왕복)")]
+    public bool usePatrol = true;
+    public float patrolRange = 2.5f;       // 시작 위치 기준 좌/우 거리
+    public float patrolSpeed = 2.5f;       // ✅ 패트롤 이동 속도
+    public float patrolAccel = 40f;        // ✅ 패트롤 가속(느림 해결)
+    public float patrolWaitTime = 0.2f;    // 끝점에서 잠깐 멈춤
+    public float patrolArriveEps = 0.15f;  // 도착 판정 오차
+
+    [Header("방향(뒤집힘 보정)")]
+    public bool invertFacing = false;      // 모델 방향이 반대면 true
+
+    [Header("히트(피격)")]
+    public float hitStunTime = 0.35f;      // ✅ 피격 경직 시간
+    private bool isHitted = false;         // ✅ 피격 중 플래그
+    private Coroutine hitCo;
+
+    private Vector3 patrolA;
+    private Vector3 patrolB;
+    private Vector3 patrolTarget;
+    private bool patrolInited = false;
+    private float patrolNextSwitchTime = 0f;
+
     [Header("디버그")]
-    public bool debugLog = false; // true로 켜면 공격 조건/log 확인 가능
+    public bool debugLog = false;
 
     private Animator animator;
-    bool hitAppliedThisSwing = false;
+    private bool hitAppliedThisSwing = false;
+
+    // Animator hashes
+    static readonly int HashTrace = Animator.StringToHash("Trace");
+    static readonly int HashPatrol = Animator.StringToHash("Patrol");
+    static readonly int HashAttack = Animator.StringToHash("Attack");
+    static readonly int HashHit = Animator.StringToHash("Hit"); // ✅ Animator에 Trigger "Hit" 만들기
 
     void Start()
     {
         navi = GetComponent<NavMeshAgent>();
-        enemyTr = transform;
-        playerTr = GameObject.FindWithTag("Player")?.transform;
-        lockZ = gameObject.transform.position.z;
-
-        if (navi != null)
-        {
-            navi.updateRotation = false;
-            navi.updateUpAxis = false;
-            navi.stoppingDistance = attackDist;
-
-            // ✅ 적끼리 자동으로 피하는 기능 끄기
-            navi.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-
-            // ✅ 필요하면 에이전트 반지름도 줄이기(붙게 만들기)
-            navi.radius = 0.15f; // 0.1~0.25 테스트
-
-            // ✅ 기본(추적 시작) 값 세팅
-            navi.speed = startTraceSpeed;
-            navi.acceleration = startTraceAccel;
-        }
-
         animator = GetComponent<Animator>();
 
-        if (attackBox != null)
+        enemyTr = transform;
+        playerTr = GameObject.FindWithTag("Player")?.transform;
+
+        lockZ = transform.position.z;
+
+        InitNavAgent();
+        InitAttackHitbox();
+        InitChaseAudio();
+        InitPatrolPoints();
+    }
+
+    void Update()
+    {
+        if (!CanUpdate()) return;
+
+        // ✅ 피격 중이면 모든 행동 멈춤(최우선)
+        if (isHitted)
         {
-            // 공격 판정용 콜라이더는 기본 OFF
-            attackBox.enabled = false;
+            StopTraceRampOnly();
+            StopAgentHard();
+            SetAnim(trace: false, patrol: false);
+
+            if (lockZAxis) FixZ();
+            return;
         }
 
+        // ✅ 공격/리코일 중에는 추적/패트롤 모두 멈추기 (+ 램프 중단)
+        if (HandleBusyState())
+            return;
+
+        Vector3 playerPos = GetPlayerPosLockedZ();
+        float distanceX = Mathf.Abs(enemyTr.position.x - playerPos.x);
+
+        bool inAttackRange = IsPlayerInAttackBox();
+        bool tracingNow = false;
+
+        if (inAttackRange)
+        {
+            HandleAttackState(playerPos);
+            tracingNow = false;
+        }
+        else if (distanceX < traceDist)
+        {
+            HandleTraceState(playerPos);
+            tracingNow = true;
+        }
+        else
+        {
+            HandlePatrolOrIdleState();
+            tracingNow = false;
+        }
+
+        UpdateChaseAudio(tracingNow);
+
+        if (lockZAxis) FixZ();
+        // FaceToPlayer는 제거된 상태 유지
+    }
+
+    // =======================
+    // ✅ 외부에서 호출할 피격 함수(복붙용)
+    // =======================
+    public void PlayHit(float stunTime = -1f)
+    {
+        if (animator == null) return;
+        if (hitCo != null) StopCoroutine(hitCo);
+        hitCo = StartCoroutine(HitRoutine(stunTime));
+    }
+
+    IEnumerator HitRoutine(float stunTime = -1f)
+    {
+        isHitted = true;
+
+        StopTraceRampOnly();
+        StopAgentHard();
+        SetAnim(false, false);
+
+        // ✅ 히트 모션 실행 (Animator에 Trigger "Hit" 필요)
+        animator.ResetTrigger(HashAttack); // 공격 트리거 꼬임 방지(선택)
+        animator.SetTrigger(HashHit);
+
+        // 경직 시간
+        float t = (stunTime >= 0f) ? stunTime : hitStunTime;
+        yield return new WaitForSeconds(t);
+
+        isHitted = false;
+        hitCo = null;
+
+        // ✅ 피격 후 다시 추적 시작이 너무 튀면 기본값으로 리셋
+        ResetTraceMove();
+    }
+
+    // =======================
+    // Init
+    // =======================
+    void InitNavAgent()
+    {
+        if (navi == null) return;
+
+        navi.updateRotation = false;
+        navi.updateUpAxis = false;
+        navi.stoppingDistance = attackDist;
+
+        navi.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        navi.radius = 0.15f;
+        navi.autoBraking = false;
+
+        navi.speed = startTraceSpeed;
+        navi.acceleration = startTraceAccel;
+    }
+
+    void InitAttackHitbox()
+    {
+        if (attackBox != null)
+            attackBox.enabled = false;
+    }
+
+    void InitChaseAudio()
+    {
         if (chaseAudio == null)
-            chaseAudio = GetComponent<AudioSource>(); // 같은 오브젝트에 AudioSource 달려있으면 자동 연결
+            chaseAudio = GetComponent<AudioSource>();
 
         if (chaseAudio != null)
         {
@@ -105,79 +223,157 @@ public class EnemyCtrl : MonoBehaviour
         }
     }
 
-    void Update()
+    void InitPatrolPoints()
     {
-        if (animator == null) return;
-        if (navi == null) return;
-        if (!navi.enabled || !navi.isOnNavMesh) return;
+        if (!usePatrol) return;
 
-        // ✅ 공격/리코일 중에는 추적/판정 모두 멈추기 (+ 가속 램프 중단)
-        if (isAttacking || isRecoiling)
-        {
-            StopTraceRampOnly(); // 램프만 끊고
-            StopAgent();
-            animator.SetBool("Trace", false);
-            if (lockZAxis) FixZ();
-            FaceToPlayer();
-            return;
-        }
+        Vector3 p = transform.position;
+        if (lockZAxis) p.z = lockZ;
 
-        if (playerTr == null) return;
-        Vector3 playerPos = playerTr.position;
-        if (lockZAxis) playerPos.z = lockZ;
+        patrolA = p; patrolA.x -= patrolRange;
+        patrolB = p; patrolB.x += patrolRange;
 
-        // 2.5D면 X만 보는 게 안정적
-        float distance = Mathf.Abs(enemyTr.position.x - playerPos.x);
+        patrolTarget = patrolB;
+        patrolInited = true;
+        patrolNextSwitchTime = 0f;
+    }
 
-        // ★ 공격 판정: 공격 박스 안에 플레이어가 있는지
-        bool inAttackRange = IsPlayerInAttackBox();
+    // =======================
+    // Update helpers
+    // =======================
+    bool CanUpdate()
+    {
+        if (animator == null) return false;
+        if (navi == null) return false;
+        if (!navi.enabled || !navi.isOnNavMesh) return false;
+        if (playerTr == null) return false;
+        return true;
+    }
 
-        bool isTracingNow = false;
+    bool HandleBusyState()
+    {
+        if (!(isAttacking || isRecoiling)) return false;
 
-        if (inAttackRange)
-        {
-            StopTraceRampOnly(); // 공격 들어갈 땐 램프 중단
-            StopAgent();
-            animator.SetBool("Trace", false);
-            isTracingNow = false;
+        StopTraceRampOnly();
+        StopAgentHard();
+        SetAnim(trace: false, patrol: false);
 
-            if (Time.time >= nextAttackTime)
-            {
-                if (debugLog) Debug.Log("[EnemyCtrl] ATTACK TRIGGER!");
-                animator.SetTrigger("Attack");
-                nextAttackTime = Time.time + attackCooldown;
-
-                StartCoroutine(AttackLock());               // ✅ 공격 애니가 보이도록 잠깐 멈춤
-                StartCoroutine(EnableHitboxTemporarily());  // ✅ 히트박스 잠깐 ON
-                StartCoroutine(RecoilBack());               // ✅ 플레이어 반대 방향 리코일
-            }
-        }
-        else if (distance < traceDist)
-        {
-            // ✅ 추적 "진입 순간"에만 부드러운 가속 시작
-            if (!wasTracing)
-                StartTraceRamp();
-
-            navi.isStopped = false;
-            navi.SetDestination(playerPos);
-            animator.SetBool("Trace", true);
-            isTracingNow = true;
-        }
-        else
-        {
-            StopTraceRampOnly();
-            StopAgent();
-            animator.SetBool("Trace", false);
-            isTracingNow = false;
-
-            // 추적이 끊기면 다음 추적을 위해 시작값으로 복귀(원치 않으면 지워도 됨)
-            ResetTraceMove();
-        }
-
-        UpdateChaseAudio(isTracingNow);     // 추적 사운드 갱신
+        FaceByTargetX(playerTr.position.x);
 
         if (lockZAxis) FixZ();
-        FaceToPlayer();
+        return true;
+    }
+
+    Vector3 GetPlayerPosLockedZ()
+    {
+        Vector3 p = playerTr.position;
+        if (lockZAxis) p.z = lockZ;
+        return p;
+    }
+
+    void SetAnim(bool trace, bool patrol)
+    {
+        animator.SetBool(HashTrace, trace);
+        animator.SetBool(HashPatrol, patrol);
+    }
+
+    // =======================
+    // Facing (상태별)
+    // =======================
+    void FaceByTargetX(float targetX)
+    {
+        float dirX = targetX - transform.position.x;
+        if (invertFacing) dirX = -dirX;
+
+        if (dirX >= 0f)
+            transform.rotation = Quaternion.Euler(0, 90f, 0);
+        else
+            transform.rotation = Quaternion.Euler(0, -90f, 0);
+    }
+
+    // =======================
+    // States
+    // =======================
+    void HandleAttackState(Vector3 playerPos)
+    {
+        StopTraceRampOnly();
+        StopAgentHard();
+        SetAnim(trace: false, patrol: false);
+
+        FaceByTargetX(playerPos.x);
+
+        if (Time.time < nextAttackTime) return;
+
+        if (debugLog) Debug.Log("[EnemyCtrl] ATTACK TRIGGER!");
+        animator.SetTrigger(HashAttack);
+        nextAttackTime = Time.time + attackCooldown;
+
+        StartCoroutine(AttackLock());
+        StartCoroutine(EnableHitboxTemporarily());
+        StartCoroutine(RecoilBack());
+    }
+
+    void HandleTraceState(Vector3 playerPos)
+    {
+        if (!wasTracing)
+            StartTraceRamp();
+
+        navi.isStopped = false;
+        navi.stoppingDistance = attackDist;
+        navi.SetDestination(playerPos);
+
+        SetAnim(trace: true, patrol: false);
+
+        FaceByTargetX(playerPos.x);
+    }
+
+    void HandlePatrolOrIdleState()
+    {
+        StopTraceRampOnly();
+        SetAnim(trace: false, patrol: usePatrol);
+
+        ResetTraceMove();
+
+        if (usePatrol)
+            PatrolMove();
+        else
+            StopAgentHard();
+    }
+
+    // =======================
+    // Patrol
+    // =======================
+    void PatrolMove()
+    {
+        if (navi == null) return;
+        if (!patrolInited) InitPatrolPoints();
+        if (!navi.enabled || !navi.isOnNavMesh) return;
+
+        navi.speed = patrolSpeed;
+        navi.acceleration = patrolAccel;
+        navi.stoppingDistance = 0f;
+
+        float distX = Mathf.Abs(transform.position.x - patrolTarget.x);
+
+        if (distX <= patrolArriveEps)
+        {
+            if (Time.time < patrolNextSwitchTime)
+            {
+                StopAgentHard();
+                return;
+            }
+
+            patrolTarget = (Mathf.Abs(patrolTarget.x - patrolA.x) < 0.001f) ? patrolB : patrolA;
+            patrolNextSwitchTime = Time.time + patrolWaitTime;
+        }
+
+        Vector3 dest = patrolTarget;
+        if (lockZAxis) dest.z = lockZ;
+
+        navi.isStopped = false;
+        navi.SetDestination(dest);
+
+        FaceByTargetX(dest.x);
     }
 
     // =======================
@@ -204,7 +400,6 @@ public class EnemyCtrl : MonoBehaviour
     {
         if (navi == null) return;
 
-        // 다음 추적 시작을 위해 시작값으로 복귀
         navi.speed = startTraceSpeed;
         navi.acceleration = startTraceAccel;
     }
@@ -224,13 +419,11 @@ public class EnemyCtrl : MonoBehaviour
 
         while (t < rampTime)
         {
-            // 공격/리코일 들어가면 램프 중단
-            if (isAttacking || isRecoiling) yield break;
+            if (isAttacking || isRecoiling || isHitted) yield break;
 
             t += Time.deltaTime;
             float r = Mathf.Clamp01(t / rampTime);
 
-            // ✅ SmoothStep(부드럽게 빨라지는 느낌)
             float smooth = r * r * (3f - 2f * r);
 
             navi.speed = Mathf.Lerp(s0, s1, smooth);
@@ -251,8 +444,8 @@ public class EnemyCtrl : MonoBehaviour
     {
         isAttacking = true;
 
-        StopAgent();
-        animator.SetBool("Trace", false);
+        StopAgentHard();
+        SetAnim(trace: false, patrol: false);
 
         yield return new WaitForSeconds(attackLockTime);
 
@@ -314,12 +507,17 @@ public class EnemyCtrl : MonoBehaviour
     }
 
     // =======================
-    // 이동/회전 보조
+    // 이동/정지 보조
     // =======================
-    void StopAgent()
+    void StopAgentHard()
     {
-        navi.isStopped = true;
-        navi.ResetPath();
+        if (navi == null) return;
+    if (!navi.enabled) return;
+    if (!navi.isOnNavMesh) return;   // ✅ 핵심: NavMesh 위 아닐 땐 아무 것도 하지 않음
+
+    navi.isStopped = true;
+    navi.ResetPath();
+    navi.velocity = Vector3.zero;
     }
 
     void FixZ()
@@ -327,14 +525,6 @@ public class EnemyCtrl : MonoBehaviour
         Vector3 pos = transform.position;
         pos.z = lockZ;
         transform.position = pos;
-    }
-
-    void FaceToPlayer()
-    {
-        if (playerTr != null && playerTr.position.x > transform.position.x)
-            transform.rotation = Quaternion.Euler(0, 90f, 0);
-        else
-            transform.rotation = Quaternion.Euler(0, -90f, 0);
     }
 
     // =======================
@@ -383,21 +573,6 @@ public class EnemyCtrl : MonoBehaviour
     }
 
     // =======================
-    // 디버그 기즈모
-    // =======================
-    void OnDrawGizmosSelected()
-    {
-        if (attackBox == null) return;
-
-        Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
-        Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
-        Quaternion rot = attackBox.transform.rotation;
-
-        Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
-    }
-
-    // =======================
     // 추적 사운드
     // =======================
     void UpdateChaseAudio(bool isTracingNow)
@@ -420,5 +595,33 @@ public class EnemyCtrl : MonoBehaviour
         }
 
         wasTracing = isTracingNow;
+    }
+
+    // =======================
+    // 디버그 기즈모
+    // =======================
+    void OnDrawGizmosSelected()
+    {
+        if (attackBox != null)
+        {
+            Vector3 center = attackBox.transform.TransformPoint(attackBox.center);
+            Vector3 halfExtents = Vector3.Scale(attackBox.size * 0.5f, attackBox.transform.lossyScale);
+            Quaternion rot = attackBox.transform.rotation;
+
+            Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
+        }
+
+        if (usePatrol)
+        {
+            Vector3 p = transform.position;
+            float z = Application.isPlaying ? lockZ : transform.position.z;
+
+            Vector3 a = p; a.x -= patrolRange; if (lockZAxis) a.z = z;
+            Vector3 b = p; b.x += patrolRange; if (lockZAxis) b.z = z;
+
+            Gizmos.matrix = Matrix4x4.identity;
+            Gizmos.DrawLine(a, b);
+        }
     }
 }
