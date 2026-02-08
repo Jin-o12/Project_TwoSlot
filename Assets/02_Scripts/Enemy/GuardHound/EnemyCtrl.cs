@@ -18,7 +18,7 @@ public class EnemyCtrl : MonoBehaviour
     public AudioClip chaseLoopClip;         // 추적 중 반복 재생할 클립
     public bool chaseLoop = true;           // 보통 true 추천(반복)
     public float chaseVolume = 1f;          // 볼륨
-    bool wasTracing = false;
+    private bool wasTracing = false;        // ✅ 추적 진입/이탈 감지 플래그
 
     [Header("추적 가속(부드럽게 빨라지기)")]
     public float startTraceSpeed = 1.2f;   // 추적 시작 속도
@@ -58,8 +58,8 @@ public class EnemyCtrl : MonoBehaviour
     [Header("패트롤(좌우 왕복)")]
     public bool usePatrol = true;
     public float patrolRange = 2.5f;       // 시작 위치 기준 좌/우 거리
-    public float patrolSpeed = 2.5f;       // ✅ 패트롤 이동 속도
-    public float patrolAccel = 40f;        // ✅ 패트롤 가속(느림 해결)
+    public float patrolSpeed = 2.5f;       // 패트롤 이동 속도
+    public float patrolAccel = 40f;        // 패트롤 가속(느림 해결)
     public float patrolWaitTime = 0.2f;    // 끝점에서 잠깐 멈춤
     public float patrolArriveEps = 0.15f;  // 도착 판정 오차
 
@@ -67,8 +67,8 @@ public class EnemyCtrl : MonoBehaviour
     public bool invertFacing = false;      // 모델 방향이 반대면 true
 
     [Header("히트(피격)")]
-    public float hitStunTime = 0.35f;      // ✅ 피격 경직 시간
-    private bool isHitted = false;         // ✅ 피격 중 플래그
+    public float hitStunTime = 0.35f;      // 피격 경직 시간
+    private bool isHitted = false;         // 피격 중 플래그
     private Coroutine hitCo;
 
     private Vector3 patrolA;
@@ -84,10 +84,11 @@ public class EnemyCtrl : MonoBehaviour
     private bool hitAppliedThisSwing = false;
 
     // Animator hashes
-    static readonly int HashTrace = Animator.StringToHash("Trace");
+    static readonly int HashTrace  = Animator.StringToHash("Trace");
     static readonly int HashPatrol = Animator.StringToHash("Patrol");
     static readonly int HashAttack = Animator.StringToHash("Attack");
-    static readonly int HashHit = Animator.StringToHash("Hit"); // ✅ Animator에 Trigger "Hit" 만들기
+    static readonly int HashHit    = Animator.StringToHash("Hit");   // Trigger
+    static readonly int HashDie    = Animator.StringToHash("Die");   // (있으면 사용, 없어도 문제 없음)
 
     void Start()
     {
@@ -109,18 +110,15 @@ public class EnemyCtrl : MonoBehaviour
     {
         if (!CanUpdate()) return;
 
-        // ✅ 피격 중이면 모든 행동 멈춤(최우선)
+        // ✅ 피격 중이면 최우선으로 행동 중단
         if (isHitted)
         {
-            StopTraceRampOnly();
-            StopAgentHard();
-            SetAnim(trace: false, patrol: false);
-
+            StopTracing(true);   // ✅ 핵심: wasTracing=false까지 포함
             if (lockZAxis) FixZ();
             return;
         }
 
-        // ✅ 공격/리코일 중에는 추적/패트롤 모두 멈추기 (+ 램프 중단)
+        // ✅ 공격/리코일 중에도 추적/패트롤 중단
         if (HandleBusyState())
             return;
 
@@ -128,7 +126,7 @@ public class EnemyCtrl : MonoBehaviour
         float distanceX = Mathf.Abs(enemyTr.position.x - playerPos.x);
 
         bool inAttackRange = IsPlayerInAttackBox();
-        bool tracingNow = false;
+        bool tracingNow;
 
         if (inAttackRange)
         {
@@ -149,7 +147,6 @@ public class EnemyCtrl : MonoBehaviour
         UpdateChaseAudio(tracingNow);
 
         if (lockZAxis) FixZ();
-        // FaceToPlayer는 제거된 상태 유지
     }
 
     // =======================
@@ -166,22 +163,26 @@ public class EnemyCtrl : MonoBehaviour
     {
         isHitted = true;
 
-        StopTraceRampOnly();
-        StopAgentHard();
-        SetAnim(false, false);
+        // ✅ 피격 진입 시 “추적 상태”를 강제로 끊어줌 (가속 램프 재시작 보장)
+        StopTracing(true);
 
-        // ✅ 히트 모션 실행 (Animator에 Trigger "Hit" 필요)
-        animator.ResetTrigger(HashAttack); // 공격 트리거 꼬임 방지(선택)
+        // ✅ 트리거 꼬임 정리: 공격이 남아있으면 Hit 끝나고 Attack으로 튈 수 있음
+        animator.ResetTrigger(HashAttack);
+        animator.ResetTrigger(HashHit);   // ✅ 연속 피격 시 트리거 꼬임 방지(추천)
+        // animator.ResetTrigger(HashDie); // ✅ Die 트리거도 쓰고 있다면(선택)
+
         animator.SetTrigger(HashHit);
 
-        // 경직 시간
         float t = (stunTime >= 0f) ? stunTime : hitStunTime;
         yield return new WaitForSeconds(t);
 
         isHitted = false;
         hitCo = null;
 
-        // ✅ 피격 후 다시 추적 시작이 너무 튀면 기본값으로 리셋
+        // ✅ 다음 추적 진입을 진입으로 인식시키기
+        wasTracing = false;
+
+        // ✅ 피격 후 속도 튐 방지(기본값으로)
         ResetTraceMove();
     }
 
@@ -254,10 +255,7 @@ public class EnemyCtrl : MonoBehaviour
     {
         if (!(isAttacking || isRecoiling)) return false;
 
-        StopTraceRampOnly();
-        StopAgentHard();
-        SetAnim(trace: false, patrol: false);
-
+        StopTracing(true); // ✅ 공격/리코일 중에도 추적 상태 리셋
         FaceByTargetX(playerTr.position.x);
 
         if (lockZAxis) FixZ();
@@ -278,7 +276,24 @@ public class EnemyCtrl : MonoBehaviour
     }
 
     // =======================
-    // Facing (상태별)
+    // ✅ 추적/가속/오디오/애니/정지 한방 정리
+    // =======================
+    void StopTracing(bool stopAudio = true)
+    {
+        StopTraceRampOnly();
+
+        // ✅ 핵심: 다음 추적 진입을 “진입”으로 인식시키기
+        wasTracing = false;
+
+        if (stopAudio && chaseAudio != null && chaseAudio.isPlaying)
+            chaseAudio.Stop();
+
+        SetAnim(trace: false, patrol: false);
+        StopAgentHard();
+    }
+
+    // =======================
+    // Facing
     // =======================
     void FaceByTargetX(float targetX)
     {
@@ -296,15 +311,19 @@ public class EnemyCtrl : MonoBehaviour
     // =======================
     void HandleAttackState(Vector3 playerPos)
     {
-        StopTraceRampOnly();
-        StopAgentHard();
-        SetAnim(trace: false, patrol: false);
+        StopTracing(false); // 상태 정리(오디오는 UpdateChaseAudio가 끄니 여기선 false도 OK)
 
         FaceByTargetX(playerPos.x);
 
         if (Time.time < nextAttackTime) return;
 
         if (debugLog) Debug.Log("[EnemyCtrl] ATTACK TRIGGER!");
+
+        // ✅ 트리거 꼬임 방지: 같은 프레임/짧은 간격의 중복 입력 정리
+        animator.ResetTrigger(HashAttack);
+        // Hit는 “맞으면 끊기는 게 정상”이라 Attack 넣을 때 ResetHit는 보통 안 함
+        // animator.ResetTrigger(HashHit); // 필요하면(공격 입력이 Hit랑 충돌하는 이상한 케이스만)
+
         animator.SetTrigger(HashAttack);
         nextAttackTime = Time.time + attackCooldown;
 
@@ -315,6 +334,7 @@ public class EnemyCtrl : MonoBehaviour
 
     void HandleTraceState(Vector3 playerPos)
     {
+        // ✅ 추적 “진입” 순간 램프 시작
         if (!wasTracing)
             StartTraceRamp();
 
@@ -323,15 +343,15 @@ public class EnemyCtrl : MonoBehaviour
         navi.SetDestination(playerPos);
 
         SetAnim(trace: true, patrol: false);
-
         FaceByTargetX(playerPos.x);
     }
 
     void HandlePatrolOrIdleState()
     {
         StopTraceRampOnly();
-        SetAnim(trace: false, patrol: usePatrol);
+        wasTracing = false;
 
+        SetAnim(trace: false, patrol: usePatrol);
         ResetTraceMove();
 
         if (usePatrol)
@@ -512,12 +532,12 @@ public class EnemyCtrl : MonoBehaviour
     void StopAgentHard()
     {
         if (navi == null) return;
-    if (!navi.enabled) return;
-    if (!navi.isOnNavMesh) return;   // ✅ 핵심: NavMesh 위 아닐 땐 아무 것도 하지 않음
+        if (!navi.enabled) return;
+        if (!navi.isOnNavMesh) return;
 
-    navi.isStopped = true;
-    navi.ResetPath();
-    navi.velocity = Vector3.zero;
+        navi.isStopped = true;
+        navi.ResetPath();
+        navi.velocity = Vector3.zero;
     }
 
     void FixZ()
