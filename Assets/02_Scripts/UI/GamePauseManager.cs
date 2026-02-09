@@ -110,8 +110,8 @@ public class GamePauseManager : MonoBehaviour
 
         // 마우스 커서 숨기기 (FPS 게임이라면 다시 잠금)
         // 상황에 따라 주석 해제 필요
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OpenSettings()

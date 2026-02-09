@@ -1505,7 +1505,7 @@ MonoBehaviour:
   maxAmmo: 10
   reloadTime: 2.3
   audioSource: {fileID: 5564705116494574469}
-  fireClip: {fileID: 0}
+  fireClip: {fileID: 8300000, guid: e164ed7fcb195534b981ece1c92191d3, type: 3}
   reloadClip: {fileID: 8300000, guid: 03f8770f9f599f647b09120b77f577ca, type: 3}
   muzzleFlash: {fileID: 198719912503724044, guid: 541ce353e8fb0bb479764506d0f4b76a, type: 3}
 --- !u!114 &3439138498539923855
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   slotIcon1: {fileID: 0}
   slotIcon2: {fileID: 0}
   selectedSlot: 1
-  handSocket: {fileID: 0}
+  handSocket: {fileID: 419431952913334656}
   dropPoint: {fileID: 6259517043618871549}
   activeMode: 0
   selectingItem: 0
