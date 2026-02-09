@@ -17,8 +17,8 @@ public class WatcherCTRL : MonoBehaviour
     public Light warningLight;
 
     [Header("Distances")]
-    public float lightDistance = 15f; // 노랑 경고
-    public float spawnDistance = 10f; // 빨강 경보 + 소환
+    public float lightDistance = 10f; // 노랑 경고
+    public float spawnDistance = 5f; // 빨강 경보 + 소환
 
     [Header("Look")]
     public float rotateSpeed = 6f;

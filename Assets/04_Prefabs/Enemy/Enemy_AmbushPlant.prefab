@@ -3219,10 +3219,12 @@ GameObject:
   - component: {fileID: 5119313724512705601}
   - component: {fileID: 6220408257662051687}
   - component: {fileID: 6611841087073680403}
+  - component: {fileID: 7098876596619313267}
+  - component: {fileID: 4661401226498611158}
   - component: {fileID: 8604156178319621709}
   - component: {fileID: 6624005023738488234}
-  - component: {fileID: 4661401226498611158}
-  - component: {fileID: 2421302932692242114}
+  - component: {fileID: 7097332280759745687}
+  - component: {fileID: -6815712111764138996}
   m_Layer: 7
   m_Name: Enemy_AmbushPlant
   m_TagString: ENEMY
@@ -3255,6 +3257,7 @@ Transform:
   - {fileID: 4805296654361773225}
   - {fileID: 9218542670525029386}
   - {fileID: 3292979446206917815}
+  - {fileID: 2645345598977706442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!95 &6220408257662051687
@@ -3293,7 +3296,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -3301,6 +3304,129 @@ CapsuleCollider:
   m_Height: 32.28
   m_Direction: 1
   m_Center: {x: 0, y: 10.2, z: -1.6}
+--- !u!82 &7098876596619313267
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 8
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!54 &4661401226498611158
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &8604156178319621709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3329,35 +3455,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
---- !u!54 &4661401226498611158
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020962383702482920}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2421302932692242114
+  maxHp: 30
+  audioSource: {fileID: 7098876596619313267}
+  hitClips:
+  - {fileID: 8300000, guid: 3982bff2ea8d2bd43b9091c201c22740, type: 3}
+  - {fileID: 8300000, guid: d06f750f53b315f4294e2406bd357a05, type: 3}
+  - {fileID: 8300000, guid: 85228b18506e0db4b98bdcd3cfd041d6, type: 3}
+  dieClip: {fileID: 8300000, guid: 14581cc4d3c06344b92d9e334213e605, type: 3}
+  hitVfxPrefab: {fileID: 408759531892612412, guid: 22561396b9d6c634c8af6ff23a8c228c, type: 3}
+  hitVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForHitVfx: 0
+  hitVfxUseContactPoint: 1
+  hitVfxMinInterval: 0.05
+  deathVfxPrefab: {fileID: 9083677376886972344, guid: 54bfc9693403a8645bdaf98279c0407c, type: 3}
+  deathVfxOffset: {x: 0, y: 0, z: 0}
+  useEnemyRotationForVfx: 0
+--- !u!114 &7097332280759745687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3366,10 +3479,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 4020962383702482920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba030b056a3ca14c97d6131e25fe3fc, type: 3}
+  m_Script: {fileID: 11500000, guid: a22d60cca38b23a44a07c29880368b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  player: {fileID: 0}
+  radius: 15
+  hysteresis: 0.5
+  loopClip: {fileID: 8300000, guid: 4ca672c7d9b9311489098d4cb1887849, type: 3}
+  volume: 1
+  fadeSpeed: 2
+  minDistance: 8
+  maxDistance: 15
+--- !u!114 &-6815712111764138996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020962383702482920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a666fa84b29ca6e4ead7bd7e048f8706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropSpawnPoint: {fileID: 2645345598977706442}
+  oilDropPrefab: {fileID: 2421556905976870601, guid: ee6cbaa544876fd49862d516aed3cd1d, type: 3}
+  puddlePrefab: {fileID: 2578846122977356927, guid: c98d1ad06c3f1b24ca32e0df65f644d7, type: 3}
+  interval: 2
+  randomInterval: 1
+  startDownVelocity: 0
+  randomSideForce: 0.2
+  dropScale: 0.15
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &4033656146877792450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,6 +3692,7 @@ GameObject:
   - component: {fileID: 176407030202870154}
   - component: {fileID: 202823294914683263}
   - component: {fileID: 6503049594366253074}
+  - component: {fileID: 262236789174218648}
   m_Layer: 8
   m_Name: HitTrigger
   m_TagString: Untagged
@@ -3669,6 +3813,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &262236789174218648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098260319079963159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19ac1564f0f6d645b9a387eaaa2d38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8604156178319621709}
+  playerTag: Player
 --- !u!1 &4248904232982715650
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,6 +5436,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6104160431472352497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2645345598977706442}
+  m_Layer: 7
+  m_Name: OilDropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2645345598977706442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104160431472352497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 30.3, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5119313724512705601}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6233084121086748689
 GameObject:
   m_ObjectHideFlags: 0

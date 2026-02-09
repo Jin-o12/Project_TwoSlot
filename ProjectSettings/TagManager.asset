@@ -9,6 +9,7 @@ TagManager:
   - Watcher
   - Gun
   - Shell
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - ENEMY ATTACK
   - ITEM
   - ITEMPICKUP
-  - 
-  - 
+  - ENERGYDRINK
+  - OILDROP
   - 
   - 
   - 

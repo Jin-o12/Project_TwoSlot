@@ -146,16 +146,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4106814457344636235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5b86568153ccfb4abc5b2e62dda66b8, type: 3}
+  m_Script: {fileID: 11500000, guid: fa26f6d9f2159a9498fc96c4b2124664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuseTime: 1.2
+  fuseTime: 1
   explodeOnFirstHit: 1
-  armDelay: 0.2
-  ignoreTag: Player
-  radius: 12
-  enemyTag: ENEMY
-  pingPrefab: {fileID: 0}
-  pingLifeTime: 1.5
-  explosionVfx: {fileID: 101206, guid: 0d6d0598d4c6d514bbf8228309023a4d, type: 3}
-  explosionSfx: {fileID: 0}
+  noiseRadius: 15
+  distractTime: 20
+  audioSource: {fileID: 0}
+  noiseClip: {fileID: 0}
+  volume: 1
+  vfxPrefab: {fileID: 0}

@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d004597c01dd4e6418bdebcb22d05af8, type: 3}
   m_Name: HandGun
   m_EditorClassIdentifier: 
+  heldLocalScale: {x: 1, y: 1, z: 1}
+  heldLocalPos: {x: 0, y: 0, z: 0}
+  heldLocalEuler: {x: 0, y: 0, z: 0}
   icon: {fileID: 21300000, guid: 4e0a6b878faf5ce45a790cd796db0ea6, type: 3}
   weaponPrefab: {fileID: 1690370004738036, guid: a78a725941312494b930d664f3b315d0, type: 3}
   pickupPrefab: {fileID: 1690370004738036, guid: a78a725941312494b930d664f3b315d0, type: 3}
+  itemId: Gun

@@ -21,7 +21,7 @@ AudioImporter:
       compressionFormat: 1
       quality: 1
       conversionMode: 0
-      preloadAudioData: 0
+      preloadAudioData: 1
     4:
       serializedVersion: 2
       loadType: 0
@@ -30,7 +30,7 @@ AudioImporter:
       compressionFormat: 1
       quality: 1
       conversionMode: 0
-      preloadAudioData: 0
+      preloadAudioData: 1
     7:
       serializedVersion: 2
       loadType: 0
@@ -39,7 +39,7 @@ AudioImporter:
       compressionFormat: 1
       quality: 1
       conversionMode: 0
-      preloadAudioData: 0
+      preloadAudioData: 1
   forceToMono: 0
   normalize: 1
   loadInBackground: 0

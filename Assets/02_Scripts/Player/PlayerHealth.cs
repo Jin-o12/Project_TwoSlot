@@ -1,28 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+/// <summary>
+/// 플레이어의 체력 수치 관링와 사망 판정 수행
+/// </summary>
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("컴포넌트&스크립트")]
     // 컴포넌트
     private AudioSource audioSource;
+    public AudioClip hitClip;
     private Animator animator;
     // 스크립트
     private PlayerMove playerMove;
-    private Inventory2Slots inventory;
     private AimAndFlip aimAndFlip;
     private RigBuilder rigBuilder;
+    private StageManager stageManager;
 
     [Header("HP")]
-    public int maxHp = 100;
-    public int hp;
-
-    [Header("UI")]
-    public Image hpFill;
-    public Text hpText;
+    public int maxHp = 100;                 // 최대 체력
+    public int currentHp                    // 현재 체력
+    { get; private set; }
 
     [Header("Refs")]
     public GunFire gunFire;
@@ -32,28 +32,33 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public string hitTrigger = "Hit";
     public string dieTrigger = "Die";
 
+    [Header("Low HP Effect")]
+    public LowHealthEffect lowHealthEffect; 
+
     bool isDead;
 
     void Awake()
     {
         // 모든 컴포넌트 및 스크립트를 찾아서 할당
-        if (!animator) animator = GetComponentInChildren<Animator>();
-        if (!gunFire) gunFire = GetComponentInChildren<GunFire>();
-        if (!playerMove) playerMove = GetComponent<PlayerMove>();
-        if (!inventory) inventory = GetComponent<Inventory2Slots>();
-        if (!rigBuilder) rigBuilder = GetComponent<RigBuilder>();
-        if (!audioSource) audioSource = GetComponent<AudioSource>();
-    }
+        if (!animator)      animator = GetComponentInChildren<Animator>();
+        if (!gunFire)       gunFire = GetComponentInChildren<GunFire>();
+        if (!playerMove)    playerMove = GetComponent<PlayerMove>();
+        if (!rigBuilder)    rigBuilder = GetComponent<RigBuilder>();
+        if (!audioSource)   audioSource = GetComponent<AudioSource>();
+        if (!aimAndFlip)    aimAndFlip = GetComponent<AimAndFlip>();
+        if(!stageManager)   stageManager = StageManager.Instance;
 
+        if (!lowHealthEffect) lowHealthEffect = FindFirstObjectByType<LowHealthEffect>();
+    }
     void Start()
     {
-        hp = maxHp;
-        UpdateHPUI();
+        Initialized();
     }
-
-    private void Update()
+    /* 플레이어 체력 수치 초기화 */
+    public void Initialized()
     {
-        UpdateHPUI();
+        currentHp = maxHp;       
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp); 
     }
 
     /* 피해를 입음 */
@@ -61,28 +66,28 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (isDead) return;
 
-        hp = Mathf.Clamp(hp - dmg, 0, maxHp);
-        UpdateHPUI();
+        currentHp = Mathf.Clamp(currentHp - dmg, 0, maxHp);
 
-        if (hp <= 0)
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
+        
+        if (currentHp <= 0)
         {
             Die();
             return;
         }
 
-        // Hit 애니
+        // Hit 애니 + 피격 사운드
         if (animator && !string.IsNullOrEmpty(hitTrigger))
+        {
             animator.SetTrigger(hitTrigger);
+        }
 
+        if (audioSource && hitClip)
+        {
+            audioSource.PlayOneShot(hitClip);
+        }
         // 0.5초 발사 금지
         gunFire?.LockFire(0.5f);
-    }
-
-    /* 체력 UI를 갱신 */
-    void UpdateHPUI()
-    {
-        if (hpFill) hpFill.fillAmount = (float)hp / maxHp;
-        if (hpText) hpText.text = $"{hp}/{maxHp}";
     }
 
     /* 사망 처리 */
@@ -91,14 +96,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (isDead) return;
         isDead = true;
 
+        lowHealthEffect?.UpdateHealthState(0, maxHp);
+
         // 에임/IK 정지
         if (aimAndFlip) aimAndFlip.IsDead = true;
         if (rig) rig.weight = 0f;
         if (rigBuilder) rigBuilder.enabled = false;
 
-        // 입력/전투/인벤 중단
+        // 입력/전투 중단
         if (gunFire) gunFire.enabled = false;
-        if (inventory) inventory.enabled = false;
 
         // 이동/사운드 중단
         if (playerMove)
@@ -111,6 +117,27 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         // 죽음 애니메이션
         if (animator)
             animator.SetTrigger(dieTrigger);
+
+        // 사망 모션 재생 기다렸다가 씬 전환
+        Invoke("GameoverScene", 3.0f);
+    }
+    public void SetHp(int hp)
+    {
+        currentHp = Mathf.Clamp(hp, 0, maxHp);
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
+    }
+
+    void GameoverScene()
+    {
+        stageManager.GameOver();
+    }
+
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+        if (amount <= 0) return;
+
+        currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
+        lowHealthEffect?.UpdateHealthState(currentHp, maxHp);
     }
 }
-

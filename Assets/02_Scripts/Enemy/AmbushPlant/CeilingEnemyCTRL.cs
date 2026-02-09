@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
+public class CeilingEnemyCTRL : MonoBehaviour
 {
     [Header("References")]
     public GameObject bulletPrefab;
@@ -12,10 +12,6 @@ public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
     [Header("Attack")]
     public float attackCooldown = 5f;
     private float nextAttackTime = 0f;
-
-    [Header("HP")]
-    public int maxHealth = 20;
-    private int currentHealth;
 
     public void TryFire()
     {
@@ -34,7 +30,7 @@ public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
         }
 
         // 총알 생성
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb == null)
@@ -59,14 +55,5 @@ public class CeilingEnemyCTRL : MonoBehaviour, IDamageable
 
         // 디버그 (원하면 유지)
         // Debug.Log($"[Bullet] downDir={downDir}, vel={rb.velocity}");
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 }

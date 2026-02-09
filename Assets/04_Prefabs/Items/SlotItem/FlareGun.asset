@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d004597c01dd4e6418bdebcb22d05af8, type: 3}
+  m_Name: FlareGun
+  m_EditorClassIdentifier: 
+  heldLocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  heldLocalPos: {x: 0, y: 0, z: 0}
+  heldLocalEuler: {x: 0, y: -180, z: 0}
+  icon: {fileID: 21300000, guid: de0c2ff048c3d5b4e935426f7e144824, type: 3}
+  weaponPrefab: {fileID: 2687447825116020007, guid: 61dce71662ff5f2449ee96079050791d, type: 3}
+  pickupPrefab: {fileID: 2687447825116020007, guid: c30583e106717fd4d81733e494fec39f, type: 3}
+  itemId: FlareGun

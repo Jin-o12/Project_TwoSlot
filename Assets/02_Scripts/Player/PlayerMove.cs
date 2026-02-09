@@ -1,13 +1,13 @@
-/// <sumamry>
+/// <summary>
 /// 플레이어의 물리 기반 움직임을 구현하고 애니메이션을 재생합니다.
-/// </sumamry>
+/// </summary>
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     [Header("컴포넌트&인스턴스")]
     private AudioSource audioSource;
-    private Rigidbody rb;        
+    private Rigidbody rb;
     private Animator animator;
     private InputManager inputManager;              // 조작 키를 가지고 있는 인스턴스 스크립트
     private AimAndFlip aimAndFlip;                  // 캐릭터를 뒤집는 스크립트
@@ -29,12 +29,18 @@ public class PlayerMove : MonoBehaviour
     private bool isBackWalkNow;                     // 뒷걸음질 치고 있다면 참
 
     [Header("Facing")]
-    private bool faceByMoveInput;         
-    private bool faceByMouse;            
+    private bool faceByMoveInput;
+    private bool faceByMouse;
 
     [Header("Footsteps")]
     public AudioClip[] walkFootstepClip;            // 걸을 때 발소리 사운드 클립
     public AudioClip[] runFootstepClip;             // 달릴 때 발소리 사운드 클립
+
+    // ▼▼▼ [추가된 부분] 볼륨 조절 변수 ▼▼▼
+    [Range(0f, 1f)] public float walkVolume = 0.5f; // 걷기 볼륨 (0~1)
+    [Range(0f, 1f)] public float runVolume = 1.0f;  // 달리기 볼륨 (0~1)
+    // ▲▲▲ [추가된 부분] ▲▲▲
+
     public float footstepMinSpeed = 0.2f;           // 이 속도 이상일 때만 발소리
     private float minPitch;                         // 다양한 크기의 발소리 연출을 위한 최소 피치
     private float maxPitch;                         // 사운드 클립의 최대 피치
@@ -52,10 +58,10 @@ public class PlayerMove : MonoBehaviour
     void Awake()
     {
         // 필요 컴포넌트
-        if (!rb)            rb = GetComponent<Rigidbody>();
-        if (!audioSource)   audioSource = GetComponent<AudioSource>();
-        if (!animator)      animator = GetComponentInChildren<Animator>();
-        if (!aimAndFlip)    aimAndFlip = GetComponent<AimAndFlip>();
+        if (!rb) rb = GetComponent<Rigidbody>();
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
+        if (!animator) animator = GetComponentInChildren<Animator>();
+        if (!aimAndFlip) aimAndFlip = GetComponent<AimAndFlip>();
 
         // 오디오 기본 세팅
         audioSource.playOnAwake = false;
@@ -71,25 +77,25 @@ public class PlayerMove : MonoBehaviour
     }
 
     /* 플레이어 생성 시 모든 상태 초기화 */
-    void InitializePlayer()
+    public void InitializePlayer()
     {
-        inputManager = InputManager.Instance;                       // 키 입력 싱글톤 초기화
+        inputManager = InputManager.Instance;                        // 키 입력 싱글톤 초기화
 
-        isRunning = false;                                          // 상태 변수 초기화
+        isRunning = false;                                           // 상태 변수 초기화
         isDead = false;
         faceByMoveInput = true;
         faceByMouse = false;
-        
-        rb.constraints = RigidbodyConstraints.FreezeRotation;       // 넘어짐 방지 회전 고정
 
-        lockedZ = transform.position.z;                             // 시작 Z 저장
+        rb.constraints = RigidbodyConstraints.FreezeRotation;        // 넘어짐 방지 회전 고정
 
-        rb.constraints |= RigidbodyConstraints.FreezePositionZ;     // 시작 시 z축 고정
+        lockedZ = transform.position.z;                              // 시작 Z 저장
+
+        rb.constraints |= RigidbodyConstraints.FreezePositionZ;      // 시작 시 z축 고정
     }
 
     void Update()
     {
-        if (InputPauseManager.IsPaused || isDead) return;   // 게임 일시정지 상태이거나 죽었을 시 입력 무시
+        if (PauseState.IsPaused || isDead) return;   // 게임 일시정지 상태이거나 죽었을 시 입력 무시
 
         ReadyMovement();
         PlayFootStepSound();
@@ -98,8 +104,8 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (InputPauseManager.IsPaused || isDead) return;
-        
+        if (PauseState.IsPaused || isDead) return;
+
         GetMove();
     }
 
@@ -147,6 +153,9 @@ public class PlayerMove : MonoBehaviour
         // 달림 여부에 따라 재생할 클립 배열 선택
         AudioClip[] clips = isRunning ? runFootstepClip : walkFootstepClip;
 
+        // ▼▼▼ [수정된 부분] 상태에 따른 볼륨 선택 ▼▼▼
+        float currentVolume = isRunning ? runVolume : walkVolume;
+
         // null 또는 비었을 시 리턴
         if (clips == null || clips.Length == 0) return;
 
@@ -160,7 +169,9 @@ public class PlayerMove : MonoBehaviour
         // 랜덤한 클립 선택 및 피치 조절
         int index = Random.Range(0, clips.Length);
         audioSource.pitch = Random.Range(minPitch, maxPitch);
-        audioSource.PlayOneShot(clips[index]);
+
+        // ▼▼▼ [수정된 부분] PlayOneShot에 볼륨 값 전달 ▼▼▼
+        audioSource.PlayOneShot(clips[index], currentVolume);
     }
 
     void SetFacing(bool faceRight)
@@ -233,7 +244,7 @@ public class PlayerMove : MonoBehaviour
         // 목표 속도까지 일정 속도로 접근 (Lerp보다 목표치 도달이 확실함)
         float newVelX = Mathf.MoveTowards(rb.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
 
-        rb.velocity = new Vector3(newVelX, rb.velocity.y, rb.velocity.z);      
+        rb.velocity = new Vector3(newVelX, rb.velocity.y, rb.velocity.z);
 
         // 물리 단계에서도 Z 고정(더 단단하게)
         Vector3 p = rb.position;
